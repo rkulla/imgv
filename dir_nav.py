@@ -100,6 +100,7 @@ def show_dirs(screen, num_imgs, file):
 
     curdir_msg = check_truncate(screen.get_width(), curdir)
     all_files = os.listdir('.')
+    all_files.sort()
     n_dirs = len([d for d in all_files if os.path.isdir(d)])
     all_files = [f for f in all_files if not os.path.isdir(f)]
     n_files = len(all_files)
@@ -130,6 +131,7 @@ def show_dirs(screen, num_imgs, file):
         show_message(screen, files_msg, (files_msg_wpos, 4), 10)
         set_caption(curdir)
         dirs = os.listdir(curdir)
+        dirs.sort()
         dirs = strip_dirs(dirs)
         # ensure the root dir and last dir items go at top
         dirs.insert(0, "..")
