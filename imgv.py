@@ -3,7 +3,7 @@
 
 """ imgv.py 
     Description: Image viewing application
-    Version: 3.1.5
+    Version: 3.1.6
     Author: Ryan Kulla 
     Site: http://imgv.sourceforge.net/
     Email: rkulla@gmail.com
@@ -17,7 +17,7 @@ if platform == 'win32':
     environ['SDL_VIDEODRIVER'] = 'windib'
 import pygame.event, pygame.time
 from pygame.display import set_caption, set_mode, update
-from pygame.locals import  MOUSEMOTION, MOUSEBUTTONDOWN, Rect, KEYDOWN, KEYUP, RESIZABLE, VIDEORESIZE, MOUSEBUTTONUP, K_UP, K_DOWN, K_RIGHT, K_LEFT
+from pygame.locals import MOUSEMOTION, MOUSEBUTTONDOWN, Rect, KEYDOWN, KEYUP, RESIZABLE, VIDEORESIZE, MOUSEBUTTONUP, K_UP, K_DOWN, K_RIGHT, K_LEFT
 import gl
 from load_timers import start_timer, check_timer
 from img_screen import init_screen, get_center, my_update_screen, img_border, paint_screen

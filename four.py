@@ -53,7 +53,7 @@ def four(screen, file, new_img, ns):
     while 1:
         flag = 0
         event = pygame.event.poll()
-        pygame.time.wait(35)
+        pygame.time.wait(1)
         cursor = pygame.mouse.get_pos()
 
         if event.type == VIDEORESIZE:

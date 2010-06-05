@@ -30,7 +30,7 @@ def load_img(img_file, screen, allow_zoom=True):
     try:
         gl.CUR_PATH = gl.CUR_PATH[gl.CUR_PATH.rindex(getcwd()):] # only show path once
     except:
-        pass
+        print "Couldn't load image"
     try:
         if img_file[:5] == "http:": # load url
             try:

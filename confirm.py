@@ -19,7 +19,7 @@ def get_confirmation(screen, confirm_msg):
     pygame.event.set_blocked(MOUSEMOTION)
     while 1:
         event = pygame.event.poll()
-        pygame.time.wait(35)
+        pygame.time.wait(1)
         cursor = pygame.mouse.get_pos()
         hover_button(yes_rect, cursor, screen, " YES ", 0, 30, "midtop")
         hover_button(no_rect, cursor, screen, " NO ", 0, 60, "midtop")

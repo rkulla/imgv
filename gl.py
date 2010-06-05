@@ -17,7 +17,7 @@ except KeyError:
     DATA_DIR = os.path.join(BASE_DIR, 'data' + os.sep)
 
 
-IMGV_VERSION = "3.1.5"
+IMGV_VERSION = "3.1.6"
 TOGGLE_TRANSPARENT = 0
 TOGGLE_STATUS_BAR = 1
 FOUR_STATUS_BARS = 1
@@ -144,7 +144,7 @@ CHANGE_BOX = DATA_DIR + "change-box.jpg"
 TITLE = "imgv"
 WAS_IN_CHANGE_DRIVES = 0
 MONTH_MAP = {'Jan':'01', 'Feb':'02', 'Mar':'03', 'Apr':'04', 'May':'05', 'Jun':'06', 'Jul':'07', 'Aug':'08', 'Sep':'09', 'Oct':'10', 'Nov':'11', 'Dec':'12'}
-DAY_SUFFIX_MAP = {'01':'1st', '02':'2nd', '03':'3rd', '04':'4th', '05':'5th', '06':'6th', '07':'7th', '08':'8th', '09':'9th', '10':'10th', '11':'11th', '12':'12th', '13':'13th', '14':'14th', '15':'15th', '16':'16th', '17':'17th', '18':'18th', '19':'19th', '20':'20th', '21':'21st', '22':'22nd', '23':'23rd', '24':'24th', '25':'25th', '26':'26th', '27':'27th', '28':'28th', '29':'29th', '30':'30th', '31':'31st'}
+DAY_SUFFIX_MAP = {'01':'1st', '02':'2nd', '03':'3rd', '04':'4th', '05':'5th', '06':'6th', '07':'7th', '08':'8th', '09':'9th', '1':'1st', '2':'2nd', '3':'3rd', '4':'4th', '5':'5th', '6':'6th', '7':'7th', '8':'8th', '9':'9th', '10':'10th', '11':'11th', '12':'12th', '13':'13th', '14':'14th', '15':'15th', '16':'16th', '17':'17th', '18':'18th', '19':'19th', '20':'20th', '21':'21st', '22':'22nd', '23':'23rd', '24':'24th', '25':'25th', '26':'26th', '27':'27th', '28':'28th', '29':'29th', '30':'30th', '31':'31st'}
 EXPAND_DAY_MAP = {'Mon':'Monday', 'Tue':'Tuesday', 'Wed':'Wednesday', 'Thu':'Thursday', 'Fri':'Friday', 'Sat':'Saturday', 'Sun':'Sunday'}
 EXPAND_MONTH_MAP = {'Jan':'January', 'Feb':'February', 'Mar':'March', 'Apr':'April', 'May':'May', 'Jun':'June', 'Jul':'July', 'Aug':'August', 'Sep':'September', 'Oct':'October', 'Nov':'November', 'Dec':'December'}
 HOUR_MAP = {'00':'12', '01':'1', '02':'2', '03':'3', '04':'4', '05':'5', '06':'6', '07':'7', '08':'8', '09':'9', '10':'10', '11':'11', '12':'12', '13':'1', '14':'2', '15':'3', '16':'4', '17':'5', '18':'6', '19':'7', '20':'8', '21':'9', '22':'10', '23':'11', '24':'12'}

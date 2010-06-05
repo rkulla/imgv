@@ -208,7 +208,7 @@ def show_dirs(screen, num_imgs, file):
     pygame.event.set_blocked(MOUSEMOTION)
     while 1:
         event = pygame.event.poll()
-        pygame.time.wait(35)
+        pygame.time.wait(1)
         cursor = pygame.mouse.get_pos()
         (esc_rect, close_font) = close_button(screen)
         hover_fx(screen, curdir, menu_items, cursor)

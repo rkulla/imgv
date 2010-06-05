@@ -91,7 +91,8 @@ class verbose:
                 memsizemsg = "%s %.2f Megabytes (%s Kilobytes) (%s Bytes)" % (origmsg_start, origmembytesize / (1024.0 * 1024.0), comma_it(origmembytesize / 1024.0), comma_it(origmembytesize))
             self.print_info(memsizemsg, len(origmsg_start))
         except:
-            pass
+            #pass
+            print "Couldn't display current memory size of image"
         if gl.CURRENT_ZOOM_PERCENT != 100:
             try:
                 # display current memory size of image
@@ -104,7 +105,8 @@ class verbose:
                     memsizemsg = "Current memory size: %.2f Megabytes (%s Kilobytes) (%s Bytes)" % (curmembytesize / (1024.0 * 1024.0), comma_it(curmembytesize / 1024.0), comma_it(curmembytesize))
                 self.print_info(memsizemsg, 20)
             except:
-                pass
+                print "Can't display current memory size of image"
+                #pass
     def img_type(self, file):
         self.img_type = imghdr.what(gl.files[file])
         if self.img_type != None:
@@ -192,7 +194,8 @@ class verbose:
             try:
                 self.print_info("Print size (from PPI): %s x %s inches" % (round(float(gl.REAL_WIDTH) / float(x), 1), round(float(gl.REAL_HEIGHT) / float(y), 1)), 22)
             except:
-                pass
+                print "Couldn't display PPI"
+                #pass
     def gamma(self):
         if self.pil_info:
             if self.im.info.has_key('gamma'):
@@ -301,7 +304,8 @@ class verbose:
                     self.screen.blit(ren, ren_rect)
                     pos = pos + 9
         except:
-            pass 
+            print "Couldn't exif"
+            #pass 
         flip()
     def histogram(self):
         if not self.pil_info:
@@ -377,7 +381,13 @@ def verbose_info(screen, new_img, file, num_imgs):
     try:
         (uniquecolors_rect, total_colors, row, font, im, verb) = print_verbose_info(screen, new_img, file, num_imgs)
     except:
-        return
+        print 'print verbose'
+        #(uniquecolors_rect, total_colors, row, font, im, verb) = junk_rect()#
+       # uniquecolors_rect = junk_rect()#
+       # total_colors = ""#
+        verb = verbose(screen, file)#
+        (uniquecolors_rect, total_colors, row, font, im) = verb.colors()
+        #return
     if gl.SHOW_EXIFBUTTON:
         exif_rect = imgv_button(screen, " Exif Data ", 5, gl.ROW_SEP + 435, None)
     (esc_rect, close_font) = close_button(screen)
@@ -385,7 +395,7 @@ def verbose_info(screen, new_img, file, num_imgs):
     transparency = 0
     while 1:
         event = pygame.event.poll()
-        pygame.time.wait(35)
+        pygame.time.wait(1)
         check_quit(event)
         cursor = pygame.mouse.get_pos()
         hover_cursor(cursor, (esc_rect, exif_rect, uniquecolors_rect))
@@ -446,7 +456,8 @@ def print_verbose_info(screen, new_img, file, num_imgs):
     try:
         verb.picture_taken(file)
     except:
-        pass
+        print "Couldn't display picture taken time"
+        #pass
     verb.file_times(file)
     try: 
         verb.histogram()
@@ -456,7 +467,8 @@ def print_verbose_info(screen, new_img, file, num_imgs):
     try:
         verb.system_info()
     except:
-        pass
+        print "Couldn't display system info"
+        #pass
     flip()
     return (uniquecolors_rect, total_colors, row, font, im, verb)
 
@@ -526,7 +538,6 @@ def check_truncate(screen_width, name):
 def convert_times(time_msg, show_today):
     "convert dates/times into a more human format"
     csplit = ctime().split()
-    time_split = time_msg.split()
     timesplit = time_msg.split()
     # if time is today then say "Today" instead of today's name:
     if show_today and (' '.join(timesplit[:3] + [timesplit[4]]) == ' '.join(csplit[:3] + [csplit[4]])):

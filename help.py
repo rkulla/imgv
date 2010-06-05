@@ -17,7 +17,7 @@ import webbrowser
 def command_help(screen, new_img, file, rect, num_imgs):
     (screen, before_winsize, not_accepted) = adjust_screen(screen)
 
-    set_caption("Help [imgv v3.1.5]")
+    set_caption("Help [imgv v3.1.6]")
     help(screen)
 
     screen = restore_screen(screen, before_winsize, not_accepted, new_img, file, num_imgs, rect)

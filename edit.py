@@ -28,7 +28,7 @@ def command_edit_menu(screen, file, new_img, num_imgs, rect):
     (menu_items, men_ops) = edit_menu(screen, file, menu_items)
     while 1:
        event = pygame.event.poll()
-       pygame.time.wait(35)
+       pygame.time.wait(1)
        check_quit(event)
        cursor = pygame.mouse.get_pos()
        hover_fx(screen, menu_items, men_ops, cursor, font)
@@ -207,7 +207,7 @@ def preferences(screen):
 
     while 1:
         event = pygame.event.poll()
-        pygame.time.wait(35)
+        pygame.time.wait(1)
         check_quit(event)
         cursor = pygame.mouse.get_pos()
         prefs_hover_fx(screen, pref_items, cursor, font)

@@ -29,11 +29,11 @@ def command_file_master(screen, file_names, msg, down, button_op, disable_right_
     pygame.event.set_blocked(MOUSEMOTION)
     while 1:
         event = pygame.event.poll()
-        pygame.time.wait(35)
+        pygame.time.wait(1)
         if screen_pause == 1:
             while 1:
                 event = pygame.event.poll()
-                pygame.time.wait(35)
+                pygame.time.wait(1)
                 cursor = pygame.mouse.get_pos()
                 hover_fx(screen, menu_items, cursor)
                 hover_cursor(cursor, [esc_rect, edit_rect, sort_rect, back_rect, forward_rect, create_rect] + [x[0] for x in menu_items])

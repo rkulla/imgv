@@ -9,6 +9,7 @@ def wait_cursor():
 
 
 def normal_cursor():
+    pygame.init()#
     set_cursor(*pygame.cursors.tri_left)
 
 

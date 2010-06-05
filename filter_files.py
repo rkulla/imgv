@@ -25,7 +25,7 @@ def command_get_filter_info(screen):
     pygame.event.set_blocked(MOUSEMOTION)
     while 1:
         event = pygame.event.poll()
-        pygame.time.wait(35)
+        pygame.time.wait(1)
         check_quit(event)
         if hit_key(event, K_ESCAPE):
             gl.ADDED_DIR_NUMS = 0

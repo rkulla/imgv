@@ -1,4 +1,5 @@
 # error screen code by Ryan Kulla, rkulla@gmail.com
+import gl
 from usr_event import check_quit
 from img_screen import paint_screen
 from show_message import show_message
