@@ -29,18 +29,21 @@ Starting the image viewer
 =========================
 If you have the source file "imgv.py" type:
 
-        python imgv.py
-              or
-        python imgv.py <directory|image|remote image>
+    python imgv.py
 
-or if you're in Windows and have the executable binary version "imgv.exe" Click on imgv
+or:
+
+    python imgv.py <directory|image|remote image>
+
+If you're in Windows and have the executable binary version "imgv.exe" Click on imgv
 from the start menu if it was installed there or in a DOS window type:
 
-        C:\"Program Files"\imgv> imgv.exe
-         or
-        C:\"Program Files"\imgv> imgv.exe <directory|image|remote image|movie>
+    C:\"Program Files"\imgv> imgv.exe
 
-(assuming imgv is installed in C:\Program Files\imgv\)
+or (assuming imgv is installed in C:\Program Files\imgv\):
+
+    C:\"Program Files"\imgv> imgv.exe <directory|image|remote image|movie>
+
 ---------------------------------------------------------
 
 Imgv allows the loading of remote images by forming a name like:
@@ -107,4 +110,3 @@ be faster.
 
 If you have questions email me at: rkulla@gmail.com
 IMGV's homepage is: http://imgv.sf.net/
-If you use IRC, I'm "gt3" on freenode (#python, #pygame).
