@@ -1,15 +1,15 @@
 
 Requirements
 ============
--python2.2 or higher
--pygame
--python-imaging (PIL)
+- python 2.2 or higher
+- pygame
+- python-imaging (PIL)
 
 
 Environment
 -----------
 The very first thing you should do is create a new environment variable called
-"IMGV_HOME" with the value of the directory you installed imgv in. For example,
+*IMGV_HOME* with the value of the directory you installed imgv in. For example,
 if you unpacked the imgv source into /usr/home/foo/imgv then put the following line in
 your bash_profile (or the equivalent depending on your shell):
     
@@ -105,4 +105,5 @@ To add new images to a play list manually:
 Contact
 -------
 If you have questions email me at: rkulla@gmail.com
+
 IMGV's homepage is: http://imgv.sf.net/
