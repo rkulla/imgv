@@ -1,9 +1,9 @@
 
 Requirements
 ============
-python2.2 or higher
-pygame
-python-imaging (PIL)
+-python2.2 or higher
+-pygame
+-python-imaging (PIL)
 
 
 Environment
@@ -12,15 +12,15 @@ The very first thing you should do is create a new environment variable called
 "IMGV_HOME" with the value of the directory you installed imgv in. For example,
 if you unpacked the imgv source into /usr/home/foo/imgv then put the following line in
 your bash_profile (or the equivalent depending on your shell):
-	
-	export IMGV_HOME="/usr/home/foo/imgv"
+    
+    export IMGV_HOME="/usr/home/foo/imgv"
 
 If you're using MS-Windows and you unpacked imgv in C:\Program Files\imgv then 
 put the following line in your autoexec.bat file:
 
-	set IMGV_HOME=C:\Program Files\imgv
+    set IMGV_HOME=C:\Program Files\imgv
 
-(In Windows you may need to reboot for changes to take affect)
+On Windows you may need to reboot for changes to take affect
 
 
 Starting the image viewer
@@ -57,14 +57,14 @@ Loading images from web sites
 -----------------------------
 Imgv allows the loading of remote images by forming a name like:
 
-	imgv http://www.site.com/bla.jpg
+    imgv http://www.site.com/bla.jpg
 
 When imgv is running you can click the 'Open URL' menu option and enter a valid URL for
 imgv to extract images from such as:
 
-	http://www.site.com/  (note: you usually need that appended / for this to work)
-	http://www.site.com/foo.html
-	http://www.site.com/bla.jpg
+    http://www.site.com/  (note: you usually need that appended / for this to work)
+    http://www.site.com/foo.html
+    http://www.site.com/bla.jpg
 
 
 Configuration File For IMGV
@@ -90,14 +90,16 @@ name of the playlist. Make sure there are NO blank lines in either file. I
 recommend only using imgv to handle all the playlist stuff but this way can
 be faster.
 
-	To create a new playlist manually:
-	cd data/
-	echo "new playlist name" >> playlists
-	touch "new playlist name"
-	
-	To add new images to a play list manually:
-	cd data/	
-	echo "/home/user/pics/bla.jpg" >> "play list name"
+To create a new playlist manually:
+
+    cd data/
+    echo "new playlist name" >> playlists
+    touch "new playlist name"
+    
+To add new images to a play list manually:
+
+    cd data/    
+    echo "/home/user/pics/bla.jpg" >> "play list name"
 
 
 Contact
