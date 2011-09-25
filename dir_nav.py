@@ -131,7 +131,6 @@ def show_dirs(screen, num_imgs, file):
         show_message(screen, files_msg, (files_msg_wpos, 4), 10)
         set_caption(curdir)
         dirs = os.listdir(curdir)
-        #dirs.sort()
         dirs.sort(lambda a, b: cmp(a.lower(), b.lower())) # case-insensitive sorting
         dirs = strip_dirs(dirs)
         # ensure the root dir and last dir items go at top
@@ -387,7 +386,7 @@ def get_dirnum(screen, key_type):
         if hit_key(event, K_ESCAPE):
             return
         if hit_key(event, K_BACKSPACE) or hit_key(event, K_DELETE) or hit_key(event, K_KP_PERIOD):
-            # erase whatever text was inputed"
+            # erase whatever text was inputed
             BACKSPACED = 1
             dirnum = ['0']
             msg2 = msg1
