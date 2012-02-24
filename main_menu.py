@@ -42,8 +42,8 @@ def command_main_menu(refresh_img, screen, file, num_imgs, rect, new_img, img, n
         font_size = 10
         gl.MENU_DIVIDER_AMOUNT = 12
     else:
-        gl.MENU_DIVIDER_AMOUNT = 14
-        font_size = 11
+        gl.MENU_DIVIDER_AMOUNT = 15
+        font_size = 12
     font = pygame.font.Font(gl.FONT_NAME, font_size)
     font.set_bold(1)
     if gl.MENU_POS == -1:

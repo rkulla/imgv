@@ -80,7 +80,7 @@ def show_dirs(screen, num_imgs, file):
             pass # Probably an OSError from not having a cd in the drive
     slash, get_curdir = os.sep, os.getcwd()
     fg_color = gl.SILVER
-    font_size = 10
+    font_size = 12
     font = pygame.font.Font(gl.FONT_NAME, font_size)
     font.set_bold(1) # very important
     line = 55
