@@ -14,15 +14,16 @@ from hide import command_hide
 from rm_img import command_remove_img
 from rotate import command_horiz, command_vert, command_rotate_left, command_rotate_right
 from randomizer import command_shuffle, command_unshuffle
-from res import command_640x480, command_800x600, command_1024x768, command_1280x1024, command_fullscreen, command_show_res_modes, adjust_screen, restore_screen
+from res import command_show_res_modes, adjust_screen, restore_screen
 from edit import command_edit_menu
 from zoom import command_zoom_in, command_zoom_out
 from img_screen import my_update_screen, get_center, clean_screen
 from four import command_four
 from img_surf import command_next_img, command_prev_img, command_first_img, command_last_img
-import pygame.event, pygame.mouse
+import pygame.event
+import pygame.mouse
 from pygame.display import update
-from pygame.locals import Rect, KEYDOWN, K_LALT, K_RALT, K_LCTRL, K_RCTRL, K_TAB, K_c, K_h, KEYUP, KEYDOWN, K_UP, K_DOWN, K_RIGHT, K_LEFT, VIDEORESIZE, RESIZABLE, MOUSEMOTION, MOUSEBUTTONDOWN
+from pygame.locals import Rect, KEYDOWN, K_LALT, K_RALT, K_LCTRL, K_RCTRL, K_TAB, K_c, K_h, K_DOWN, K_UP, K_RIGHT, K_LEFT, VIDEORESIZE, RESIZABLE, MOUSEMOTION, MOUSEBUTTONDOWN
 from usr_event import check_quit, left_click, middle_click, right_click
 from dir_nav import command_show_dirs
 from handle_keyboard import handle_keyboard
@@ -32,7 +33,7 @@ from load_img import load_img
 from load_timers import start_timer, check_timer
 
 
-def command_main_menu(refresh_img, screen, file, num_imgs, rect, new_img, img, new_img_width, new_img_height, ns):
+def command_main_menu(refresh_img, screen, file, num_imgs, rect, new_img, img, ns):
     menu_items = []
     i = 23
     cursor = pygame.mouse.get_pos()
@@ -61,12 +62,12 @@ def command_main_menu(refresh_img, screen, file, num_imgs, rect, new_img, img, n
         check_quit(event)
         cursor2 = pygame.mouse.get_pos()
 
-        if event.type == VIDEORESIZE:#
+        if event.type == VIDEORESIZE:
             gl.JUST_RESIZED = 1
             screen = pygame.display.set_mode(event.dict['size'], RESIZABLE)
             rect = get_center(screen, new_img)
             my_update_screen(new_img, screen, rect, file, len(gl.files))
-            return (refresh_img, screen, file, num_imgs, new_img, img, new_img_width, new_img_height, rect)
+            return (refresh_img, screen, file, num_imgs, new_img, img, rect)
         if gl.REMOTE and not gl.ALREADY_DOWNLOADED:
             hover_button(download_rect, cursor2, screen, " Downlo(a)d Image ", None, None, "topright")
 
@@ -81,8 +82,8 @@ def command_main_menu(refresh_img, screen, file, num_imgs, rect, new_img, img, n
                 my_update_screen(new_img, screen, rect, file, len(gl.files))
                 if event.key == K_c:
                     normal_cursor()
-                return (refresh_img, screen, file, num_imgs, new_img, img, new_img_width, new_img_height, rect)
-            
+                return (refresh_img, screen, file, num_imgs, new_img, img, rect)
+
             (screen, rect, new_img, img, refresh_img, file, num_imgs,\
             screen_width, screen_height, new_img_width, new_img_height, last_rect) =\
             handle_keyboard(event, screen, rect, new_img, img, refresh_img, file, len(gl.files),\
@@ -97,10 +98,10 @@ def command_main_menu(refresh_img, screen, file, num_imgs, rect, new_img, img, n
                     break
             for it in menu_items:
                 if it[0].collidepoint(cursor2):
-                    if it[1] == " Next Image ": 
+                    if it[1] == " Next Image ":
                         (new_img, img, refresh_img, file, rect) = command_next_img(new_img, screen, file, len(gl.files), rect)
                     elif it[1] == " Previous Image ":
-                        (new_img, img, refresh_img, file, rect) = command_prev_img(new_img, screen, file, len(gl.files), rect)        
+                        (new_img, img, refresh_img, file, rect) = command_prev_img(new_img, screen, file, len(gl.files), rect)
                     elif it[1] == " Directory Browser ":
                         gl.USING_SCROLL_MENU = 1
                         # save current things in case the user ESCAPES out of show_dirs()
@@ -164,7 +165,7 @@ def command_main_menu(refresh_img, screen, file, num_imgs, rect, new_img, img, n
                             ns = check_timer(start)
                             my_update_screen(new_img, screen, rect, file, num_imgs, ns)
                             normal_cursor()
-                            gl.N_MILLISECONDS = "0" 
+                            gl.N_MILLISECONDS = "0"
                     elif it[1] == " Zoom In ":
                         if int(gl.N_MILLISECONDS) < gl.MAX_ZOOM_MAX_MS and gl.CURRENT_ZOOM_PERCENT < gl.ZOOM_PERCENT_MAX:
                             try: # triple zoom crash protection
@@ -232,15 +233,15 @@ def command_main_menu(refresh_img, screen, file, num_imgs, rect, new_img, img, n
                         gl.ESCAPED = 0
                         my_update_screen(new_img, screen, rect, file, num_imgs)
                         normal_cursor()
- #                   elif it[1] == " Resize Options ":##
- #                       gl.USING_SCROLL_MENU = 1
- #                       gl.CALC_ZOOM = 0
- #                       zoom_percent = gl.CURRENT_ZOOM_PERCENT
- #                       real_width = gl.REAL_WIDTH
- #                       rect = command_show_res_modes(screen, new_img, file, num_imgs, rect)
- #                       gl.CURRENT_ZOOM_PERCENT = zoom_percent
- #                       gl.REAL_WIDTH = real_width
- #                       gl.USING_SCROLL_MENU = 0
+#                   elif it[1] == " Resize Options ":
+#                       gl.USING_SCROLL_MENU = 1
+#                       gl.CALC_ZOOM = 0
+#                       zoom_percent = gl.CURRENT_ZOOM_PERCENT
+#                       real_width = gl.REAL_WIDTH
+#                       rect = command_show_res_modes(screen, new_img, file, num_imgs, rect)
+#                       gl.CURRENT_ZOOM_PERCENT = zoom_percent
+#                       gl.REAL_WIDTH = real_width
+#                       gl.USING_SCROLL_MENU = 0
                     elif it[1] == " Refresh ":
                         (new_img, img, rect, file) = command_refresh(refresh_img, screen, gl.files, file, num_imgs)
                     elif it[1] == " First Image ":
@@ -301,48 +302,48 @@ def command_main_menu(refresh_img, screen, file, num_imgs, rect, new_img, img, n
                         gl.MENU_POS = -1
                         my_update_screen(new_img, screen, rect, file, len(gl.files))
                         normal_cursor()
-                        return (refresh_img, screen, file, num_imgs, new_img, img, new_img_width, new_img_height, rect)
+                        return (refresh_img, screen, file, num_imgs, new_img, img, rect)
                     elif it[1] == " Exit ":
                         clean_screen()
                         raise SystemExit
             break
         if event.type == KEYDOWN and event.key not in (K_LALT, K_RALT, K_LCTRL, K_RCTRL, K_TAB):
-            return (refresh_img, screen, file, num_imgs, new_img, img, new_img_width, new_img_height, rect)
+            return (refresh_img, screen, file, num_imgs, new_img, img, rect)
         if middle_click(event):
             "close the menu upon middle click"
             gl.MENU_POS = -1
             my_update_screen(new_img, screen, rect, file, len(gl.files))
             normal_cursor()
-            return (refresh_img, screen, file, num_imgs, new_img, img, new_img_width, new_img_height, rect)
+            return (refresh_img, screen, file, num_imgs, new_img, img, rect)
         if right_click(event):
             wait_cursor()
             gl.MENU_POS = -1
             my_update_screen(new_img, screen, rect, file, len(gl.files))
-            (refresh_img, screen, file, num_imgs, new_img, img, new_img_width, new_img_height, rect) =\
-            command_main_menu(refresh_img, screen, file, num_imgs, rect, new_img, img, new_img_width, new_img_height, ns)
-            return (refresh_img, screen, file, num_imgs, new_img, img, new_img_width, new_img_height, rect)
+            (refresh_img, screen, file, num_imgs, new_img, img, rect) =\
+            command_main_menu(refresh_img, screen, file, num_imgs, rect, new_img, img, ns)
+            return (refresh_img, screen, file, num_imgs, new_img, img, rect)
 
         if event.type == MOUSEBUTTONDOWN: # this needs to be down here to work
             if event.dict['button'] in (4, 5): # scroll wheel activated
                 # allow for mouse dragging:
-                pygame.event.set_allowed(MOUSEMOTION) 
+                pygame.event.set_allowed(MOUSEMOTION)
                 gl.HAND_TOOL = 1
                 drag_hand_cursor()
                 # close menu:
-                gl.MENU_POS = -1 
+                gl.MENU_POS = -1
                 my_update_screen(new_img, screen, rect, file, len(gl.files))
-                return (refresh_img, screen, file, num_imgs, new_img, img, new_img_width, new_img_height, rect)
- 
+                return (refresh_img, screen, file, num_imgs, new_img, img, rect)
+
 
     if gl.KEEP_MENU_OPEN == "1":
         # this code purposely closes the main menu by breaking the recursion to free up RAM memory
         gl.COUNT_CLICKS += 1
         if gl.COUNT_CLICKS == 1: # free up ram every click
-            return (refresh_img, screen, file, num_imgs, new_img, img, new_img_width, new_img_height, rect)
-        (refresh_img, screen, file, num_imgs, new_img, img, new_img_width, new_img_height, rect) =\
-        command_main_menu(refresh_img, screen, file, num_imgs, rect, new_img, img, new_img_width, new_img_height, ns)
+            return (refresh_img, screen, file, num_imgs, new_img, img, rect)
+        (refresh_img, screen, file, num_imgs, new_img, img, rect) =\
+        command_main_menu(refresh_img, screen, file, num_imgs, rect, new_img, img, ns)
     normal_cursor()
-    return (refresh_img, screen, file, num_imgs, new_img, img, new_img_width, new_img_height, rect)
+    return (refresh_img, screen, file, num_imgs, new_img, img, rect)
 
 
 def main_menu_fg(screen, font, i, menu_items):
@@ -350,7 +351,7 @@ def main_menu_fg(screen, font, i, menu_items):
         gl.MENU_ITEMS = gl.MENU_ITEMS_SHORT
     else:
         gl.MENU_ITEMS = gl.MENU_ITEMS_LONG
-    
+
     for item in gl.MENU_ITEMS:
         if screen.get_height() < 530 and item == "": # don't show divider on small screens
             continue
