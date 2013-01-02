@@ -1,7 +1,5 @@
 Imgv - cross-platform image viewer.
 
-Just a fun project I coded in 2001 to help learn Python.
-
 Requirements
 ============
 - python 2.2 or higher
