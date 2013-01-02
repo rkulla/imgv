@@ -33,7 +33,12 @@ from load_img import load_img
 from load_timers import start_timer, check_timer
 
 
-def command_main_menu(refresh_img, screen, file, num_imgs, rect, new_img, img, ns):
+def command_main_menu(gfx, file, num_imgs, ns):
+    screen = gfx['screen']
+    img = gfx['img']
+    new_img = gfx['new_img']
+    refresh_img = gfx['refresh_img']
+    rect = gfx['rect']
     menu_items = []
     i = 23
     cursor = pygame.mouse.get_pos()
@@ -67,7 +72,7 @@ def command_main_menu(refresh_img, screen, file, num_imgs, rect, new_img, img, n
             screen = pygame.display.set_mode(event.dict['size'], RESIZABLE)
             rect = get_center(screen, new_img)
             my_update_screen(new_img, screen, rect, file, len(gl.files))
-            return (refresh_img, screen, file, num_imgs, new_img, img, rect)
+            return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img), file, num_imgs)
         if gl.REMOTE and not gl.ALREADY_DOWNLOADED:
             hover_button(download_rect, cursor2, screen, " Downlo(a)d Image ", None, None, "topright")
 
@@ -82,7 +87,7 @@ def command_main_menu(refresh_img, screen, file, num_imgs, rect, new_img, img, n
                 my_update_screen(new_img, screen, rect, file, len(gl.files))
                 if event.key == K_c:
                     normal_cursor()
-                return (refresh_img, screen, file, num_imgs, new_img, img, rect)
+                return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img), file, num_imgs)
 
             (screen, rect, new_img, img, refresh_img, file, num_imgs,\
             screen_width, screen_height, new_img_width, new_img_height, last_rect) =\
@@ -302,26 +307,26 @@ def command_main_menu(refresh_img, screen, file, num_imgs, rect, new_img, img, n
                         gl.MENU_POS = -1
                         my_update_screen(new_img, screen, rect, file, len(gl.files))
                         normal_cursor()
-                        return (refresh_img, screen, file, num_imgs, new_img, img, rect)
+                        return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img), file, num_imgs)
                     elif it[1] == " Exit ":
                         clean_screen()
                         raise SystemExit
             break
         if event.type == KEYDOWN and event.key not in (K_LALT, K_RALT, K_LCTRL, K_RCTRL, K_TAB):
-            return (refresh_img, screen, file, num_imgs, new_img, img, rect)
+            return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img), file, num_imgs)
         if middle_click(event):
             "close the menu upon middle click"
             gl.MENU_POS = -1
             my_update_screen(new_img, screen, rect, file, len(gl.files))
             normal_cursor()
-            return (refresh_img, screen, file, num_imgs, new_img, img, rect)
+            return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img), file, num_imgs)
         if right_click(event):
             wait_cursor()
             gl.MENU_POS = -1
             my_update_screen(new_img, screen, rect, file, len(gl.files))
-            (refresh_img, screen, file, num_imgs, new_img, img, rect) =\
-            command_main_menu(refresh_img, screen, file, num_imgs, rect, new_img, img, ns)
-            return (refresh_img, screen, file, num_imgs, new_img, img, rect)
+            gfx = gl.build_gfx_dict(screen, img, rect, refresh_img, new_img)
+            (gfx, file, num_imgs) = command_main_menu(gfx, file, num_imgs, ns)
+            return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img), file, num_imgs)
 
         if event.type == MOUSEBUTTONDOWN: # this needs to be down here to work
             if event.dict['button'] in (4, 5): # scroll wheel activated
@@ -332,18 +337,18 @@ def command_main_menu(refresh_img, screen, file, num_imgs, rect, new_img, img, n
                 # close menu:
                 gl.MENU_POS = -1
                 my_update_screen(new_img, screen, rect, file, len(gl.files))
-                return (refresh_img, screen, file, num_imgs, new_img, img, rect)
+                return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img), file, num_imgs)
 
 
     if gl.KEEP_MENU_OPEN == "1":
         # this code purposely closes the main menu by breaking the recursion to free up RAM memory
         gl.COUNT_CLICKS += 1
         if gl.COUNT_CLICKS == 1: # free up ram every click
-            return (refresh_img, screen, file, num_imgs, new_img, img, rect)
-        (refresh_img, screen, file, num_imgs, new_img, img, rect) =\
-        command_main_menu(refresh_img, screen, file, num_imgs, rect, new_img, img, ns)
+            return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img), file, num_imgs)
+        gfx = gl.build_gfx_dict(screen, img, rect, refresh_img, new_img)
+        (gfx, file, num_imgs) = command_main_menu(gfx, file, num_imgs, ns)
     normal_cursor()
-    return (refresh_img, screen, file, num_imgs, new_img, img, rect)
+    return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img), file, num_imgs)
 
 
 def main_menu_fg(screen, font, i, menu_items):

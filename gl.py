@@ -67,9 +67,9 @@ GREEN = 0, 136, 0
 DARK_SLATE_BLUE = 72, 41, 139
 DARK_SLATE_GRAY = 49, 79, 79
 SADDLE_BROWN = 139, 69, 19
-COLORS = {"RED":RED, "BLUE":BLUE, "PURPLE":PURPLE, "SKY_BLUE":SKY_BLUE, "SILVER":SILVER,\
-"GREEN":GREEN, "LIGHT_GREEN":LIGHT_GREEN, "ORANGE":ORANGE, "YELLOW":YELLOW, "BLACK":BLACK, "WHITE":WHITE,\
-"DARK_SLATE_BLUE":DARK_SLATE_BLUE, "DARK_SLATE_GRAY":DARK_SLATE_GRAY, "SADDLE_BROWN":SADDLE_BROWN, "MID_GRAY":MID_GRAY, "IMGV_LOGO_BLUE":IMGV_LOGO_BLUE}
+COLORS = {"RED": RED, "BLUE": BLUE, "PURPLE": PURPLE, "SKY_BLUE": SKY_BLUE, "SILVER": SILVER,
+          "GREEN": GREEN, "LIGHT_GREEN": LIGHT_GREEN, "ORANGE": ORANGE, "YELLOW": YELLOW, "BLACK": BLACK, "WHITE": WHITE,
+          "DARK_SLATE_BLUE": DARK_SLATE_BLUE, "DARK_SLATE_GRAY": DARK_SLATE_GRAY, "SADDLE_BROWN": SADDLE_BROWN, "MID_GRAY": MID_GRAY, "IMGV_LOGO_BLUE": IMGV_LOGO_BLUE}
 FONT_BG = BLACK
 TEXT_TRANSPARENT = 0
 BUTTON_BGCOLOR = IMGV_LOGO_BLUE
@@ -82,17 +82,17 @@ IMG_BORDER_COLOR = WHITE
 FOUR_DIV_COLOR = PURPLE
 THUMB_BORDER_COLOR = WHITE
 THUMB_BG_COLOR_VAL = BLACK
-THUMB_BORDER_VAL=1
+THUMB_BORDER_VAL = 1
 IMG_BORDER = 0
-MAX_SCREEN_FILES = 0 # number of image names file_master can show on a given screen res 
-MAX_SF = {"640x480":165, "800x600":301, "1024x768":513, "1280x1024":858}
+MAX_SCREEN_FILES = 0  # number of image names file_master can show on a given screen res
+MAX_SF = {"640x480": 165, "800x600": 301, "1024x768": 513, "1280x1024": 858}
 ACCEPTED_WINSIZES = ["640x480", "800x600", "1024x768", "1280x1024"]
 CONF_FILE = get_conf_name()
 WRAP = "1"
 WRAP_SLIDESHOW = "1"
 THUMB_VAL = "100x100"
 THUMBING = 0
-USING_SCROLL_MENU = 0 # sentinel for TOGGLE_TRANSPARENT
+USING_SCROLL_MENU = 0  # sentinel for TOGGLE_TRANSPARENT
 MOVIES_VAL = 1
 KEEP_MENU_OPEN = "1"
 MENU_DIVIDER_AMOUNT = 14
@@ -105,10 +105,10 @@ CURRENT_GAMMA = "1.0"
 RESET_FIT = 0
 SCALE_UP = 0
 PERSISTENT_ZOOM_VAL = 0
-ZOOM_EXP = 0 # Exp of the zoom factor
+ZOOM_EXP = 0  # Exp of the zoom factor
 ZOOM_DOUBLE = 0
 CURRENT_ZOOM_PERCENT = "100"
-ZOOM_PERCENT_MAX = 1600 # 1600%
+ZOOM_PERCENT_MAX = 1600  # 1600%
 CALC_ZOOM = 1
 N_MILLISECONDS = "0"
 MAX_ZOOM_MAX_MS = 5000
@@ -118,7 +118,7 @@ CORRECT_PASSWORD = None
 START_FULLSCREEN = 0
 TOGGLE_FULLSCREEN_SET = 0
 IMGV_RESOLUTION = (800, 600)
-set_configuration() # set up user defined default values
+set_configuration()  # set up user defined default values
 MOVIE_FILE = DATA_DIR + "movie-file.jpg"
 SLIDE_SHOW_RUNNING = 0
 TRANSPARENT = 1, 1, 1
@@ -127,11 +127,11 @@ if START_FULLSCREEN == 1:
     my_toggle_fullscreen()
 else:
     TOGGLE_FULLSCREEN = 0
-FULLSCREEN_SPECIAL = 0 # flag for launching fullscreen mode with or without current window resolution
+FULLSCREEN_SPECIAL = 0  # flag for launching fullscreen mode with or without current window resolution
 MENU_COLOR = MSG_COLOR
 MENU_COLOR_ITEM = 0
 MENU_ADJUST = COLORS.values()
-NS_GLOBAL = 0 # number of seconds it took to load. used with check_timer()
+NS_GLOBAL = 0  # number of seconds it took to load. used with check_timer()
 DEFAULT_RES = IMGV_RESOLUTION
 MENU_POS = DEFAULT_RES[0] - 150
 BEFORE_WINSIZE = DEFAULT_RES
@@ -143,22 +143,23 @@ UNCHECKED_BOX = DATA_DIR + "unchecked-box.jpg"
 CHANGE_BOX = DATA_DIR + "change-box.jpg"
 TITLE = "imgv"
 WAS_IN_CHANGE_DRIVES = 0
-MONTH_MAP = {'Jan':'01', 'Feb':'02', 'Mar':'03', 'Apr':'04', 'May':'05', 'Jun':'06', 'Jul':'07', 'Aug':'08', 'Sep':'09', 'Oct':'10', 'Nov':'11', 'Dec':'12'}
-DAY_SUFFIX_MAP = {'01':'1st', '02':'2nd', '03':'3rd', '04':'4th', '05':'5th', '06':'6th', '07':'7th', '08':'8th', '09':'9th', '1':'1st', '2':'2nd', '3':'3rd', '4':'4th', '5':'5th', '6':'6th', '7':'7th', '8':'8th', '9':'9th', '10':'10th', '11':'11th', '12':'12th', '13':'13th', '14':'14th', '15':'15th', '16':'16th', '17':'17th', '18':'18th', '19':'19th', '20':'20th', '21':'21st', '22':'22nd', '23':'23rd', '24':'24th', '25':'25th', '26':'26th', '27':'27th', '28':'28th', '29':'29th', '30':'30th', '31':'31st'}
-EXPAND_DAY_MAP = {'Mon':'Monday', 'Tue':'Tuesday', 'Wed':'Wednesday', 'Thu':'Thursday', 'Fri':'Friday', 'Sat':'Saturday', 'Sun':'Sunday'}
-EXPAND_MONTH_MAP = {'Jan':'January', 'Feb':'February', 'Mar':'March', 'Apr':'April', 'May':'May', 'Jun':'June', 'Jul':'July', 'Aug':'August', 'Sep':'September', 'Oct':'October', 'Nov':'November', 'Dec':'December'}
-HOUR_MAP = {'00':'12', '01':'1', '02':'2', '03':'3', '04':'4', '05':'5', '06':'6', '07':'7', '08':'8', '09':'9', '10':'10', '11':'11', '12':'12', '13':'1', '14':'2', '15':'3', '16':'4', '17':'5', '18':'6', '19':'7', '20':'8', '21':'9', '22':'10', '23':'11', '24':'12'}
+MONTH_MAP = {'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'}
+DAY_SUFFIX_MAP = {'01': '1st', '02': '2nd', '03': '3rd', '04': '4th', '05': '5th', '06': '6th', '07': '7th', '08': '8th', '09': '9th', '1': '1st', '2': '2nd', '3': '3rd', '4': '4th', '5': '5th', '6': '6th', '7': '7th', '8': '8th', '9': '9th', '10': '10th', '11': '11th', '12': '12th', '13': '13th', '14': '14th', '15': '15th', '16': '16th', '17': '17th', '18': '18th', '19': '19th', '20': '20th', '21': '21st', '22': '22nd', '23': '23rd', '24': '24th', '25': '25th', '26': '26th', '27': '27th', '28': '28th', '29': '29th', '30': '30th', '31': '31st'}
+EXPAND_DAY_MAP = {'Mon': 'Monday', 'Tue': 'Tuesday', 'Wed': 'Wednesday',
+                  'Thu': 'Thursday', 'Fri': 'Friday', 'Sat': 'Saturday', 'Sun': 'Sunday'}
+EXPAND_MONTH_MAP = {'Jan': 'January', 'Feb': 'February', 'Mar': 'March', 'Apr': 'April', 'May': 'May', 'Jun': 'June', 'Jul': 'July', 'Aug': 'August', 'Sep': 'September', 'Oct': 'October', 'Nov': 'November', 'Dec': 'December'}
+HOUR_MAP = {'00': '12', '01': '1', '02': '2', '03': '3', '04': '4', '05': '5', '06': '6', '07': '7', '08': '8', '09': '9', '10': '10', '11': '11', '12': '12', '13': '1', '14': '2', '15': '3', '16': '4', '17': '5', '18': '6', '19': '7', '20': '8', '21': '9', '22': '10', '23': '11', '24': '12'}
 IMGV_PLAYLISTS = DATA_DIR + "playlists"
 PLAY_LIST_NAME = " "
-REMOTE = 0 # true if its a remote url to the image
-REMOTE_IMG = "" # remote image name
-REMOTE_IMG_DATA = "" # remote image data
-REMOTE_FILE_SIZE = 0 # remote image byte size
+REMOTE = 0  # true if its a remote url to the image
+REMOTE_IMG = ""  # remote image name
+REMOTE_IMG_DATA = ""  # remote image data
+REMOTE_FILE_SIZE = 0  # remote image byte size
 MIN_WIDTH = 10
-MIN_HEIGHT =10 
-MOVE = 21 # how much to nudge larger-than-window images by
-ERROR_IMG = DATA_DIR + "imgv-error.jpg" 
-DRIVE = os.getcwd()[0] # used for multi-drive support
+MIN_HEIGHT = 10
+MOVE = 21  # how much to nudge larger-than-window images by
+ERROR_IMG = DATA_DIR + "imgv-error.jpg"
+DRIVE = os.getcwd()[0]  # used for multi-drive support
 REAL_WIDTH = 0
 REAL_HEIGHT = 0
 CUR_PATH = ""
@@ -166,24 +167,24 @@ SHRUNK = 0
 SKIP_FIT = 0
 THUMBING = 0
 MULTI_VIEWING = 0
-SKIP = 0 # used for long strings in inputbox()
+SKIP = 0  # used for long strings in inputbox()
 REFRESH_IMG_COUNT = 1
 ISURL = 0
 URL = ""
 SHOW_DATA = False
 INDEX_OF = False
-JUST_SOURCE = 0 # for complete url image links
+JUST_SOURCE = 0  # for complete url image links
 URL_ERROR = False
 DIRNUMSEP = ') '
-MULT_DIRS = [] # to store multiple tagged directories
+MULT_DIRS = []  # to store multiple tagged directories
 FILTER_COMMAND = {}
 SUBDIRS = 0
 SORT_HIT = 0
 
 
-IMG_TYPES = [".gif",".GIF", ".jpg",".JPG", ".jpeg",".JPEG", ".png",".PNG", ".bmp",".BMP", ".ppm",".PPM", ".pcx",".PCX", 
-".tga",".TGA", ".tif",".TIF", ".tiff",".TIFF", ".pnm",".PNM", ".pbm",".PBM", ".pgm",".PGM", ".xpm",".XPM", ".xcf",".XCF",
-".lbm",".LBM", ".iff",".IFF"]
+IMG_TYPES = [".gif", ".GIF", ".jpg", ".JPG", ".jpeg", ".JPEG", ".png", ".PNG", ".bmp", ".BMP", ".ppm", ".PPM", ".pcx", ".PCX",
+             ".tga", ".TGA", ".tif", ".TIF", ".tiff", ".TIFF", ".pnm", ".PNM", ".pbm", ".PBM", ".pgm", ".PGM", ".xpm", ".XPM", ".xcf", ".XCF",
+             ".lbm", ".LBM", ".iff", ".IFF"]
 
 
 if MOVIES_VAL:
@@ -204,7 +205,7 @@ else:
     dir_or_file = argv[1]
     if not os.path.exists(dir_or_file):
         # make a full path if user didn't (i.e., they typed "../foo/bar/bla.jpg")
-        dir_or_file = BASE_DIR + os.sep + dir_or_file 
+        dir_or_file = BASE_DIR + os.sep + dir_or_file
 
 
 # set initial directory values
@@ -258,7 +259,7 @@ MENU_ITEMS_LONG = [
     " Thumbnails ",
     " Four at a Time ",
     " Slideshow ",
-    "", 
+    "",
     " Flip Horizontal ",
     " Flip Vertical ",
     " Rotate Right ",
@@ -268,7 +269,7 @@ MENU_ITEMS_LONG = [
     " Lock Zoom ",
     "",
     " Fit to Window ",
-    " Actual Size ", 
+    " Actual Size ",
     " Hand Tool ",
     " Close Image ",
     " Hide Image ",
@@ -281,38 +282,59 @@ MENU_ITEMS_LONG = [
 
 
 PREF_LIST = [
-        ("Main screen status bar:", "Show the main status bar. Default = Yes"),
-        ("Four at a Time status bars:", "Show status bars in Four-at-a-Time mode. Default = Yes"), 
-        ("On-the-fly Exif status bar:", "Show on-the-fly camera metadata in the main screen. Default = Yes"), 
-        ("Thumbnail status bars:", "Show filenames in thumbnail mode. Default = Yes"),
-        ("Transparent text:", "Show the font of the main menu and status bars as transparent (no background color.) Default = No"), 
-        ("Image border:", "Show a border around images (helps to see their true pixels against the background.) Default = No"), 
-        ("Persistent zoom:", "Always Lock Zoom. Default = No"), 
-        ("Wrap images:", "Allow going to the first image after the last image. Default = Yes"), 
-        ("Wrap slideshow images:", "Allow going to the first image after the last image in a slideshow. Default = Yes"), 
-        ("Start in fullscreen mode:", "Start imgv in fullscreen mode. Default = No"), 
-        ("Thumbnail border:", "Show borders around images in thumbnail mode. Default = Yes"), 
-        ("Colored directory numbers:", "Show directory browser numbers in color (Note: This is slower.) Default = No"), 
-        ("Show movies:", "Load MPEG movies along with images for viewing. Default = Yes"), 
-        ("Screen background color:", "The color of the background to show images against. Default = BLACK"), 
-        ("Font color:", "Color of the font for the main menu, status bars and empahsized text. Default = WHITE"), 
-        ("Font background color:", "Background color of the main font. Default = BLACK"), 
-        ("Image border color:", "Color of the image border when active. Default = LIGHT_GREEN"),
-        ("Thumbnail border color:", "Color of the image border for thumbnails. Default = WHITE"),
-        ("Thumbnail background box color:", "Color of the background the thumbnail images will show against. Default = BLACK"), 
-        ("Four-at-a-Time divider color:", "Color of the image divider in Four-at-a-Time mode. Default = WHITE"),
-        ("Button background color:", "Background color of buttons. Default = IMGV_LOGO_BLUE"), 
-        ("Button hover color:", "Background color of buttons when your mouse hovers them. Default = SKY_BLUE"), 
-        ("Button text color:", "Color of the text on buttons. Default = BLACK"), 
-        ("Button text hover color:", "Color of the text on buttons when your mouse hovers them. Default = BLACK"), 
-        ("Close button color:", "Color of the close/cancel buttons (The 'X' in the top/right of the screen. Default = SADDLE_BROWN"), 
-        ("Fit images:", "How to scale the images or window to fit eachother. Default = Fit nothing"),
-        ("Screen brightness:", "Temporarily change the gamma values on the display hardware. Default = 1.0"), 
-        ("Default window size:", "Default window size of imgv. Default = 800x600"), 
-        ("Thumbnail size:", "Size of the thumbnail border/box that each thumb will fit in. Default = AUTO"), 
-        ("Transitional effects:", "Set this if you want a transitional effect when loading images. Default = NONE"), 
-        ("Start directory:", "Directory to load images from when imgv first starts. Default = /"), 
-        ("External editor:", "Path to external image editing software. Default = \"None\""),
-        ("Fit slideshow images:", "How to scale the images or window to fit eachother while in a slideshow. Default = Fit large images"),
-        ("Password", "Password to use in when hiding images. Default = None"),
-        ]
+    ("Main screen status bar:", "Show the main status bar. Default = Yes"),
+    ("Four at a Time status bars:",
+     "Show status bars in Four-at-a-Time mode. Default = Yes"),
+    ("On-the-fly Exif status bar:",
+     "Show on-the-fly camera metadata in the main screen. Default = Yes"),
+    ("Thumbnail status bars:",
+     "Show filenames in thumbnail mode. Default = Yes"),
+    ("Transparent text:", "Show the font of the main menu and status bars as transparent (no background color.) Default = No"),
+    ("Image border:", "Show a border around images (helps to see their true pixels against the background.) Default = No"),
+    ("Persistent zoom:", "Always Lock Zoom. Default = No"),
+    ("Wrap images:",
+     "Allow going to the first image after the last image. Default = Yes"),
+    ("Wrap slideshow images:", "Allow going to the first image after the last image in a slideshow. Default = Yes"),
+    ("Start in fullscreen mode:",
+     "Start imgv in fullscreen mode. Default = No"),
+    ("Thumbnail border:",
+     "Show borders around images in thumbnail mode. Default = Yes"),
+    ("Colored directory numbers:", "Show directory browser numbers in color (Note: This is slower.) Default = No"),
+    ("Show movies:",
+     "Load MPEG movies along with images for viewing. Default = Yes"),
+    ("Screen background color:",
+     "The color of the background to show images against. Default = BLACK"),
+    ("Font color:", "Color of the font for the main menu, status bars and empahsized text. Default = WHITE"),
+    ("Font background color:",
+     "Background color of the main font. Default = BLACK"),
+    ("Image border color:",
+     "Color of the image border when active. Default = LIGHT_GREEN"),
+    ("Thumbnail border color:",
+     "Color of the image border for thumbnails. Default = WHITE"),
+    ("Thumbnail background box color:", "Color of the background the thumbnail images will show against. Default = BLACK"),
+    ("Four-at-a-Time divider color:",
+     "Color of the image divider in Four-at-a-Time mode. Default = WHITE"),
+    ("Button background color:",
+     "Background color of buttons. Default = IMGV_LOGO_BLUE"),
+    ("Button hover color:", "Background color of buttons when your mouse hovers them. Default = SKY_BLUE"),
+    ("Button text color:",
+     "Color of the text on buttons. Default = BLACK"),
+    ("Button text hover color:", "Color of the text on buttons when your mouse hovers them. Default = BLACK"),
+    ("Close button color:", "Color of the close/cancel buttons (The 'X' in the top/right of the screen. Default = SADDLE_BROWN"),
+    ("Fit images:", "How to scale the images or window to fit eachother. Default = Fit nothing"),
+    ("Screen brightness:", "Temporarily change the gamma values on the display hardware. Default = 1.0"),
+    ("Default window size:",
+     "Default window size of imgv. Default = 800x600"),
+    ("Thumbnail size:", "Size of the thumbnail border/box that each thumb will fit in. Default = AUTO"),
+    ("Transitional effects:", "Set this if you want a transitional effect when loading images. Default = NONE"),
+    ("Start directory:",
+     "Directory to load images from when imgv first starts. Default = /"),
+    ("External editor:",
+     "Path to external image editing software. Default = \"None\""),
+    ("Fit slideshow images:", "How to scale the images or window to fit eachother while in a slideshow. Default = Fit large images"),
+    ("Password", "Password to use in when hiding images. Default = None"),
+]
+
+
+def build_gfx_dict(screen, img, rect, refresh_img, new_img):
+    return {'screen': screen, 'img': img, 'rect': rect, 'refresh_img': refresh_img, 'new_img': new_img}
