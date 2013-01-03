@@ -102,7 +102,7 @@ def thumbs_engine(screen, new_img, file, ns):
                     for item in x: # load clicked image:
                         if item[0].collidepoint(cursor):
                             wait_cursor()
-                            new_img = load_img(item[1], screen)
+                            new_img = load_img(item[1])
                             file = gl.files.index(item[1])
                             return (new_img, new_img, new_img, file, start)
                 check_quit(event)
@@ -147,7 +147,7 @@ def show_thumbs(screen, SPACER, x, i, j, place, marker, font, font_size):
     # show thumbnails with correct aspect ratio
     if place < len(gl.files):
         img_name = gl.files[place]
-        img = load_img(img_name, screen, 0)
+        img = load_img(img_name, 0)
         (img_width, img_height) = img.get_size()
 
         splitval = None

@@ -4,7 +4,7 @@
 """
     imgv.py
     Description: Image viewing application
-    Version: 3.1.6
+    Version: 3.1.7
     Author: Ryan Kulla
     Email: rkulla@gmail.com
 """
@@ -47,9 +47,9 @@ class Imgv(object):
         self.gfx['file'] = 0
         if len(gl.files) < 1:
             gl.files = [gl.IMGV_LOGO]
-            self.gfx['img'] = load_img(gl.files[self.gfx['file']], self.gfx['screen'])
+            self.gfx['img'] = load_img(gl.files[self.gfx['file']])
         else:
-            self.gfx['img'] = load_img(gl.files[self.gfx['file']], self.gfx['screen'])
+            self.gfx['img'] = load_img(gl.files[self.gfx['file']])
         wait_cursor()
         self.gfx['refresh_img'] = self.gfx['img']
         self.gfx['new_img'] = self.gfx['img']

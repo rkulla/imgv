@@ -111,19 +111,19 @@ def four(screen, file, new_img, ns):
             start = start_timer()
             if img_one_rect.collidepoint(cursor):
                 wait_cursor()
-                new_img = load_img(gl.files[img_one_file], screen)
+                new_img = load_img(gl.files[img_one_file])
                 return (img_one_file, new_img, start)
             if img_two_rect.collidepoint(cursor):
                 wait_cursor()
-                new_img = load_img(gl.files[img_two_file], screen)
+                new_img = load_img(gl.files[img_two_file])
                 return (img_two_file, new_img, start)
             if img_three_rect.collidepoint(cursor):
                 wait_cursor()
-                new_img = load_img(gl.files[img_three_file], screen)
+                new_img = load_img(gl.files[img_three_file])
                 return (img_three_file, new_img, start)
             if img_four_rect.collidepoint(cursor):
                 wait_cursor()
-                new_img = load_img(gl.files[img_four_file], screen)
+                new_img = load_img(gl.files[img_four_file])
                 return (img_four_file, new_img, start)
             if esc_rect.collidepoint(cursor):
                 file = old_file
@@ -147,7 +147,7 @@ def square_one(screen, file):
         file = 0
     img_one_name = gl.files[file]
     img_one_file = file
-    img_one = load_img(img_one_name, screen, 0)
+    img_one = load_img(img_one_name, 0)
     file = file + 1
     img_one = adjust_img_size(img_one, screen.get_width(), screen.get_height())
     img_one_rect = img_one.get_rect()
@@ -174,7 +174,7 @@ def square_two(screen, file):
         file = 0
     img_two_name = gl.files[file]
     img_two_file = file
-    img_two = load_img(img_two_name, screen, 0)
+    img_two = load_img(img_two_name, 0)
     file = file + 1
     img_two = adjust_img_size(img_two, screen.get_width(), screen.get_height())
     img_two_rect = img_two.get_rect()
@@ -202,7 +202,7 @@ def square_three(screen, file):
         file = 0
     img_three_name = gl.files[file]
     img_three_file = file
-    img_three = load_img(img_three_name, screen, 0)
+    img_three = load_img(img_three_name, 0)
     file = file + 1
     img_three = adjust_img_size(img_three, screen.get_width(), screen.get_height())
     img_three_rect = img_three.get_rect()
@@ -230,7 +230,7 @@ def square_four(screen, file):
         file = 0
     img_four_name = gl.files[file]
     img_four_file = file
-    img_four = load_img(img_four_name, screen, 0)
+    img_four = load_img(img_four_name, 0)
     file = file + 1
     img_four = adjust_img_size(img_four, screen.get_width(), screen.get_height())
     img_four_rect = img_four.get_rect()

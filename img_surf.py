@@ -12,7 +12,7 @@ def command_first_img(new_img, screen, file, rect):
     wait_cursor()
     start = start_timer()
     file = 0
-    new_img = load_img(gl.files[file], screen)
+    new_img = load_img(gl.files[file])
     rect = get_center(screen, new_img)
     ns = check_timer(start)
     my_update_screen(new_img, rect, file, ns)
@@ -27,7 +27,7 @@ def command_last_img(new_img, screen, file, rect):
     num_imgs = len(gl.files)
     while file < (num_imgs - 1):
         file = file + 1
-    new_img = load_img(gl.files[file], screen)
+    new_img = load_img(gl.files[file])
     rect = get_center(screen, new_img)
     ns = check_timer(start)
     my_update_screen(new_img, rect, file, ns)
@@ -77,14 +77,14 @@ def command_prev_img(new_img, screen, file, rect):
 def next_img(file, old_img, screen):
     img = old_img
     if file < len(gl.files):
-        img = load_img(gl.files[file], screen)
+        img = load_img(gl.files[file])
     transitional_fx(screen, img)
     return img
 
 
 def previous_img(file, old_img, screen):
     img = old_img
-    img = load_img(gl.files[file], screen)
+    img = load_img(gl.files[file])
     return img
 
 

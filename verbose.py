@@ -249,7 +249,7 @@ class verbose:
         accessed_msg = convert_times(str(ctime(os.stat(fname)[ST_ATIME])), 1)
         self.print_info("Last Accessed: %s" % accessed_msg, 14)
     def show_current_image(self, file):
-        self.current = load_img(gl.files[file], self.screen, False)
+        self.current = load_img(gl.files[file], False)
         (self.current, img_width, img_height) = preview_img(self.screen, self.current)
         current_rect = self.current.get_rect()
         current_rect[0] = 15

@@ -197,7 +197,7 @@ def command_show_res_modes(screen, new_img, file, rect):
             break
 
         # draw checked box:
-        checked_img = load_img(gl.CHECKED_BOX, screen, False)
+        checked_img = load_img(gl.CHECKED_BOX, False)
         checked_img_rect = checked_img.get_rect()
         if gl.FULLSCREEN_SPECIAL == 0:
             checked_img_rect[0] = 432
@@ -208,7 +208,7 @@ def command_show_res_modes(screen, new_img, file, rect):
         update(checked_img_rect)
 
         # draw unchecked box:
-        unchecked_img = load_img(gl.UNCHECKED_BOX, screen, False)
+        unchecked_img = load_img(gl.UNCHECKED_BOX, False)
         unchecked_img_rect = unchecked_img.get_rect()
         if gl.FULLSCREEN_SPECIAL == 0:
             unchecked_img_rect[0] = 455

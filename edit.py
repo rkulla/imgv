@@ -749,7 +749,7 @@ def pref_options(screen):
 
 
 def change_box(screen, positions):
-    change_img = load_img(gl.CHANGE_BOX, screen, False)
+    change_img = load_img(gl.CHANGE_BOX, False)
     change_rect = change_img.get_rect()
     change_rect[0] = positions[1]
     change_rect[1] = positions[0]
@@ -761,7 +761,7 @@ def change_box(screen, positions):
 def check_boxes(screen, positions, opt):
     # positions[0]=hpos, positions[1]=checked_wpos, positions[2]=unchecked_wpos
     # draw checked box:
-    checked_img = load_img(gl.CHECKED_BOX, screen, False)
+    checked_img = load_img(gl.CHECKED_BOX, False)
     checked_rect = checked_img.get_rect()
     if opt == "transparent_text":
         checked_rect[0] = (positions[1], positions[2])[get_config_val("TRANSPARENT_TEXT")]
@@ -793,7 +793,7 @@ def check_boxes(screen, positions, opt):
     screen.blit(checked_img, checked_rect)
     update(checked_rect)
     # draw unchecked box:
-    unchecked_img = load_img(gl.UNCHECKED_BOX, screen, False)
+    unchecked_img = load_img(gl.UNCHECKED_BOX, False)
     unchecked_rect = unchecked_img.get_rect()
     if opt == "transparent_text":
         unchecked_rect[0] = (positions[2], positions[1])[get_config_val("TRANSPARENT_TEXT")]

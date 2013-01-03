@@ -114,7 +114,7 @@ def help(screen):
 
 
 def print_version(screen, screen_height):
-    imgvlogo = load_img(gl.IMGV_LOGO_SMALL, screen, False)
+    imgvlogo = load_img(gl.IMGV_LOGO_SMALL, False)
     imgvlogo_rect = imgvlogo.get_rect()
     imgvlogo_rect[0] = 5
     imgvlogo_rect[1] = screen_height - 50

@@ -22,7 +22,7 @@ def command_img_names(screen, new_img, img, file, rect):
     if not filename == None:
         if num_imgs > 1:
             file = gl.files.index(filename)
-        new_img = load_img(gl.files[file], screen)
+        new_img = load_img(gl.files[file])
         rect = get_center(screen, new_img)
         ns = check_timer(start)
         my_update_screen(new_img, rect, file, ns)

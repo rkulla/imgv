@@ -22,7 +22,7 @@ def command_refresh(refresh_img, screen, files, file):
     if gl.SHRUNK and len(gl.files) > 1:
         # reload shrunk images to their true size
         gl.SKIP_FIT = 1
-        refresh_img = load_img(gl.files[file], screen)
+        refresh_img = load_img(gl.files[file])
         rect = get_center(screen, refresh_img)
         ns = check_timer(start)
         adjust_files(gl.SUBDIRS)

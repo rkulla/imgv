@@ -19,8 +19,9 @@ def insensitive_find(haystack, needle):
     return haystack.lower().find(needle.lower())
 
 
-def load_img(img_file, screen, allow_zoom=True):
-    "load images and movies"
+def load_img(img_file, allow_zoom=True):
+    "load images (and movies)"
+    screen = get_surface()
     if not gl.PERSISTENT_ZOOM_VAL:
         gl.ZOOM_EXP = 0
     if gl.PLAY_LIST_NAME != " ":

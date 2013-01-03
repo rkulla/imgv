@@ -56,7 +56,7 @@ def command_play_list_options(screen, file):
     if (file == "deleteit"):
         delete_play_list(msg)
         file = old_file
-    new_img = load_img(gl.files[file], screen)
+    new_img = load_img(gl.files[file])
     rect = get_center(screen, new_img)
     my_update_screen(new_img, rect, file)
     normal_cursor()

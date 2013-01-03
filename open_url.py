@@ -132,15 +132,15 @@ def open_url(screen, img):
         for ext in gl.IMG_TYPES:
             if gl.URL.endswith(ext):
                 gl.files.append(str(''.join(gl.URL)))
-                return (load_img(gl.files[0], screen), 1)
+                return (load_img(gl.files[0]), 1)
     else:
         return img
     gl.files = []
     check_indexhtml()
     if gl.URL_ERROR:
         gl.files.append(gl.ERROR_IMG)
-        return (load_img(gl.ERROR_IMG, screen), len(gl.files))
+        return (load_img(gl.ERROR_IMG), len(gl.files))
     if len(gl.files) < 1:
         gl.files.append(gl.ERROR_IMG)
     gl.files = [x.replace(' ', '%20') for x in gl.files] # urls need %20 for spaces
-    return (load_img(gl.files[0], screen))
+    return load_img(gl.files[0])

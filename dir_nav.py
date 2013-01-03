@@ -58,9 +58,9 @@ def command_show_dirs(new_img, img, screen, rect, file):
         if num_imgs < 1 or len(gl.files) == 0:
             gl.files = [gl.IMGV_LOGO]
             num_imgs = 0
-            new_img = img = load_img(gl.files[file], screen)
+            new_img = img = load_img(gl.files[file])
         else:
-            new_img = load_img(gl.files[file], screen)
+            new_img = load_img(gl.files[file])
     screen = restore_screen(screen, before_winsize, not_accepted, new_img, file, rect)
     rect = get_center(screen, new_img)
     if gl.ESCAPED != 1:

@@ -98,9 +98,11 @@ def command_main_menu(gfx, ns):
             for it in menu_items:
                 if it[0].collidepoint(cursor2):
                     if it[1] == " Next Image ":
-                        (gfx['new_img'], gfx['img'], gfx['refresh_img'], gfx['file'], gfx['rect']) = command_next_img(gfx['new_img'], gfx['screen'], gfx['file'], gfx['rect'])
+                        (gfx['new_img'], gfx['img'], gfx['refresh_img'], gfx['file'], gfx['rect']) =\
+                             command_next_img(gfx['new_img'], gfx['screen'], gfx['file'], gfx['rect'])
                     elif it[1] == " Previous Image ":
-                        (gfx['new_img'], gfx['img'], gfx['refresh_img'], gfx['file'], gfx['rect']) = command_prev_img(gfx['new_img'], gfx['screen'], file, rect)
+                        (gfx['new_img'], gfx['img'], gfx['refresh_img'], gfx['file'], gfx['rect']) =\
+                             command_prev_img(gfx['new_img'], gfx['screen'], gfx['file'], gfx['rect'])
                     elif it[1] == " Directory Browser ":
                         gl.USING_SCROLL_MENU = 1
                         # save current things in case the user ESCAPES out of show_dirs()
@@ -161,7 +163,7 @@ def command_main_menu(gfx, ns):
                             gl.ZOOM_EXP = 0
                             start = start_timer()
                             wait_cursor()
-                            gfx['new_img'] = load_img(gl.files[gfx['file']], gfx['screen'])
+                            gfx['new_img'] = load_img(gl.files[gfx['file']])
                             gfx['img'] = gfx['refresh_img'] = gfx['new_img']
                             gfx['rect'] = get_center(
                                 gfx['screen'], gfx['new_img'])
@@ -189,7 +191,7 @@ def command_main_menu(gfx, ns):
                             gl.FIT_IMAGE_VAL = 1
                         start = start_timer()
                         wait_cursor()
-                        gfx['new_img'] = load_img(gl.files[gfx['file']], gfx['screen'])
+                        gfx['new_img'] = load_img(gl.files[gfx['file']])
                         gfx['img'] = gfx['refresh_img'] = gfx['new_img']
                         gfx['rect'] = get_center(gfx['screen'], gfx['new_img'])
                         ns = check_timer(start)
@@ -207,8 +209,7 @@ def command_main_menu(gfx, ns):
                         gl.ZOOM_EXP = 0
                         start = start_timer()
                         wait_cursor()
-                        gfx['new_img'] = load_img(
-                            gl.files[gfx['file']], gfx['screen'])
+                        gfx['new_img'] = load_img(gl.files[gfx['file']])
                         gfx['img'] = gfx['refresh_img'] = gfx['new_img']
                         gfx['rect'] = get_center(gfx['screen'], gfx['new_img'])
                         ns = check_timer(start)

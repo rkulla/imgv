@@ -176,7 +176,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
                 gl.ZOOM_EXP = 0
                 start = start_timer()
                 wait_cursor()
-                new_img = load_img(gl.files[file], screen)
+                new_img = load_img(gl.files[file])
                 img = refresh_img = new_img
                 rect = get_center(screen, new_img)
                 ns = check_timer(start)
@@ -316,7 +316,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
                 gl.FIT_IMAGE_VAL = 1
             start = start_timer()
             wait_cursor()
-            new_img = load_img(gl.files[file], screen)
+            new_img = load_img(gl.files[file])
             img = refresh_img = new_img
             rect = get_center(screen, new_img)
             ns = check_timer(start)
@@ -331,7 +331,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
             gl.ZOOM_EXP = 0
             start = start_timer()
             wait_cursor()
-            new_img = load_img(gl.files[file], screen)
+            new_img = load_img(gl.files[file])
             img = refresh_img = new_img
             rect = get_center(screen, new_img)
             ns = check_timer(start)
@@ -349,7 +349,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
         start = start_timer()
         wait_cursor()
         if new_img.get_width() > screen.get_width() or new_img.get_height() > screen.get_height() or gl.RESET_FIT:
-            new_img = load_img(gl.files[file], screen)
+            new_img = load_img(gl.files[file])
             img = refresh_img = new_img
             rect = get_center(screen, new_img)
         if gl.RESET_FIT:
