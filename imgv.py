@@ -70,8 +70,7 @@ class Imgv(object):
 
     def main(self):
         # start with menu open
-        gfx = gl.build_gfx_dict(self.gfx['screen'], self.gfx['img'], self.gfx['rect'], self.gfx['refresh_img'],
-                                self.gfx['new_img'], self.gfx['file'])
+        gfx = gl.build_gfx_dict(self.gfx['img'], self.gfx['rect'], self.gfx['refresh_img'], self.gfx['new_img'], self.gfx['file'])
         self.gfx = command_main_menu(gfx, self.ns)
 
         # main loop
@@ -124,16 +123,14 @@ class Imgv(object):
             if event.type == MOUSEBUTTONDOWN:  # open main menu:
                 if right_click(event):
                     gl.HAND_TOOL = 0
-                    gfx = gl.build_gfx_dict(self.gfx['screen'], self.gfx['img'], self.gfx['rect'],
-                                            self.gfx['refresh_img'], self.gfx['new_img'], self.gfx['file'])
+                    gfx = gl.build_gfx_dict(self.gfx['img'], self.gfx['rect'], self.gfx['refresh_img'], self.gfx['new_img'], self.gfx['file'])
                     self.gfx = command_main_menu(gfx, self.ns)
 
             # Re-open the purposely closed window that frees up RAM
             if (gl.KEEP_MENU_OPEN == "1" and gl.COUNT_CLICKS == 1) or gl.JUST_RESIZED:
                 gl.COUNT_CLICKS = 0
                 gl.JUST_RESIZED = 0
-                gfx = gl.build_gfx_dict(self.gfx['screen'], self.gfx['img'], self.gfx['rect'], self.gfx['refresh_img'],
-                                        self.gfx['new_img'], self.gfx['file'])
+                gfx = gl.build_gfx_dict(self.gfx['img'], self.gfx['rect'], self.gfx['refresh_img'], self.gfx['new_img'], self.gfx['file'])
                 self.gfx = command_main_menu(gfx, self.ns)
 
             start_auto_repeat(self.gfx, last_rect, event)

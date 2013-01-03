@@ -8,6 +8,7 @@ from dir_nav import strip_dirs, get_imgs
 from error_box import errorbox
 from res import my_toggle_fullscreen
 from pygame import version
+from pygame.display import get_surface
 
 
 BASE_DIR = os.getcwd()
@@ -336,6 +337,6 @@ PREF_LIST = [
 ]
 
 
-def build_gfx_dict(screen, img, rect, refresh_img, new_img, file):
-    return {'screen': screen, 'img': img, 'rect': rect, 'refresh_img':
+def build_gfx_dict(img, rect, refresh_img, new_img, file):
+    return {'screen': get_surface(), 'img': img, 'rect': rect, 'refresh_img':
             refresh_img, 'new_img': new_img, 'file': file}
