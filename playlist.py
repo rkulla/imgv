@@ -177,7 +177,7 @@ def delete_play_list(play_list):
 
 def play_list_options_msg(screen, msg):
     paint_screen(screen, gl.BLACK)
-    show_message(screen, msg, 100, 10)
+    show_message(msg, 100, 10)
     normal_cursor()
     while 1:
         event = pygame.event.wait()

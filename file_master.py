@@ -21,7 +21,7 @@ def command_file_master(screen, file_names, msg, down, button_op, disable_right_
     create_rect = imgv_button(screen, " Create New List ", 0, 18, "midtop")
     if len(file_names) < 1:
         my_string = ask(screen, "Create playlist first (Enter a name)")
-        if my_string == None or my_string == []: 
+        if my_string == None or my_string == []:
             return ([], [], [], []) # don't create a list
         if my_string != []: # create list
             if (len(my_string) > 0) and my_string != "\n":
@@ -67,7 +67,7 @@ def command_file_master(screen, file_names, msg, down, button_op, disable_right_
                                 if not os.path.isfile(gl.DATA_DIR + item[1]):
                                     if edit_rect != junk_rect():
                                         paint_screen(screen, gl.BLACK)
-                                    edit_rect = show_message(screen,\
+                                    edit_rect = show_message(
                                     "%s doesn't exist in %s" % (item[1], gl.DATA_DIR), "top", 9, ("bold", "transparent"))
                                 else:
                                     return (None, item[1], "rclicked", None)
@@ -122,13 +122,13 @@ def command_file_master(screen, file_names, msg, down, button_op, disable_right_
 
 def file_master(screen, file_names, place, marker, menu_items, msg, down, button_op):
     paint_screen(screen, gl.BLACK)
-    show_message(screen, msg, down, 10, ("bold", "transparent"))
+    show_message(msg, down, 10, ("bold", "transparent"))
     font = pygame.font.Font(gl.FONT_NAME, 9)
     font.set_bold(1)
     (esc_rect, esc_font) = close_button(screen)
     font_height = font.size(file_names[0])[1]
     screen_height = screen.get_height()
-    name_max = 16 
+    name_max = 16
     max_file_width = 116
     line = 65 # leave room at top of screen for other stuff
     col = 5
@@ -142,7 +142,7 @@ def file_master(screen, file_names, place, marker, menu_items, msg, down, button
             ren_name = os.path.basename(name)
             if len(ren_name) > name_max:
                 ren_name = ren_name[:name_max] + '...' # truncate
-                if ren_name[-4:] == '....': 
+                if ren_name[-4:] == '....':
                     ren_name = ren_name[:-1] # 3 .'s are enough
             ren = font.render(ren_name, 1, gl.MSG_COLOR, gl.BLACK)
             if (place + 1) < len(file_names):
@@ -180,7 +180,7 @@ def file_master(screen, file_names, place, marker, menu_items, msg, down, button
 def basename_sort(x):
     "sort a list of paths by their basename keeping their dirnames in tact"
     l = map(list, map(os.path.split, x))
-    map(list.reverse, l) 
+    map(list.reverse, l)
     l = [os.path.join(path, fn) for fn, path in l]
     l.sort(lambda a, b: cmp(a.lower(), b.lower()))
     return l

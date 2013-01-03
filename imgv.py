@@ -43,7 +43,7 @@ class Imgv(object):
         self.gfx['screen'] = pygame.display.set_mode(gl.DEFAULT_RES, RESIZABLE)
         set_caption(gl.TITLE)
         if gl.REMOTE == 1:
-            show_message(self.gfx['screen'], "Loading image. Please wait..", 34, 42)
+            show_message("Loading image. Please wait..", 34, 42)
         self.gfx['file'] = 0
         if len(gl.files) < 1:
             gl.files = [gl.IMGV_LOGO]

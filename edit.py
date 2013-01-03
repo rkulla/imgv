@@ -22,8 +22,8 @@ def command_edit_menu(screen, file, new_img, rect):
     menu_items = []
     paint_screen(screen, gl.BLACK)
     (esc_rect, font) = close_button(screen)
-    show_message(screen, "%s" % os.path.basename(gl.files[file]), "top", 12, "bold")
-    show_message(screen, "Option number: _", "bottom", 12)
+    show_message("%s" % os.path.basename(gl.files[file]), "top", 12, "bold")
+    show_message("Option number: _", "bottom", 12)
     pygame.event.set_blocked(MOUSEMOTION)
     (menu_items, men_ops) = edit_menu(screen, file, menu_items)
     while 1:
@@ -34,7 +34,7 @@ def command_edit_menu(screen, file, new_img, rect):
        hover_fx(screen, menu_items, men_ops, cursor, font)
        hover_cursor(cursor, [esc_rect] + [x[0] for x in menu_items])
        if gl.NOT_HOVERED:
-           show_message(screen, "%sOption number: _%s" % (" " * 100, " " * 100), "bottom", 12)
+           show_message("%sOption number: _%s" % (" " * 100, " " * 100), "bottom", 12)
            blank_fx(screen, -1)
 
        if hit_key(event, K_ESCAPE):
@@ -122,8 +122,8 @@ def do_external_viewer(screen, file, new_img):
 
 def do_gamma(screen):
     paint_screen(screen, gl.BLACK)
-    show_message(screen, "Set the RGB gamma values on the display hardware while imgv is running.", 20, 13, ("bold"))
-    show_message(screen, "Valid values are 0.3 to 4.4.  1.0 is the default. Higher than 1.0 = brighter. Lower than 1.0 = darker.", 40, 12)
+    show_message("Set the RGB gamma values on the display hardware while imgv is running.", 20, 13, ("bold"))
+    show_message("Valid values are 0.3 to 4.4.  1.0 is the default. Higher than 1.0 = brighter. Lower than 1.0 = darker.", 40, 12)
     gl.CURRENT_GAMMA = new_gamma = ask(screen, "New gamma value")
     return new_gamma
 
@@ -183,14 +183,14 @@ def blank_fx(screen, row):
     l = [gl.FIRST_RECT, gl.SECOND_RECT, gl.THIRD_RECT, gl.FOURTH_RECT]
     for i in range(len(l)):
         if i != row:
-            show_message(screen, "  ", l[i], 12, ("bold")) # erase effect from non-hovered items
+            show_message("  ", l[i], 12, ("bold")) # erase effect from non-hovered items
 
 
 def index_fx(screen, it, font, msg):
     gl.NOT_HOVERED = 0
     fxpos = (it[0][0] - 10, it[0][1] + (font.size(it[1])[1] / 2) - 10, it[0][2], it[0][3])
-    show_message(screen, ".", fxpos, 16, ("bold"))
-    show_message(screen, "%s%s%s" % (" " * 100, msg, " " * 100), "bottom", 12)
+    show_message(".", fxpos, 16, ("bold"))
+    show_message("%s%s%s" % (" " * 100, msg, " " * 100), "bottom", 12)
     return fxpos
 
 
@@ -214,7 +214,7 @@ def preferences(screen):
         hover_cursor(cursor, [esc_rect, transparent_text_crect, transparent_text_ucrect, main_statusbar_crect, main_statusbar_ucrect, four_statusbars_crect, four_statusbars_ucrect, exif_statusbar_crect, exif_statusbar_ucrect, thumb_statusbars_crect, thumb_statusbars_ucrect, image_border_crect, image_border_ucrect, fit_image_rect, dirnum_colors_crect, dirnum_colors_ucrect, screen_bgcolor_rect, lock_zoom_crect, lock_zoom_ucrect, wrap_crect, wrap_ucrect, wrap_slideshow_crect, wrap_slideshow_ucrect, start_fullscreen_crect, start_fullscreen_ucrect, thumb_border_crect, thumb_border_ucrect, show_movies_crect, show_movies_ucrect, font_color_rect, font_bgcolor_rect, img_border_color_rect, thumb_border_color_rect, thumb_bgcolor_rect, four_divcolor_rect, button_bgcolor_rect, button_hover_color_rect, button_textcolor_rect, button_texthovercolor_rect, close_button_color_rect, gamma_rect, winsize_rect, thumbsize_rect, transeffect_rect, startdir_rect, external_editor_rect, fit_slideshow_rect, passwd_rect])
 
         if gl.NOT_HOVERED:
-            show_message(screen, "%s%s" % (" " * 100, " " * 100), "bottom", 12, ("transparent"))
+            show_message("%s%s" % (" " * 100, " " * 100), "bottom", 12, ("transparent"))
             prefs_blank_fx(screen, -1)
         if hit_key(event, K_ESCAPE):
             gl.ESCAPED = 1
@@ -260,15 +260,15 @@ def preferences(screen):
                 write_cfg("THUMB_BORDER")
             if show_movies_ucrect.collidepoint(cursor):
                 gl.MOVIES_VAL ^= 1
-                show_message(screen, "(You must restart imgv for this change to take effect)", (375, 204), 10, ("bold", "transparent"))
+                show_message("(You must restart imgv for this change to take effect)", (375, 204), 10, ("bold", "transparent"))
                 write_cfg("MOVIES")
             if fit_image_rect.collidepoint(cursor):
                 paint_screen(screen, gl.BLACK)
-                show_message(screen, "Enter an option letter and press enter", (15, 20), 13, ("bold", "transparent"))
-                show_message(screen, "A = Fit nothing.", (15, 60), 13, ("bold", "transparent"))
-                show_message(screen, "B = Fit only large images to the window.", (15, 80), 13, ("bold", "transparent"))
-                show_message(screen, "C = Fit all images to the window. (both in normal mode and Four-at-a-Time mode)", (15, 100), 13, ("bold", "transparent"))
-                show_message(screen, "D = Fit the window to images.", (15, 120), 13, ("bold", "transparent"))
+                show_message("Enter an option letter and press enter", (15, 20), 13, ("bold", "transparent"))
+                show_message("A = Fit nothing.", (15, 60), 13, ("bold", "transparent"))
+                show_message("B = Fit only large images to the window.", (15, 80), 13, ("bold", "transparent"))
+                show_message("C = Fit all images to the window. (both in normal mode and Four-at-a-Time mode)", (15, 100), 13, ("bold", "transparent"))
+                show_message("D = Fit the window to images.", (15, 120), 13, ("bold", "transparent"))
                 answer = ask(screen, "Option")
                 if answer != None and answer in ('a','A', 'b','B', 'c','C', 'd','D'):
                     dmap = {'a':0, 'b':1, 'c':2, 'd':3}
@@ -277,11 +277,11 @@ def preferences(screen):
                 clean_prefs(screen)
             if fit_slideshow_rect.collidepoint(cursor):
                 paint_screen(screen, gl.BLACK)
-                show_message(screen, "Enter an option letter and press enter", (15, 20), 13, ("bold", "transparent"))
-                show_message(screen, "A = Fit nothing.", (15, 60), 13, ("bold", "transparent"))
-                show_message(screen, "B = Fit only large images to the window.", (15, 80), 13, ("bold", "transparent"))
-                show_message(screen, "C = Fit all images to the window. (both in normal mode and Four-at-a-Time mode)", (15, 100), 13, ("bold", "transparent"))
-                show_message(screen, "D = Fit the window to images.", (15, 120), 13, ("bold", "transparent"))
+                show_message("Enter an option letter and press enter", (15, 20), 13, ("bold", "transparent"))
+                show_message("A = Fit nothing.", (15, 60), 13, ("bold", "transparent"))
+                show_message("B = Fit only large images to the window.", (15, 80), 13, ("bold", "transparent"))
+                show_message("C = Fit all images to the window. (both in normal mode and Four-at-a-Time mode)", (15, 100), 13, ("bold", "transparent"))
+                show_message("D = Fit the window to images.", (15, 120), 13, ("bold", "transparent"))
                 answer = ask(screen, "Option")
                 if answer != None and answer in ('a','A', 'b','B', 'c','C', 'd','D'):
                     dmap = {'a':0, 'b':1, 'c':2, 'd':3}
@@ -351,7 +351,7 @@ def preferences(screen):
                 color_clean(screen, "CLOSE_BUTTONCOLOR", cfg_str)
             if winsize_rect.collidepoint(cursor):
                 paint_screen(screen, gl.BLACK)
-                show_message(screen, "Default Window Size or resolution of imgv (in the format: width x height. Default is: 800x600)", (15, 80), 13, ("bold", "transparent"))
+                show_message("Default Window Size or resolution of imgv (in the format: width x height. Default is: 800x600)", (15, 80), 13, ("bold", "transparent"))
                 answer = ask(screen, "New window size")
                 if answer != None:
                     x = None
@@ -365,9 +365,9 @@ def preferences(screen):
                 clean_prefs(screen)
             if thumbsize_rect.collidepoint(cursor):
                 paint_screen(screen, gl.BLACK)
-                show_message(screen, "The size you set will be used as the size of the thumbnail border/box, not the images themselves.", (15, 60), 13, ("bold", "transparent"))
-                show_message(screen, "Values are in the format: width x height. Example: 100x100", (15, 100), 13, ("transparent"))
-                show_message(screen, "To have imgv choose the best thumb size for a given default screen size use the default value of: AUTO", (15, 120), 13, ("transparent"))
+                show_message("The size you set will be used as the size of the thumbnail border/box, not the images themselves.", (15, 60), 13, ("bold", "transparent"))
+                show_message("Values are in the format: width x height. Example: 100x100", (15, 100), 13, ("transparent"))
+                show_message("To have imgv choose the best thumb size for a given default screen size use the default value of: AUTO", (15, 120), 13, ("transparent"))
                 answer = ask(screen, "New thumbnail size")
                 if answer != None:
                     gl.THUMB_VAL = answer
@@ -375,8 +375,8 @@ def preferences(screen):
                 clean_prefs(screen)
             if transeffect_rect.collidepoint(cursor):
                 paint_screen(screen, gl.BLACK)
-                show_message(screen, "Valid values: NONE (default), MELT, FADE_IN", (15, 60), 13, ("bold", "transparent"))
-                show_message(screen, "You can also apply multiple effects by separating them with |'s such as: MELT|FADE_IN", (15, 90), 13, ("transparent"))
+                show_message("Valid values: NONE (default), MELT, FADE_IN", (15, 60), 13, ("bold", "transparent"))
+                show_message("You can also apply multiple effects by separating them with |'s such as: MELT|FADE_IN", (15, 90), 13, ("transparent"))
                 answer = ask(screen, "Transitional effect")
                 if answer != None:
                     gl.TRANS_FX = answer
@@ -384,14 +384,14 @@ def preferences(screen):
                 clean_prefs(screen)
             if startdir_rect.collidepoint(cursor):
                 paint_screen(screen, gl.BLACK)
-                show_message(screen, "Set this to an already existing directory that you want imgv to initially load images from.", (15, 60), 13, ("bold", "transparent"))
+                show_message("Set this to an already existing directory that you want imgv to initially load images from.", (15, 60), 13, ("bold", "transparent"))
                 if platform == 'win32':
-                    show_message(screen, "For example: C:\photos\\", (15, 80), 13, ("transparent"))
+                    show_message("For example: C:\photos\\", (15, 80), 13, ("transparent"))
                 else:
-                     show_message(screen, "For example: /home/photos/", (15, 80), 13, ("transparent"))
-                show_message(screen, "Set to / (default) to have imgv load images from the root directory.", (15, 110), 13, ("transparent"))
-                show_message(screen, "You an also specify a single image name.", (15, 150), 13, ("transparent"))
-                show_message(screen, "For example: C:\pics\dog.jpg", (15, 170), 13, ("transparent"))
+                     show_message("For example: /home/photos/", (15, 80), 13, ("transparent"))
+                show_message("Set to / (default) to have imgv load images from the root directory.", (15, 110), 13, ("transparent"))
+                show_message("You an also specify a single image name.", (15, 150), 13, ("transparent"))
+                show_message("For example: C:\pics\dog.jpg", (15, 170), 13, ("transparent"))
                 answer = ask(screen, "Start directory")
                 if answer != None:
                     gl.START_DIRECTORY_VAL = answer
@@ -399,10 +399,10 @@ def preferences(screen):
                 clean_prefs(screen)
             if external_editor_rect.collidepoint(cursor):
                 paint_screen(screen, gl.BLACK)
-                show_message(screen, "Path to an external image editing application (You must put quotes around the value)", (15, 60), 13, ("bold", "transparent"))
-                show_message(screen, "For example, if you want to use Adobe Photoshop with imgv you might put:", (15, 80), 13, ("transparent"))
-                show_message(screen, "\"C:\\Program Files\\Adobe\\Photoshop CS2\\Photoshop.exe\"", (15, 100), 13, ("transparent"))
-                show_message(screen, "Set to \"None\" (default) if you don't need this feature.", (15, 130), 13, ("transparent"))
+                show_message("Path to an external image editing application (You must put quotes around the value)", (15, 60), 13, ("bold", "transparent"))
+                show_message("For example, if you want to use Adobe Photoshop with imgv you might put:", (15, 80), 13, ("transparent"))
+                show_message("\"C:\\Program Files\\Adobe\\Photoshop CS2\\Photoshop.exe\"", (15, 100), 13, ("transparent"))
+                show_message("Set to \"None\" (default) if you don't need this feature.", (15, 130), 13, ("transparent"))
                 answer = ask(screen, "External editor")
                 if answer != None:
                     gl.EXTERNAL_EDITOR = answer
@@ -410,9 +410,9 @@ def preferences(screen):
                 clean_prefs(screen)
             if passwd_rect.collidepoint(cursor):
                 paint_screen(screen, gl.BLACK)
-                show_message(screen, "Set this to the password you want to be used in the 'Hide Image' feature.", (15, 60), 13, ("bold", "transparent"))
-                show_message(screen, "It's case sensitive and don't use quotes.", (15, 90), 13, ("transparent"))
-                show_message(screen, "Set to None (default) if you don't want to be prompted for a password.", (15, 110), 13, ("transparent"))
+                show_message("Set this to the password you want to be used in the 'Hide Image' feature.", (15, 60), 13, ("bold", "transparent"))
+                show_message("It's case sensitive and don't use quotes.", (15, 90), 13, ("transparent"))
+                show_message("Set to None (default) if you don't want to be prompted for a password.", (15, 110), 13, ("transparent"))
                 answer = ask(screen, "New password")
                 if answer != None:
                     gl.CORRECT_PASSWORD = answer
@@ -425,10 +425,10 @@ def preferences(screen):
 
 def color_msg(screen, msg):
     paint_screen(screen, gl.BLACK)
-    show_message(screen, msg, (15, 20), 13, ("bold", "transparent"))
-    show_message(screen, "Valid colors: BLACK, WHITE, PURPLE, BLUE, IMGV_LOGO_BLUE, SKY_BLUE, SILVER, GREEN, LIGHT_GREEN,", (15, 50), 13, ("transparent"))
-    show_message(screen, "SADDLE_BROWN, RED, ORANGE, YELLOW, DARK_SLATE_BLUE, DARK_SLATE_GRAY, MID_GRAY.", (15, 70), 13, ("transparent"))
-    show_message(screen, "You can also specify coma separated RGB color values in the format: n,n,n (where n is a number from 0 to 255)", (15, 100), 13, ("transparent"))
+    show_message(msg, (15, 20), 13, ("bold", "transparent"))
+    show_message("Valid colors: BLACK, WHITE, PURPLE, BLUE, IMGV_LOGO_BLUE, SKY_BLUE, SILVER, GREEN, LIGHT_GREEN,", (15, 50), 13, ("transparent"))
+    show_message("SADDLE_BROWN, RED, ORANGE, YELLOW, DARK_SLATE_BLUE, DARK_SLATE_GRAY, MID_GRAY.", (15, 70), 13, ("transparent"))
+    show_message("You can also specify coma separated RGB color values in the format: n,n,n (where n is a number from 0 to 255)", (15, 100), 13, ("transparent"))
     return ask(screen, "Color")
 
 
@@ -593,14 +593,14 @@ def prefs_blank_fx(screen, row):
     l = [gl.FIRST_RECT, gl.SECOND_RECT, gl.THIRD_RECT, gl.FOURTH_RECT, gl.FIFTH_RECT, gl.SIXTH_RECT, gl.SEVENTH_RECT, gl.EIGHTH_RECT, gl.NINTH_RECT, gl.TENTH_RECT, gl.ELEVENTH_RECT, gl.TWELFTH_RECT, gl.THIRTEENTH_RECT, gl.FOURTEENTH_RECT, gl.FIFTEENTH_RECT, gl.SIXTEENTH_RECT, gl.SEVENTEENTH_RECT, gl.EIGHTEENTH_RECT, gl.NINETEENTH_RECT, gl.TWENTIETH_RECT, gl.TWENTYFIRST_RECT, gl.TWENTYSECOND_RECT, gl.TWENTYTHIRD_RECT, gl.TWENTYFOURTH_RECT, gl.TWENTYFIFTH_RECT, gl.TWENTYSIXTH_RECT, gl.TWENTYSEVENTH_RECT, gl.TWENTYEIGTH_RECT, gl.TWENTYNINTH_RECT, gl.THIRTIETH_RECT, gl.THIRTYFIRST_RECT, gl.THIRTYSECOND_RECT, gl.THIRTYTHIRD_RECT, gl.THIRTYFOURTH_RECT]
     for i in range(len(l)):
         if i != row:
-            show_message(screen, "  ", l[i], 12, ("bold", "transparent")) # Erase effect from non-hovered items
+            show_message("  ", l[i], 12, ("bold", "transparent")) # Erase effect from non-hovered items
 
 
 def prefs_index_fx(screen, it, font, msg):
     gl.NOT_HOVERED = 0
     fxpos = (it[0][0] - 10, it[0][1] + (font.size(it[1])[1] / 2) - 13, it[0][2], it[0][3])
-    show_message(screen, ".", fxpos, 16, ("bold", "transparent"))
-    show_message(screen, "%s%s%s" % (" " * 100, msg, " " * 100), "bottom", 12, ("transparent"))
+    show_message(".", fxpos, 16, ("bold", "transparent"))
+    show_message("%s%s%s" % (" " * 100, msg, " " * 100), "bottom", 12, ("transparent"))
     return fxpos
 
 
@@ -613,56 +613,56 @@ def pref_options(screen):
     change_msg_wpos = change_wpos + 60
 
     # travel down printing each message option 16 pixels as at time (same value as row_sep in print_preferences())
-    show_message(screen, "Yes:", (yes_wpos, 13), 10, ("transparent"))
-    show_message(screen, "No:", (no_wpos, 13), 10, ("transparent"))
+    show_message("Yes:", (yes_wpos, 13), 10, ("transparent"))
+    show_message("No:", (no_wpos, 13), 10, ("transparent"))
     main_statusbar_crect, main_statusbar_ucrect = check_boxes(screen, (15, cbox_wpos1, cbox_wpos2), "main_statusbar")
 
-    show_message(screen, "Yes", (yes_wpos, 29), 10, ("transparent"))
-    show_message(screen, "No:", (no_wpos, 29), 10, ("transparent"))
+    show_message("Yes", (yes_wpos, 29), 10, ("transparent"))
+    show_message("No:", (no_wpos, 29), 10, ("transparent"))
     four_statusbars_crect, four_statusbars_ucrect = check_boxes(screen, (31, cbox_wpos1, cbox_wpos2), "four_statusbars")
 
-    show_message(screen, "Yes:", (yes_wpos, 45), 10, ("transparent"))
-    show_message(screen, "No:", (no_wpos, 45), 10, ("transparent"))
+    show_message("Yes:", (yes_wpos, 45), 10, ("transparent"))
+    show_message("No:", (no_wpos, 45), 10, ("transparent"))
     exif_statusbar_crect, exif_statusbar_ucrect = check_boxes(screen, (47, cbox_wpos1, cbox_wpos2), "exif_statusbar")
 
-    show_message(screen, "Yes:", (yes_wpos, 61), 10, ("transparent"))
-    show_message(screen, "No:", (no_wpos, 61), 10, ("transparent"))
+    show_message("Yes:", (yes_wpos, 61), 10, ("transparent"))
+    show_message("No:", (no_wpos, 61), 10, ("transparent"))
     thumb_statusbars_crect, thumb_statusbars_ucrect = check_boxes(screen, (63, cbox_wpos1, cbox_wpos2), "thumb_statusbars")
 
-    show_message(screen, "Yes:", (yes_wpos, 77), 10, ("transparent"))
-    show_message(screen, "No:", (no_wpos, 77), 10, ("transparent"))
+    show_message("Yes:", (yes_wpos, 77), 10, ("transparent"))
+    show_message("No:", (no_wpos, 77), 10, ("transparent"))
     transparent_text_crect, transparent_text_ucrect = check_boxes(screen, (79, cbox_wpos1, cbox_wpos2), "transparent_text")
 
-    show_message(screen, "Yes:", (yes_wpos, 93), 10, ("transparent"))
-    show_message(screen, "No:", (no_wpos, 93), 10, ("transparent"))
+    show_message("Yes:", (yes_wpos, 93), 10, ("transparent"))
+    show_message("No:", (no_wpos, 93), 10, ("transparent"))
     image_border_crect, image_border_ucrect = check_boxes(screen, (95, cbox_wpos1, cbox_wpos2), "image_border")
 
-    show_message(screen, "Yes:", (yes_wpos, 109), 10, ("transparent"))
-    show_message(screen, "No:", (no_wpos, 109), 10, ("transparent"))
+    show_message("Yes:", (yes_wpos, 109), 10, ("transparent"))
+    show_message("No:", (no_wpos, 109), 10, ("transparent"))
     lock_zoom_crect, lock_zoom_ucrect = check_boxes(screen, (110, cbox_wpos1, cbox_wpos2), "lock_zoom")
 
-    show_message(screen, "Yes:", (yes_wpos, 125), 10, ("transparent"))
-    show_message(screen, "No:", (no_wpos, 125), 10, ("transparent"))
+    show_message("Yes:", (yes_wpos, 125), 10, ("transparent"))
+    show_message("No:", (no_wpos, 125), 10, ("transparent"))
     wrap_crect, wrap_ucrect = check_boxes(screen, (126, cbox_wpos1, cbox_wpos2), "wrap")
 
-    show_message(screen, "Yes:", (yes_wpos, 141), 10, ("transparent"))
-    show_message(screen, "No:", (no_wpos, 141), 10, ("transparent"))
+    show_message("Yes:", (yes_wpos, 141), 10, ("transparent"))
+    show_message("No:", (no_wpos, 141), 10, ("transparent"))
     wrap_slideshow_crect, wrap_slideshow_ucrect = check_boxes(screen, (142, cbox_wpos1, cbox_wpos2), "wrap_slideshow")
 
-    show_message(screen, "Yes:", (yes_wpos, 157), 10, ("transparent"))
-    show_message(screen, "No:", (no_wpos, 157), 10, ("transparent"))
+    show_message("Yes:", (yes_wpos, 157), 10, ("transparent"))
+    show_message("No:", (no_wpos, 157), 10, ("transparent"))
     start_fullscreen_crect, start_fullscreen_ucrect = check_boxes(screen, (158, cbox_wpos1, cbox_wpos2), "start_fullscreen")
 
-    show_message(screen, "Yes:", (yes_wpos, 173), 10, ("transparent"))
-    show_message(screen, "No:", (no_wpos, 173), 10, ("transparent"))
+    show_message("Yes:", (yes_wpos, 173), 10, ("transparent"))
+    show_message("No:", (no_wpos, 173), 10, ("transparent"))
     thumb_border_crect, thumb_border_ucrect = check_boxes(screen, (174, cbox_wpos1, cbox_wpos2), "thumb_border")
 
-    show_message(screen, "Yes:", (yes_wpos, 189), 10, ("transparent"))
-    show_message(screen, "No:", (no_wpos, 189), 10, ("transparent"))
+    show_message("Yes:", (yes_wpos, 189), 10, ("transparent"))
+    show_message("No:", (no_wpos, 189), 10, ("transparent"))
     dirnum_colors_crect, dirnum_colors_ucrect = check_boxes(screen, (190, cbox_wpos1, cbox_wpos2), "dirnum_colors")
 
-    show_message(screen, "Yes:", (yes_wpos, 205), 10, ("transparent"))
-    show_message(screen, "No:", (no_wpos, 205), 10, ("transparent"))
+    show_message("Yes:", (yes_wpos, 205), 10, ("transparent"))
+    show_message("No:", (no_wpos, 205), 10, ("transparent"))
     show_movies_crect, show_movies_ucrect = check_boxes(screen, (206, cbox_wpos1, cbox_wpos2), "show_movies")
 
     paint_screen(screen, gl.WHITE, (change_msg_wpos, 223, 12, 10))
@@ -713,34 +713,34 @@ def pref_options(screen):
     paint_screen(screen, gl.CLOSE_BUTTONCOLOR, (change_msg_wpos+1, 401, 10, 8))
     close_button_color_rect = change_box(screen, (401, change_wpos))
 
-    show_message(screen, "%s" % ('Fit nothing', 'Fit large images', 'Fit all images', 'Fit window to image')[gl.FIT_IMAGE_VAL], (change_msg_wpos, 416), 10, ("transparent"))
+    show_message("%s" % ('Fit nothing', 'Fit large images', 'Fit all images', 'Fit window to image')[gl.FIT_IMAGE_VAL], (change_msg_wpos, 416), 10, ("transparent"))
     fit_image_rect = change_box(screen, (417, change_wpos))
 
-    show_message(screen, gl.CURRENT_GAMMA, (change_msg_wpos, 432), 10, ("transparent"))
+    show_message(gl.CURRENT_GAMMA, (change_msg_wpos, 432), 10, ("transparent"))
     gamma_rect = change_box(screen, (433, change_wpos))
 
-    show_message(screen, "%sx%s" % (gl.IMGV_RESOLUTION[0], gl.IMGV_RESOLUTION[1]), (change_wpos+60, 448), 10, ("transparent"))
+    show_message("%sx%s" % (gl.IMGV_RESOLUTION[0], gl.IMGV_RESOLUTION[1]), (change_wpos+60, 448), 10, ("transparent"))
     winsize_rect = change_box(screen, (449, change_wpos))
 
-    show_message(screen, gl.THUMB_VAL, (change_wpos+60, 464), 10, ("transparent"))
+    show_message(gl.THUMB_VAL, (change_wpos+60, 464), 10, ("transparent"))
     thumbsize_rect = change_box(screen, (465, change_wpos))
 
-    show_message(screen, gl.TRANS_FX, (change_wpos+60, 480), 10, ("transparent"))
+    show_message(gl.TRANS_FX, (change_wpos+60, 480), 10, ("transparent"))
     transeffect_rect = change_box(screen, (481, change_wpos))
 
-    show_message(screen, gl.START_DIRECTORY_VAL, (change_wpos+60, 496), 10, ("transparent"))
+    show_message(gl.START_DIRECTORY_VAL, (change_wpos+60, 496), 10, ("transparent"))
     startdir_rect = change_box(screen, (497, change_wpos))
 
-    show_message(screen, gl.EXTERNAL_EDITOR, (change_wpos+60, 512), 10, ("transparent"))
+    show_message(gl.EXTERNAL_EDITOR, (change_wpos+60, 512), 10, ("transparent"))
     external_editor_rect = change_box(screen, (513, change_wpos))
 
-    show_message(screen, "%s" % ('Fit nothing', 'Fit large images', 'Fit all images', 'Fit window to image')[gl.FIT_IMAGE_SLIDESHOW_VAL], (change_msg_wpos, 528), 10, ("transparent"))
+    show_message("%s" % ('Fit nothing', 'Fit large images', 'Fit all images', 'Fit window to image')[gl.FIT_IMAGE_SLIDESHOW_VAL], (change_msg_wpos, 528), 10, ("transparent"))
     fit_slideshow_rect = change_box(screen, (529, change_wpos))
 
     if gl.CORRECT_PASSWORD.lower() == "none":
-        show_message(screen, gl.CORRECT_PASSWORD , (change_msg_wpos, 544), 10, ("transparent"))
+        show_message(gl.CORRECT_PASSWORD , (change_msg_wpos, 544), 10, ("transparent"))
     else:
-        show_message(screen, '*' * len(gl.CORRECT_PASSWORD), (change_msg_wpos, 544), 10, ("transparent"))
+        show_message('*' * len(gl.CORRECT_PASSWORD), (change_msg_wpos, 544), 10, ("transparent"))
     passwd_rect = change_box(screen, (545, change_wpos))
 
     close_button(screen)

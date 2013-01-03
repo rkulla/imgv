@@ -35,7 +35,7 @@ class verbose:
         self.start_width = 230
         self.show_exif = 1
         self.row = 11
-        show_message(screen, "Image Properties", self.row, self.font_size, ("bold", "underline", "transparent"))
+        show_message("Image Properties", self.row, self.font_size, ("bold", "underline", "transparent"))
         self.row += gl.ROW_SEP
         self.prev_pic_row = self.row + gl.ROW_SEP + 5
         self.screen = screen
@@ -278,7 +278,7 @@ class verbose:
             font_size = 13
             font = pygame.font.Font(gl.FONT_NAME, font_size)
             no_exif_msg = "No Exif information found"
-            show_message(self.screen, no_exif_msg, ((self.screen.get_width() / 2) - (font.size(no_exif_msg)[0] / 2), self.screen.get_height() / 2), font_size, ("bold", "transparent"))
+            show_message(no_exif_msg, ((self.screen.get_width() / 2) - (font.size(no_exif_msg)[0] / 2), self.screen.get_height() / 2), font_size, ("bold", "transparent"))
             gl.SHOW_EXIFBUTTON = 0
             return
         x = data.keys()
@@ -292,7 +292,7 @@ class verbose:
                 exif_info.append('error', i, '"', data[i], '"')
         gl.SHOW_EXIFBUTTON = 0
         pos = 25
-        show_message(self.screen, "Exif Information", "top", 13, ("underline", "bold", "transparent"))
+        show_message("Exif Information", "top", 13, ("underline", "bold", "transparent"))
         try:
             for line in exif_info:
                 if type(line) is StringType and len(line) <= 250: # parachutes on long lines without this
@@ -334,7 +334,7 @@ class verbose:
             for i, v in enumerate(bluelist):
                 if v > vlen: v -= vlen
                 pygame.draw.line(self.screen, gl.BLUE, ((i / wdiv) + wpos, h), ((i / wdiv) + wpos, (h - (v / vdiv))), 1)
-        show_message(self.screen, "Histogram", (wpos + 1, h - 174), 11, ("transparent"))
+        show_message("Histogram", (wpos + 1, h - 174), 11, ("transparent"))
         pygame.draw.line(self.screen, gl.MSG_COLOR, (wpos - 2, h + 2), (wpos - 2, h - vlen)) # left side of border
         pygame.draw.line(self.screen, gl.MSG_COLOR, ((i / wdiv) + wpos, h - vlen), ((i / wdiv) + wpos, h + 2)) # right side
         pygame.draw.line(self.screen, gl.MSG_COLOR, (wpos - 2, h - vlen), ((i / wdiv) + wpos, h - vlen)) # top
@@ -342,7 +342,7 @@ class verbose:
     def system_info(self):
         info = pygame.display.Info()
         self.row += gl.ROW_SEP * 2
-        show_message(self.screen, "Display Properties", self.row, self.font_size, ("bold", "underline", "transparent"))
+        show_message("Display Properties", self.row, self.font_size, ("bold", "underline", "transparent"))
         self.row += gl.ROW_SEP
         self.print_info('Using video driver: %s' % pygame.display.get_driver(), 20)
         self.print_info('Video mode is accelerated: %s' % ('No', 'Yes')[info.hw], 27)
@@ -357,7 +357,7 @@ class verbose:
             gl.MSG_COLOR = (142, 142, 142)
         else:
             gl.MSG_COLOR = gl.SILVER
-        show_message(self.screen, msg, (self.start_width, self.row), self.font_size, (""), (emphasize_length, before_color))
+        show_message(msg, (self.start_width, self.row), self.font_size, (""), (emphasize_length, before_color))
         gl.MSG_COLOR = before_color
 
 
@@ -404,7 +404,7 @@ def verbose_info(screen, new_img, file):
         if gl.UNIQUE_COLORS == None and gl.SHOW_EXIFBUTTON and total_colors != "":
             hover_button(uniquecolors_rect, cursor, screen, " Unique colors ", (font.size(total_colors)[0] + 230), row, None)
 
-        show_message(screen, convert_times(ctime(), 0), "bottom", 15, ("transparent"))
+        show_message(convert_times(ctime(), 0), "bottom", 15, ("transparent"))
 
         if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
             if uniquecolors_rect != junk_rect():
@@ -416,7 +416,7 @@ def verbose_info(screen, new_img, file):
                         gl.MSG_COLOR = (142, 142, 142)
                     else:
                         gl.MSG_COLOR = gl.SILVER
-                    show_message(screen,  "Unique colors: %s%s" % (gl.UNIQUE_COLORS, ' ' * 12), ((font.size(total_colors)[0] + 235), row), 12, (""), (14, before_color))
+                    show_message("Unique colors: %s%s" % (gl.UNIQUE_COLORS, ' ' * 12), ((font.size(total_colors)[0] + 235), row), 12, (""), (14, before_color))
                     gl.MSG_COLOR = before_color
                     normal_cursor()
             if exif_rect.collidepoint(cursor):
@@ -478,7 +478,7 @@ def remote_img_details(screen, new_img, rect, file):
     paint_screen(screen, gl.BLACK)
     while 1:
         event = pygame.event.wait()
-        show_message(screen, gl.REMOTE_IMG, (0, 30, 0, 0), 12)
+        show_message(gl.REMOTE_IMG, (0, 30, 0, 0), 12)
         check_quit(event)
         if event.type == KEYDOWN or event.type == MOUSEBUTTONDOWN:
             return

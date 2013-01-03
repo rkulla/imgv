@@ -30,7 +30,7 @@ def help(screen):
     paint_screen(screen, gl.BLACK)
     (screen_width, screen_height) = (screen.get_width(), screen.get_height())
     (esc_rect, font) = close_button(screen)
-    show_message(screen, "Main Keyboard Commands", "top", 11, ("bold", "underline", "transparent"))
+    show_message("Main Keyboard Commands", "top", 11, ("bold", "underline", "transparent"))
     key_list = [" Space/N/Ctrl+Tab=Next image, Backspace/B=Previous Image. Ctrl+B=Toggle Image Border ",
                 " D=Change Directory ",
                 " I=Image Browser ",
@@ -66,27 +66,27 @@ def help(screen):
         font_size = 11
     pos = linesep
     for line in key_list:
-        show_message(screen, line, (2, pos), font_size, ("transparent"))
+        show_message(line, (2, pos), font_size, ("transparent"))
         pos += linesep
 
     mouse_msg = "Main Mouse Commands"
-    show_message(screen, mouse_msg, ((screen_width / 2) - (font.size(mouse_msg)[0] / 2), pos, 0, 0), 11, ("bold", "underline", "transparent"))
+    show_message(mouse_msg, ((screen_width / 2) - (font.size(mouse_msg)[0] / 2), pos, 0, 0), 11, ("bold", "underline", "transparent"))
     mouse_list = [" Left-Click=Select menu options/Load images in Four at a Time, Thumbnail and Image browser/Click buttons and links/Change directories ", " Right-Click=Open or move the main menu/Go forward a page in Four at a Time, Thumbnail and Image Browser/Tag directories ", " Middle-Click=Close the main menu/Go back a page in Four at a Time, Thumbnail and Image Browser ", " Mouse Scroll Wheel=Scroll images that are larger than the screen up or down/Activate the Hand Tool "]
     pos += linesep
     for line in mouse_list:
-        show_message(screen, line, (2, pos), font_size, ("transparent"))
+        show_message(line, (2, pos), font_size, ("transparent"))
         pos += linesep
 
     gl.MSG_COLOR = gl.BLUE
     doc_msg = "View imgv's online documentation"
-    doc_rect = show_message(screen, doc_msg, ((screen_width / 2) - (font.size(doc_msg)[0] / 2), screen_height - 20, 0, 0), 12, ("underline", "bold"))
+    doc_rect = show_message(doc_msg, ((screen_width / 2) - (font.size(doc_msg)[0] / 2), screen_height - 20, 0, 0), 12, ("underline", "bold"))
 
     donate_msg = "Donate!"
-    donate_rect = show_message(screen, donate_msg, ((screen_width) - (font.size(donate_msg)[0] + 70), screen_height - 35, 0, 0), 12, ("bold", "underline"))
+    donate_rect = show_message(donate_msg, ((screen_width) - (font.size(donate_msg)[0] + 70), screen_height - 35, 0, 0), 12, ("bold", "underline"))
 
     gl.MSG_COLOR = gl.SILVER
     author_msg = "Author: Ryan Kulla"
-    show_message(screen, author_msg, ((screen_width) - (font.size(author_msg)[0] - 10), screen_height - 15, 0, 0), 9, ("bold", "transparent"), (7, gl.WHITE))
+    show_message(author_msg, ((screen_width) - (font.size(author_msg)[0] - 10), screen_height - 15, 0, 0), 9, ("bold", "transparent"), (7, gl.WHITE))
 
     normal_cursor()
     print_version(screen, screen_height)

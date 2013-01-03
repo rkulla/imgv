@@ -12,7 +12,7 @@ def error_screen(screen, msg):
    paint_screen(screen, gl.BLACK)
    while 1:
         event = pygame.event.wait()
-        show_message(screen, msg, "top", 12)
+        show_message(msg, "top", 12)
         check_quit(event)
         if (event.type == KEYDOWN and event.key not in (K_LALT, K_RALT, K_LCTRL, K_RCTRL)) or event.type == MOUSEBUTTONDOWN:
             return

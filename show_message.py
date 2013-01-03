@@ -1,31 +1,32 @@
 # imgv message rendering code by Ryan Kulla, rkulla@gmail.com
 import gl
 import pygame.font
-from pygame.display import update
+from pygame.display import update, get_surface
 from types import StringType
 
 
-def show_message(screen, msg, down_value, font_size, *font_ops):
+def show_message(msg, down_value, font_size, *font_ops):
     "write a message centered anywhere on the screen"
+    screen = get_surface()
     font = pygame.font.Font(gl.FONT_NAME, font_size)
     if font_ops:
         if font_ops[0] != "":
             font_options(font_ops, font)
-    if not gl.TOGGLE_TRANSPARENT: # use transparent font background:
+    if not gl.TOGGLE_TRANSPARENT:  # use transparent font background:
         ren = font.render(msg, 1, gl.MSG_COLOR)
-    else: # use a font background color:
+    else:  # use a font background color:
         if gl.TOGGLE_TRANSPARENT and not gl.TEXT_TRANSPARENT:
             ren = font.render(msg, 1, gl.MSG_COLOR, gl.FONT_BG)
         else:
             ren = font.render(msg, 1, gl.WHITE, gl.BLACK)
-    if gl.USING_SCROLL_MENU: # to let the blank_fx() work right
+    if gl.USING_SCROLL_MENU:  # to let the blank_fx() work right
         ren = font.render(msg, 1, gl.WHITE, gl.BLACK)
     ren_rect = ren.get_rect()
     if down_value == "bottom":
         ren_rect.midbottom = screen.get_rect().midbottom
     elif down_value == "top":
         ren_rect.midtop = screen.get_rect().midtop
-    elif isinstance(down_value, tuple): # allow you to uncenter too:
+    elif isinstance(down_value, tuple):  # allow you to uncenter too:
         ren_rect = ren.get_rect()
         ren_rect[0] = down_value[0]
         ren_rect[1] = down_value[1]
@@ -79,7 +80,7 @@ def font_options(font_ops, font):
             font.set_italic(1)
         if font_ops[0][1] == "transparent":
             gl.TEXT_TRANSPARENT = 1
-            
+
         if len(font_ops[0]) > 2:
             if font_ops[0][2] == "underline":
                 font.set_underline(1)
@@ -94,9 +95,9 @@ def font_options(font_ops, font):
 def truncate_name(name, allow):
     "Truncate long strings and append a '...'"
     if len(name) > allow:
-        if name[:allow][-1] == ' ': 
-            name = name[:allow - 1] # make 'foo ...' into 'foo...'
+        if name[:allow][-1] == ' ':
+            name = name[:allow - 1]  # make 'foo ...' into 'foo...'
         name = name[:allow] + '...'
-        if name[-4:] == '....': # make 'foo....' into 'foo...'
-            name = name[:-1] 
+        if name[-4:] == '....':  # make 'foo....' into 'foo...'
+            name = name[:-1]
     return name

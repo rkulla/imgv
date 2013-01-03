@@ -18,7 +18,7 @@ def errorbox(title, msg):
     screen = set_mode((450, 150))
     normal_cursor()
     set_caption(title)
-    show_message(screen, msg, (10, 10), 12, ("bold"))
+    show_message(msg, (10, 10), 12, ("bold"))
     ok_rect = imgv_button(screen, " OK ", 20, screen.get_height() - 40, "midtop")
     while 1:
         event = wait()

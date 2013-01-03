@@ -41,7 +41,7 @@ def four(screen, file, new_img, ns):
     (img_one_name, img_two_name, img_three_name, img_four_name) = (0, 0, 0, 0)
     (show_img_one, show_img_two, show_img_three, show_img_four) = (0, 0, 0, 0)
 
-    rect = show_message(screen, "", "bottom", 9, ("bold")) # needed to not paint on esc_rect first time
+    rect = show_message("", "bottom", 9, ("bold")) # needed to not paint on esc_rect first time
     (file, img_one_rect, img_one_name, img_one_file) = square_one(screen, file)
     (file, img_two_rect, img_two_name, img_two_file) = square_two(screen, file)
     (file, img_three_rect, img_three_name, img_three_file) = square_three(screen, file)
@@ -161,7 +161,7 @@ def square_one(screen, file):
         name = check_truncate(screen.get_width(), name)
         img_status = "%s [%d/%d]" % (name, img_one_file + 1, num_imgs)
         raise_up = 12
-        show_message(screen, img_status, ((screen.get_width() / 4) - (font.size(img_status)[0] / 2), screen.get_height() / 2 - raise_up), font_size, ("bold"))
+        show_message(img_status, ((screen.get_width() / 4) - (font.size(img_status)[0] / 2), screen.get_height() / 2 - raise_up), font_size, ("bold"))
     normal_cursor()
     return (file, img_one_rect, img_one_name, img_one_file)
 
@@ -189,7 +189,7 @@ def square_two(screen, file):
         name = check_truncate(screen.get_width(), name)
         img_status = "%s [%d/%d]" % (name, img_two_file + 1, num_imgs)
         raise_up = 12
-        show_message(screen, img_status, ((screen.get_width() / 2) + (screen.get_width() / 4 - font.size(img_status)[0]/2), screen.get_height() / 2 - raise_up), font_size, ("bold"))
+        show_message(img_status, ((screen.get_width() / 2) + (screen.get_width() / 4 - font.size(img_status)[0]/2), screen.get_height() / 2 - raise_up), font_size, ("bold"))
     normal_cursor()
     return (file, img_two_rect, img_two_name, img_two_file)
 
@@ -217,7 +217,7 @@ def square_three(screen, file):
         name = check_truncate(screen.get_width(), name)
         img_status = "%s [%d/%d]" % (name, img_three_file + 1, num_imgs)
         raise_up = 12
-        show_message(screen, img_status, ((screen.get_width() / 4) - (font.size(img_status)[0] / 2), screen.get_height() - raise_up), font_size, ("bold"))
+        show_message(img_status, ((screen.get_width() / 4) - (font.size(img_status)[0] / 2), screen.get_height() - raise_up), font_size, ("bold"))
     normal_cursor()
     return (file, img_three_rect, img_three_name, img_three_file)
 
@@ -246,7 +246,7 @@ def square_four(screen, file):
         name = check_truncate(screen.get_width(), name)
         img_status = "%s [%d/%d]" % (name, img_four_file + 1, num_imgs)
         raise_up = 12
-        show_message(screen, img_status, ((screen.get_width() / 2) + (screen.get_width() / 4 - font.size(img_status)[0]/2), screen.get_height() - raise_up), font_size, ("bold"))
+        show_message(img_status, ((screen.get_width() / 2) + (screen.get_width() / 4 - font.size(img_status)[0]/2), screen.get_height() - raise_up), font_size, ("bold"))
     normal_cursor()
     return (file, img_four_rect, img_four_name, img_four_file)
 

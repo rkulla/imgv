@@ -123,12 +123,12 @@ def open_url(screen, img):
     paint_screen(screen, gl.BLACK)
     set_caption("Extract from Web - imgv")
     normal_cursor()
-    show_message(screen, "Enter a Web URL to extract images from", 20, 15, ("transparent"))
+    show_message("Enter a Web URL to extract images from", 20, 15, ("transparent"))
     gl.URL = ask(screen, "http://")
     if gl.URL != None:
         gl.files = []
         wait_cursor()
-        show_message(screen, "Loading. Please wait..", 39, 42, ("transparent"))
+        show_message("Loading. Please wait..", 39, 42, ("transparent"))
         for ext in gl.IMG_TYPES:
             if gl.URL.endswith(ext):
                 gl.files.append(str(''.join(gl.URL)))

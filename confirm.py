@@ -13,7 +13,7 @@ def get_confirmation(screen, confirm_msg):
     paint_screen(screen, gl.IMGV_COLOR)
     pygame.display.update()
     normal_cursor()
-    show_message(screen, confirm_msg, "top", 12, ("bold"))
+    show_message(confirm_msg, "top", 12, ("bold"))
     yes_rect = imgv_button(screen, " YES ", 0, 30, "midtop")
     no_rect = imgv_button(screen, " NO ", 0, 60, "midtop")
     pygame.event.set_blocked(MOUSEMOTION)
@@ -26,7 +26,7 @@ def get_confirmation(screen, confirm_msg):
         hover_cursor(cursor, (yes_rect, no_rect))
         check_quit(event)
         if hit_key(event, K_ESCAPE):
-            return 
+            return
         if hit_key(event, K_y):
             return "yes"
         if hit_key(event, K_n):

@@ -96,9 +96,9 @@ def show_dirs(screen, file):
     screen_height = screen.get_height()
 
     if not gl.BEEN_THERE_DONE_THAT:
-        show_message(screen, "You can type in a directory number or shortcut (L/T/A/D/C/V/S/Q) instead of clicking: _", "bottom", 11)
+        show_message("You can type in a directory number or shortcut (L/T/A/D/C/V/S/Q) instead of clicking: _", "bottom", 11)
     else:
-        show_message(screen, "Directory number or shortcut: _", "bottom", 11)
+        show_message("Directory number or shortcut: _", "bottom", 11)
 
     curdir_msg = check_truncate(screen.get_width(), curdir)
     all_files = os.listdir('.')
@@ -126,11 +126,11 @@ def show_dirs(screen, file):
         dirs = gl.CACHE_DIRS
         gl.REFRESH_IMG_COUNT = 1
         set_caption(curdir)
-        show_message(screen, curdir_msg, (curdir_msg_wpos, 4), 10, ("bold"))
-        show_message(screen, files_msg, (files_msg_wpos, 4), 10)
+        show_message(curdir_msg, (curdir_msg_wpos, 4), 10, ("bold"))
+        show_message(files_msg, (files_msg_wpos, 4), 10)
     else:
-        show_message(screen, curdir_msg, (curdir_msg_wpos, 4), 10, ("bold"))
-        show_message(screen, files_msg, (files_msg_wpos, 4), 10)
+        show_message(curdir_msg, (curdir_msg_wpos, 4), 10, ("bold"))
+        show_message(files_msg, (files_msg_wpos, 4), 10)
         set_caption(curdir)
         dirs = os.listdir(curdir)
         dirs.sort(lambda a, b: cmp(a.lower(), b.lower())) # case-insensitive sorting
@@ -148,12 +148,12 @@ def show_dirs(screen, file):
     view_tagged_rect = imgv_button(screen, " (V)iew Tags ", 472, 18, "topleft")
     filter_rect = imgv_button(screen, " (S)earch ", 559, 18, "topleft")
     col = 10
-    show_message(screen, "Right-Click directories to tag multiple directories to load. Ctrl+Left-Click to untag.", (10, 40), 10)
+    show_message("Right-Click directories to tag multiple directories to load. Ctrl+Left-Click to untag.", (10, 40), 10)
     if gl.MULT_DIRS != []:
-        show_message(screen, "[Dirs tagged: %s]" % len(gl.MULT_DIRS), (440, 40), 10, "bold")
+        show_message("[Dirs tagged: %s]" % len(gl.MULT_DIRS), (440, 40), 10, "bold")
 
     if gl.FILTER_COMMAND != {}:
-        show_message(screen, "[Filter: on]", (560, 40), 10, "bold")
+        show_message("[Filter: on]", (560, 40), 10, "bold")
 
     # add numbers to directory names
     if gl.ADDED_DIR_NUMS == 0 and dirs[0] != '*':
@@ -192,9 +192,9 @@ def show_dirs(screen, file):
             else:
                 gl.MSG_COLOR = gl.SILVER
             if before_color == gl.WHITE:
-                ren_rect = show_message(screen, dmsg, (col, line), font_size, ("bold"), (len(dmsg[:dmsg.index(gl.DIRNUMSEP) + 1]), gl.SILVER))
+                ren_rect = show_message(dmsg, (col, line), font_size, ("bold"), (len(dmsg[:dmsg.index(gl.DIRNUMSEP) + 1]), gl.SILVER))
             else:
-                ren_rect = show_message(screen, dmsg, (col, line), font_size, ("bold"), (len(dmsg[:dmsg.index(gl.DIRNUMSEP) + 1]), before_color))
+                ren_rect = show_message(dmsg, (col, line), font_size, ("bold"), (len(dmsg[:dmsg.index(gl.DIRNUMSEP) + 1]), before_color))
         else:
             ren_rect = ren.get_rect()
             ren_rect[0] = col
@@ -231,8 +231,8 @@ def show_dirs(screen, file):
                        pygame.key.get_pressed()[K_RCTRL]):
                         try: # untag directory
                             gl.MULT_DIRS.remove(os.getcwd() + slash + ' '.join(item[1].split(' ')[1:]))
-                            show_message(screen, " " * 30, (440, 40), 10, ("bold"))
-                            show_message(screen, "[Dirs tagged: %s]" % len(gl.MULT_DIRS), (440, 40), 10, "bold")
+                            show_message(" " * 30, (440, 40), 10, ("bold"))
+                            show_message("[Dirs tagged: %s]" % len(gl.MULT_DIRS), (440, 40), 10, "bold")
                         except:
                             pass
                     else: # (normal mode) change to a single directory and load its images
@@ -246,8 +246,8 @@ def show_dirs(screen, file):
                         gl.MULT_DIRS.append(os.getcwd() + slash + ' '.join(item[1].split(' ')[1:]))
                     else:
                         gl.MULT_DIRS.append(os.getcwd() + ' '.join(item[1].split(' ')[1:]))
-                    show_message(screen, " " * 30, (440, 40), 10, ("bold"))
-                    show_message(screen, "[Dirs tagged: %s]" % len(gl.MULT_DIRS), (440, 40), 10, "bold")
+                    show_message(" " * 30, (440, 40), 10, ("bold"))
+                    show_message("[Dirs tagged: %s]" % len(gl.MULT_DIRS), (440, 40), 10, "bold")
 
         # allow number keys to be used to change directories
         dirnum = None
@@ -349,14 +349,14 @@ def get_dirnum(screen, key_type):
             K_KP5:5, K_KP6:6, K_KP7:7, K_KP8:8, K_KP9:9, K_KP0:0}
     dirnum = ['0']
     dirnum.append(str(keyz[key_type]))
-    show_message(screen, " " * screen.get_width(), (0, screen.get_height() - 15), 11, ("bold"))
+    show_message(" " * screen.get_width(), (0, screen.get_height() - 15), 11, ("bold"))
     if not gl.BEEN_THERE_DONE_THAT:
         msg1 = "You can type in a directory number or shortcut (L/T/A/D/C/V/S/Q) instead of clicking: _"
         msg2 = "You can type in a directory number or shortcut (L/T/A/D/C/V/S/Q) instead of clicking: %s" % dirnum[1]
     else:
         msg1 = "Directory number or shortcut: _"
         msg2 = "Directory number or shortcut: %s" % dirnum[1] # start with num showing
-    show_message(screen, msg2, "bottom", 11)
+    show_message("bottom", 11)
     my_digits = [] # keypad number list.
 
     for num in range(10):
@@ -377,9 +377,9 @@ def get_dirnum(screen, key_type):
                             dirnum_input = i
                     dirnum.append(dirnum_input)
                     if BACKSPACED:
-                        show_message(screen, msg2 + ''.join(dirnum[1:]), "bottom", 11)
+                        show_message(msg2 + ''.join(dirnum[1:]), "bottom", 11)
                     else:
-                        show_message(screen, msg2 + ''.join(dirnum[2:]), "bottom", 11)
+                        show_message(msg2 + ''.join(dirnum[2:]), "bottom", 11)
             except TypeError:
                 pass
 
@@ -392,8 +392,8 @@ def get_dirnum(screen, key_type):
             BACKSPACED = 1
             dirnum = ['0']
             msg2 = msg1
-            show_message(screen, " " * screen.get_width(), (0, screen.get_height() - 15), 11)
-            show_message(screen, msg1, "bottom", 11)
+            show_message(" " * screen.get_width(), (0, screen.get_height() - 15), 11)
+            show_message(msg1, "bottom", 11)
             return 'backspaced' # get control back so you can click directories
 
     dirnum = int(''.join(dirnum)) # convert to valid number
@@ -406,7 +406,7 @@ def do_view_tagged(screen, file):
     (esc_rect, close_font) = close_button(screen)
     line = 5
     if len(gl.MULT_DIRS) == 0:
-        show_message(screen, "[No directories are currently tagged]", "bottom", 12)
+        show_message("[No directories are currently tagged]", "bottom", 12)
     for d in gl.MULT_DIRS:
         font = pygame.font.Font(gl.FONT_NAME, 9)
         ren = font.render(d, 1, (255, 255, 255), (0, 0, 0))
@@ -456,8 +456,8 @@ def do_change_drive(screen, file):
 
 def do_untag(screen):
     gl.MULT_DIRS = []
-    show_message(screen, " " * 30, (440, 40), 10, ("bold"))
-    show_message(screen, "[Dirs tagged: %s]" % len(gl.MULT_DIRS), (440, 40), 10, "bold")
+    show_message(" " * 30, (440, 40), 10, ("bold"))
+    show_message("[Dirs tagged: %s]" % len(gl.MULT_DIRS), (440, 40), 10, "bold")
 
 
 def do_change_dir(screen, file, dirname):

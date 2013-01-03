@@ -37,8 +37,8 @@ def hide(screen):
                 if pw == gl.CORRECT_PASSWORD:
                     break
                 else:
-                    show_message(screen, "Incorrect Password", (150), 24, ("bold", "transparent"))
-                    show_message(screen, "Press any key to try again", (175), 12, ("bold", "transparent"))
+                    show_message("Incorrect Password", (150), 24, ("bold", "transparent"))
+                    show_message("Press any key to try again", (175), 12, ("bold", "transparent"))
                     f = open(gl.DATA_DIR + "security.log", "a")
                     f.write("Password failure: %s\n" % ctime())
                     f.close()

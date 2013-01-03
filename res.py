@@ -10,7 +10,7 @@ from usr_event import check_quit, hit_key, left_click
 from load_img import load_img
 import pygame.mouse, pygame.event, pygame.font
 from pygame.display import set_mode, toggle_fullscreen, list_modes, update, set_caption#
-from pygame.locals import FULLSCREEN, MOUSEBUTTONDOWN, MOUSEMOTION, K_ESCAPE, KEYDOWN, K_F2, K_F3, K_F4, K_F5, K_F6, K_c, RESIZABLE, VIDEORESIZE#
+from pygame.locals import FULLSCREEN, MOUSEMOTION, K_ESCAPE, KEYDOWN, K_F2, K_F3, K_F4, K_F5, K_F6, K_c, RESIZABLE, VIDEORESIZE#
 
 
 def adjust_screen(screen, *flags):
@@ -163,10 +163,10 @@ def command_show_res_modes(screen, new_img, file, rect):
     (esc_rect, font) = close_button(screen)
     res_font = pygame.font.Font(gl.FONT_NAME, 18)
     res_font.set_bold(1)
-    show_message(screen, "Choose a preset or custom window size for imgv", "top", 12, ("underline", "bold"))
-    show_message(screen, "Use current window size as fullscreen resolution?", (170, 192), 10)
-    show_message(screen, "No  Yes", (430, 182), 10)
-    show_message(screen, "Option: _", "bottom", 12)
+    show_message("Choose a preset or custom window size for imgv", "top", 12, ("underline", "bold"))
+    show_message("Use current window size as fullscreen resolution?", (170, 192), 10)
+    show_message("No  Yes", (430, 182), 10)
+    show_message("Option: _", "bottom", 12)
     (menu_items, men_ops) = show_res_modes(screen, menu_items, res_font)
     pygame.event.set_blocked(MOUSEMOTION)
     while 1:
@@ -175,7 +175,7 @@ def command_show_res_modes(screen, new_img, file, rect):
        cursor = pygame.mouse.get_pos()
        hover_fx(screen, menu_items, cursor, res_font)
        if gl.NOT_HOVERED:
-           show_message(screen, "%sOption: _%s" % (" " * 100, " " * 100), "bottom", 12)
+           show_message("%sOption: _%s" % (" " * 100, " " * 100), "bottom", 12)
            blank_fx(screen, 0)
        check_quit(event)
 
@@ -312,14 +312,14 @@ def blank_fx(screen, row):
     l = [gl.FIRST_RECT, gl.SECOND_RECT, gl.THIRD_RECT, gl.FOURTH_RECT, gl.FIFTH_RECT, gl.SIXTH_RECT]
     for i in range(len(l)):
         if i != row - 1:
-            show_message(screen, "  ", l[i], 12, ("bold")) # erase effect from non-hovered items
+            show_message("  ", l[i], 12, ("bold")) # erase effect from non-hovered items
 
 
 def index_fx(screen, it, font, msg):
     gl.NOT_HOVERED = 0
     fxpos = (it[0][0] - 10, it[0][1] + (font.size(it[1])[1] / 2) - 13, it[0][2], it[0][3])
-    show_message(screen, ".", fxpos, 16, ("bold"))
-    show_message(screen, "%s%s%s" % (" " * 20, msg, " " * 20), "bottom", 12)
+    show_message(".", fxpos, 16, ("bold"))
+    show_message("%s%s%s" % (" " * 20, msg, " " * 20), "bottom", 12)
     return fxpos
 
 
@@ -330,7 +330,7 @@ def update_res_screen(screen, file, new_img):
 
 def do_custom(screen, new_img, file, rect):
     paint_screen(screen, gl.BLACK)
-    show_message(screen, "Enter a custom window size/resolution. (Example:  455x500)", "top", 12, ("bold"))
+    show_message("Enter a custom window size/resolution. (Example:  455x500)", "top", 12, ("bold"))
     res = ask(screen, "New size")
     if res == None:
         return rect

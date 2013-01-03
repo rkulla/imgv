@@ -94,12 +94,12 @@ def exif_data(screen, filename):
             focal_text = exif_data1_msg.split(divider)[4].split()[-1]
             exif_data1_msg = exif_data1_msg.replace(focal_text, str(round(float(focal_text.replace('mm', '')), 1)))
 
-        show_message(screen, exif_data1_msg, (1, 0), 9)
+        show_message(exif_data1_msg, (1, 0), 9)
         if font.size(exif_data2_msg)[0] > screen.get_width():
             exif_data2_wrap = " " + exif_data2.pop()
             exif_data2_msg = " " + ' '.join(exif_data2)[:-3]
-            show_message(screen, exif_data2_wrap, (1, 20), font_size)
-        show_message(screen, exif_data2_msg, (1, 10), font_size)
+            show_message(exif_data2_wrap, (1, 20), font_size)
+        show_message(exif_data2_msg, (1, 10), font_size)
     except:
         pass
 
@@ -214,7 +214,7 @@ def img_info(filename, file, new_img, ns):
             update(transrect)
 
         # write the image status message:
-        show_message(screen, img_status, "bottom", font_size)
+        show_message(img_status, "bottom", font_size)
 
     try:
         if gl.ON_FLY_EXIF_STATUS_BAR:

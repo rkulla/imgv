@@ -228,7 +228,7 @@ def show_thumbs(screen, SPACER, x, i, j, place, marker, font, font_size):
 
         if gl.THUMB_STATUS_BARS:
             # display thumbnail's filename:
-            show_message(screen, thumb_name, (wpos, j + square_height - 12), font_size, ("bold"))
+            show_message(thumb_name, (wpos, j + square_height - 12), font_size, ("bold"))
 
     if place >= len(gl.files):
         return (x, 0, 0, place, 1, marker)

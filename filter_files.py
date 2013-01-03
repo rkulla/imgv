@@ -17,10 +17,10 @@ def command_get_filter_info(screen):
     set_caption("imgv")
     menu_items = []
     (esc_rect, font) = close_button(screen)
-    
-    show_message(screen, 'To build a search filter click as many options below as you need and then click "Done"', (21, 15), 12, ("bold"))
-    show_message(screen, 'Example: If you don\'t want to view movies then just choose "Do not end with" and input:  .mpg, .mpeg', (21, 45), 12)
-    show_message(screen, "Option number: _", "bottom", 12)
+
+    show_message('To build a search filter click as many options below as you need and then click "Done"', (21, 15), 12, ("bold"))
+    show_message('Example: If you don\'t want to view movies then just choose "Do not end with" and input:  .mpg, .mpeg', (21, 45), 12)
+    show_message("Option number: _", "bottom", 12)
     (menu_items, filt_ops) = get_filter_info(screen, menu_items)
     pygame.event.set_blocked(MOUSEMOTION)
     while 1:
@@ -51,18 +51,18 @@ def command_get_filter_info(screen):
                 gl.ADDED_DIR_NUMS = 0
                 return
             break
-        
+
         cursor = pygame.mouse.get_pos()
 
         if left_click(event):
             if esc_rect.collidepoint(cursor):
                 gl.ADDED_DIR_NUMS = 0
-                return 
-        
+                return
+
         hover_fx(screen, menu_items, cursor, font)
         hover_cursor(cursor, [esc_rect] + [x[0] for x in menu_items])
         if gl.NOT_HOVERED:
-            show_message(screen, "%sOption number: _%s" % (" " * 100, " " * 100), "bottom", 12)
+            show_message("%sOption number: _%s" % (" " * 100, " " * 100), "bottom", 12)
             blank_fx(screen, 0)
         if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
             for it in menu_items:
@@ -106,7 +106,7 @@ def get_filter_info(screen, menu_items):
         menu_items.append((ren_rect, op))
         screen.blit(ren, ren_rect)
         line = line + 30
-        update(ren_rect)    
+        update(ren_rect)
     return (menu_items, filt_ops)
 
 
@@ -131,7 +131,7 @@ def filter_files(file_list):
             for i in filt_split:
                 new_list = [x for x in new_list if not x.endswith(i)]
     if "startwith" in gl.FILTER_COMMAND.keys():
-        if new_list == []: 
+        if new_list == []:
             new_list = file_list
         filt_split = convert_to_list("startwith")
         if len(filt_split) >= 1:
@@ -140,7 +140,7 @@ def filter_files(file_list):
             new_list = temp_list
             temp_list = []
     if "notstartwith" in gl.FILTER_COMMAND.keys():
-        if new_list == []: 
+        if new_list == []:
             new_list = file_list
         filt_split = convert_to_list("notstartwith")
         if len(filt_split) >= 1:
@@ -176,8 +176,8 @@ def convert_to_list(name):
 
 def view_filter(screen):
     paint_screen(screen, gl.BLACK)
-    show_message(screen, "Current filter", "top", 20, ("underline", "bold"))
-    show_message(screen, "Imgv will only display files whose filenames:", (5, 30), 15, ("bold"))
+    show_message("Current filter", "top", 20, ("underline", "bold"))
+    show_message("Imgv will only display files whose filenames:", (5, 30), 15, ("bold"))
     line = 60
     for k in gl.FILTER_COMMAND.keys():
         font = pygame.font.Font(gl.FONT_NAME, 12)
@@ -208,10 +208,10 @@ def view_filter(screen):
 
 def do_startwith(screen):
     paint_screen(screen, gl.BLACK)
-    show_message(screen, "Enter the string you want all image names to start with.", (10, 25), 12, ("bold"))
-    show_message(screen, 'Example: Type red to view only images that start with the string'
+    show_message("Enter the string you want all image names to start with.", (10, 25), 12, ("bold"))
+    show_message('Example: Type red to view only images that start with the string'
                          ' "red" (i.e., red_car.jpg)', (10, 55), 12)
-    show_message(screen, '(To input multiple strings separate them with commas)', (10, 75), 11)
+    show_message('(To input multiple strings separate them with commas)', (10, 75), 11)
     startwith_str = ask(screen, "Start with")
     if startwith_str != None:
         gl.FILTER_COMMAND["startwith"] = startwith_str
@@ -220,10 +220,10 @@ def do_startwith(screen):
 
 def do_donot_startwith(screen):
     paint_screen(screen, gl.BLACK)
-    show_message(screen, "Enter the string that you do not want image names to start with.", (10, 25), 12, ("bold"))
-    show_message(screen, 'Example: Type blue to view all images that do not start with the string'
+    show_message("Enter the string that you do not want image names to start with.", (10, 25), 12, ("bold"))
+    show_message('Example: Type blue to view all images that do not start with the string'
                          ' "blue"', (10, 55), 12)
-    show_message(screen, '(To input multiple strings separate them with commas)', (10, 75), 11)
+    show_message('(To input multiple strings separate them with commas)', (10, 75), 11)
     notstartwith_str = ask(screen, "Do not start with")
     if notstartwith_str != None:
         gl.FILTER_COMMAND["notstartwith"] = notstartwith_str
@@ -232,11 +232,11 @@ def do_donot_startwith(screen):
 
 def do_endwith(screen):
     paint_screen(screen, gl.BLACK)
-    show_message(screen, "Enter the string you want all image names to end with.", (10, 25), 12, ("bold"))
-    show_message(screen, 'Example 1: Type .jpg to view all images that end with the string'
+    show_message("Enter the string you want all image names to end with.", (10, 25), 12, ("bold"))
+    show_message('Example 1: Type .jpg to view all images that end with the string'
                          ' ".jpg" (i.e., dog.jpg)', (10, 55), 12)
-    show_message(screen, 'Example 2: To load only jpegs and bitmaps, input:  .jpg, .jpeg, .bmp', (10, 75), 12)
-    show_message(screen, '(To input multiple strings separate them with commas)', (10, 95), 11)
+    show_message('Example 2: To load only jpegs and bitmaps, input:  .jpg, .jpeg, .bmp', (10, 75), 12)
+    show_message('(To input multiple strings separate them with commas)', (10, 95), 11)
     endwith_str = ask(screen, "End with")
     if endwith_str != None:
         gl.FILTER_COMMAND["endwith"] = endwith_str
@@ -245,11 +245,11 @@ def do_endwith(screen):
 
 def do_donot_endwith(screen):
     paint_screen(screen, gl.BLACK)
-    show_message(screen, "Enter the string that you do not want image names to end with.", (10, 25), 12, ("bold"))
-    show_message(screen, 'Example 1: Type .jpg to view all images that do not end with the string'
+    show_message("Enter the string that you do not want image names to end with.", (10, 25), 12, ("bold"))
+    show_message('Example 1: Type .jpg to view all images that do not end with the string'
                          ' ".jpg" (i.e., car.jpg)', (10, 55), 12)
-    show_message(screen, 'Example 2: To only load images that are not GIFs, input:  .gif', (10, 75), 12)
-    show_message(screen, '(To input multiple strings separate them with commas)', (10, 95), 11)
+    show_message('Example 2: To only load images that are not GIFs, input:  .gif', (10, 75), 12)
+    show_message('(To input multiple strings separate them with commas)', (10, 95), 11)
     notendwith_str = ask(screen, "Do not end with")
     if notendwith_str != None:
         gl.FILTER_COMMAND["notendwith"] = notendwith_str
@@ -258,10 +258,10 @@ def do_donot_endwith(screen):
 
 def do_contain(screen):
     paint_screen(screen, gl.BLACK)
-    show_message(screen, "Enter the string you want all image names to contain.", (10, 25), 12, ("bold"))
-    show_message(screen, 'Example: Type red to view all images that contain the string'
+    show_message("Enter the string you want all image names to contain.", (10, 25), 12, ("bold"))
+    show_message('Example: Type red to view all images that contain the string'
                          ' "red" (i.e., my_red_car.jpg)', (10, 55), 12)
-    show_message(screen, '(To input multiple strings separate them with commas)', (10, 75), 11)
+    show_message('(To input multiple strings separate them with commas)', (10, 75), 11)
     contain_str = ask(screen, "Contain")
     if contain_str != None:
         gl.FILTER_COMMAND["contain"] = contain_str
@@ -270,10 +270,10 @@ def do_contain(screen):
 
 def do_donot_contain(screen):
     paint_screen(screen, gl.BLACK)
-    show_message(screen, "Enter the string that you do not want image names to contain.", (10, 25), 12, ("bold"))
-    show_message(screen, 'Example: Type blue to view only images that do not contain the string'
+    show_message("Enter the string that you do not want image names to contain.", (10, 25), 12, ("bold"))
+    show_message('Example: Type blue to view only images that do not contain the string'
                          ' "blue" (i.e., my_blue_car.jpg)', (10, 55), 12)
-    show_message(screen, '(To input multiple strings separate them with commas)', (10, 75), 11)
+    show_message('(To input multiple strings separate them with commas)', (10, 75), 11)
     notcontain_str = ask(screen, "Do not contain")
     if notcontain_str != None:
         gl.FILTER_COMMAND["notcontain"] = notcontain_str
@@ -335,13 +335,13 @@ def blank_fx(screen, row):
     l = [gl.FIRST_RECT, gl.SECOND_RECT, gl.THIRD_RECT, gl.FOURTH_RECT, gl.FIFTH_RECT, gl.SIXTH_RECT, gl.SEVENTH_RECT, gl.EIGHTH_RECT, gl.NINTH_RECT]
     for i in range(len(l)):
         if i != row - 1:
-            show_message(screen, "  ", l[i], 12, ("bold")) # erase effect from non-hovered items
-            
+            show_message("  ", l[i], 12, ("bold")) # erase effect from non-hovered items
+
 
 def index_fx(screen, it, font, msg):
     gl.NOT_HOVERED = 0
     fxpos = (it[0][0] - 10, it[0][1] + (font.size(it[1])[1] / 2) - 10, it[0][2], it[0][3])
-    show_message(screen, ".", fxpos, 16, ("bold"))
-    show_message(screen, "%s%s%s" % (" " * 100, msg, " " * 100), "bottom", 12)
+    show_message(".", fxpos, 16, ("bold"))
+    show_message("%s%s%s" % (" " * 100, msg, " " * 100), "bottom", 12)
     return fxpos
 

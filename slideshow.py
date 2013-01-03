@@ -22,14 +22,14 @@ def stopped_msg(screen):
     gl.SLIDE_SHOW_RUNNING = 0
     set_caption("[Slideshow Stopped] - imgv")
     enable_screensaver()
-    show_message(screen, "Stopped", 30, 23, ("bold"))
+    show_message("Stopped", 30, 23, ("bold"))
     pygame.time.wait(1000) # display the stopped message for 1 second
 
 
 def pause(screen):
     while 1:
         set_caption("[Slideshow Paused] - imgv")
-        ren_rect = show_message(screen, "Paused", 30, 23, ("bold"))
+        ren_rect = show_message("Paused", 30, 23, ("bold"))
         event = pygame.event.wait()
         check_quit(event)
         if event.type == KEYDOWN and event.key not in(K_LALT, K_RALT, K_LCTRL, K_RCTRL, K_TAB):

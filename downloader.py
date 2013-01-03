@@ -24,23 +24,23 @@ def save_remote_img(screen, file):
     try:
         im = Image.open(gl.REMOTE_IMG_DATA)
 
-        show_message(screen, "Saving: %s" % basename(gl.files[file]), (20, 50), 12, ("bold"))
-        show_message(screen, "From: %s" % filename[:filename.rindex('/')] + '/', (20, 70), 12, ("bold"))
-        show_message(screen, "To: %s" % save_path, (20, 90), 12, ("bold"))
+        show_message("Saving: %s" % basename(gl.files[file]), (20, 50), 12, ("bold"))
+        show_message("From: %s" % filename[:filename.rindex('/')] + '/', (20, 70), 12, ("bold"))
+        show_message("To: %s" % save_path, (20, 90), 12, ("bold"))
 
         im.save(save_path + basename(filename))
 
-        show_message(screen, "Done", (20, 120), 12, ("bold", "underline"))
-        show_message(screen, "[Press any key]", "bottom", 15)
+        show_message("Done", (20, 120), 12, ("bold", "underline"))
+        show_message("[Press any key]", "bottom", 15)
         gl.ALREADY_DOWNLOADED = 1
         normal_cursor()
     except:
         return
-    
+
     while 1:
         event = pygame.event.wait()
         check_quit(event)
         #if event.type == KEYDOWN or event.type == MOUSEBUTTONDOWN:
         if event.type == KEYDOWN and event.key not in (K_LALT, K_RALT):
             return
-        
+
