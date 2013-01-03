@@ -120,7 +120,7 @@ def html_file():
 
 def open_url(screen, img):
     gl.ISURL = 1
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     set_caption("Extract from Web - imgv")
     normal_cursor()
     show_message("Enter a Web URL to extract images from", 20, 15, ("transparent"))

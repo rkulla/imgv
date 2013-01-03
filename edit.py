@@ -20,7 +20,7 @@ from pygame.locals import K_ESCAPE, MOUSEBUTTONDOWN, MOUSEMOTION, KEYDOWN, K_UP,
 
 def command_edit_menu(screen, file, new_img, rect):
     menu_items = []
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     (esc_rect, font) = close_button(screen)
     show_message("%s" % os.path.basename(gl.files[file]), "top", 12, "bold")
     show_message("Option number: _", "bottom", 12)
@@ -50,16 +50,16 @@ def command_edit_menu(screen, file, new_img, rect):
        if event.type == KEYDOWN and event.key in (K_1, K_2, K_3, K_4, K_KP1, K_KP2, K_KP3, K_KP4):
            if hit_key(event, K_1) or hit_key(event, K_KP1):
                (new_img, img, refresh_img, file, rect) = do_delete_image(screen, new_img, file, rect)
-               paint_screen(screen, gl.BLACK)
+               paint_screen(gl.BLACK)
                (menu_items, men_ops) = edit_menu(screen, file, menu_items)
            if hit_key(event, K_2) or hit_key(event, K_KP2):
                do_set_wallpaper(screen, file, new_img, rect)
-               paint_screen(screen, gl.BLACK)
+               paint_screen(gl.BLACK)
                (menu_items, men_ops) = edit_menu(screen, file, menu_items)
            if hit_key(event, K_3) or hit_key(event, K_KP3):
                 if gl.EXTERNAL_EDITOR not in ('"None"', '"none"', '"NONE"', ''):
                     do_external_viewer(screen, file, new_img)
-                paint_screen(screen, gl.BLACK)
+                paint_screen(gl.BLACK)
                 (menu_items, men_ops) = edit_menu(screen, file, menu_items)
            if hit_key(event, K_4) or hit_key(event, K_KP4):
                preferences(screen)
@@ -70,17 +70,17 @@ def command_edit_menu(screen, file, new_img, rect):
                if it[0].collidepoint(cursor) and it[1] in men_ops:
                    if it[1] == "1) Delete image":
                        (new_img, new_img, new_img, file, rect) = do_delete_image(screen, new_img, file, rect)
-                       paint_screen(screen, gl.BLACK)
+                       paint_screen(gl.BLACK)
                        (menu_items, men_ops) = edit_menu(screen, file, menu_items)
                        break
                    if it[1] == "2) Set as wallpaper":
                        do_set_wallpaper(screen, file, new_img, rect)
-                       paint_screen(screen, gl.BLACK)
+                       paint_screen(gl.BLACK)
                        (menu_items, men_ops) = edit_menu(screen, file, menu_items)
                        break
                    if it[1] == "3) Open in external viewer":
                         do_external_viewer(screen, file, new_img)
-                        paint_screen(screen, gl.BLACK)
+                        paint_screen(gl.BLACK)
                         (menu_items, men_ops) = edit_menu(screen, file, menu_items)
                         break
                    if it[1] == "4) Preferences":
@@ -121,7 +121,7 @@ def do_external_viewer(screen, file, new_img):
 
 
 def do_gamma(screen):
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     show_message("Set the RGB gamma values on the display hardware while imgv is running.", 20, 13, ("bold"))
     show_message("Valid values are 0.3 to 4.4.  1.0 is the default. Higher than 1.0 = brighter. Lower than 1.0 = darker.", 40, 12)
     gl.CURRENT_GAMMA = new_gamma = ask(screen, "New gamma value")
@@ -195,7 +195,7 @@ def index_fx(screen, it, font, msg):
 
 
 def preferences(screen):
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     set_caption("imgv preferences")
     font_size = 12
     font = pygame.font.Font(gl.FONT_NAME, font_size)
@@ -218,12 +218,12 @@ def preferences(screen):
             prefs_blank_fx(screen, -1)
         if hit_key(event, K_ESCAPE):
             gl.ESCAPED = 1
-            paint_screen(screen, gl.BLACK)
+            paint_screen(gl.BLACK)
             return
         if left_click(event):
             if esc_rect.collidepoint(cursor):
                 gl.ESCAPED = 1
-                paint_screen(screen, gl.BLACK)
+                paint_screen(gl.BLACK)
                 return
             if transparent_text_ucrect.collidepoint(cursor):
                 gl.TOGGLE_TRANSPARENT ^= 1
@@ -263,7 +263,7 @@ def preferences(screen):
                 show_message("(You must restart imgv for this change to take effect)", (375, 204), 10, ("bold", "transparent"))
                 write_cfg("MOVIES")
             if fit_image_rect.collidepoint(cursor):
-                paint_screen(screen, gl.BLACK)
+                paint_screen(gl.BLACK)
                 show_message("Enter an option letter and press enter", (15, 20), 13, ("bold", "transparent"))
                 show_message("A = Fit nothing.", (15, 60), 13, ("bold", "transparent"))
                 show_message("B = Fit only large images to the window.", (15, 80), 13, ("bold", "transparent"))
@@ -276,7 +276,7 @@ def preferences(screen):
                     write_cfg("FIT_IMAGE", str(gl.FIT_IMAGE_VAL))
                 clean_prefs(screen)
             if fit_slideshow_rect.collidepoint(cursor):
-                paint_screen(screen, gl.BLACK)
+                paint_screen(gl.BLACK)
                 show_message("Enter an option letter and press enter", (15, 20), 13, ("bold", "transparent"))
                 show_message("A = Fit nothing.", (15, 60), 13, ("bold", "transparent"))
                 show_message("B = Fit only large images to the window.", (15, 80), 13, ("bold", "transparent"))
@@ -350,7 +350,7 @@ def preferences(screen):
                 (gl.CLOSE_BUTTONCOLOR, cfg_str) = color_change(answer, gl.CLOSE_BUTTONCOLOR)
                 color_clean(screen, "CLOSE_BUTTONCOLOR", cfg_str)
             if winsize_rect.collidepoint(cursor):
-                paint_screen(screen, gl.BLACK)
+                paint_screen(gl.BLACK)
                 show_message("Default Window Size or resolution of imgv (in the format: width x height. Default is: 800x600)", (15, 80), 13, ("bold", "transparent"))
                 answer = ask(screen, "New window size")
                 if answer != None:
@@ -364,7 +364,7 @@ def preferences(screen):
                     write_cfg("IMGV_WINDOW_SIZE", answer)
                 clean_prefs(screen)
             if thumbsize_rect.collidepoint(cursor):
-                paint_screen(screen, gl.BLACK)
+                paint_screen(gl.BLACK)
                 show_message("The size you set will be used as the size of the thumbnail border/box, not the images themselves.", (15, 60), 13, ("bold", "transparent"))
                 show_message("Values are in the format: width x height. Example: 100x100", (15, 100), 13, ("transparent"))
                 show_message("To have imgv choose the best thumb size for a given default screen size use the default value of: AUTO", (15, 120), 13, ("transparent"))
@@ -374,7 +374,7 @@ def preferences(screen):
                     write_cfg("THUMB_SIZE", answer)
                 clean_prefs(screen)
             if transeffect_rect.collidepoint(cursor):
-                paint_screen(screen, gl.BLACK)
+                paint_screen(gl.BLACK)
                 show_message("Valid values: NONE (default), MELT, FADE_IN", (15, 60), 13, ("bold", "transparent"))
                 show_message("You can also apply multiple effects by separating them with |'s such as: MELT|FADE_IN", (15, 90), 13, ("transparent"))
                 answer = ask(screen, "Transitional effect")
@@ -383,7 +383,7 @@ def preferences(screen):
                     write_cfg("TRANSITIONAL_EFFECT", answer)
                 clean_prefs(screen)
             if startdir_rect.collidepoint(cursor):
-                paint_screen(screen, gl.BLACK)
+                paint_screen(gl.BLACK)
                 show_message("Set this to an already existing directory that you want imgv to initially load images from.", (15, 60), 13, ("bold", "transparent"))
                 if platform == 'win32':
                     show_message("For example: C:\photos\\", (15, 80), 13, ("transparent"))
@@ -398,7 +398,7 @@ def preferences(screen):
                     write_cfg("START_DIRECTORY", answer)
                 clean_prefs(screen)
             if external_editor_rect.collidepoint(cursor):
-                paint_screen(screen, gl.BLACK)
+                paint_screen(gl.BLACK)
                 show_message("Path to an external image editing application (You must put quotes around the value)", (15, 60), 13, ("bold", "transparent"))
                 show_message("For example, if you want to use Adobe Photoshop with imgv you might put:", (15, 80), 13, ("transparent"))
                 show_message("\"C:\\Program Files\\Adobe\\Photoshop CS2\\Photoshop.exe\"", (15, 100), 13, ("transparent"))
@@ -409,7 +409,7 @@ def preferences(screen):
                     write_cfg("EXTERNAL_EDITOR", answer)
                 clean_prefs(screen)
             if passwd_rect.collidepoint(cursor):
-                paint_screen(screen, gl.BLACK)
+                paint_screen(gl.BLACK)
                 show_message("Set this to the password you want to be used in the 'Hide Image' feature.", (15, 60), 13, ("bold", "transparent"))
                 show_message("It's case sensitive and don't use quotes.", (15, 90), 13, ("transparent"))
                 show_message("Set to None (default) if you don't want to be prompted for a password.", (15, 110), 13, ("transparent"))
@@ -424,7 +424,7 @@ def preferences(screen):
 
 
 def color_msg(screen, msg):
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     show_message(msg, (15, 20), 13, ("bold", "transparent"))
     show_message("Valid colors: BLACK, WHITE, PURPLE, BLUE, IMGV_LOGO_BLUE, SKY_BLUE, SILVER, GREEN, LIGHT_GREEN,", (15, 50), 13, ("transparent"))
     show_message("SADDLE_BROWN, RED, ORANGE, YELLOW, DARK_SLATE_BLUE, DARK_SLATE_GRAY, MID_GRAY.", (15, 70), 13, ("transparent"))
@@ -438,7 +438,7 @@ def color_clean(screen, what, cfg_str):
 
 
 def clean_prefs(screen):
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     print_preferences(screen)
 
 
@@ -665,52 +665,52 @@ def pref_options(screen):
     show_message("No:", (no_wpos, 205), 10, ("transparent"))
     show_movies_crect, show_movies_ucrect = check_boxes(screen, (206, cbox_wpos1, cbox_wpos2), "show_movies")
 
-    paint_screen(screen, gl.WHITE, (change_msg_wpos, 223, 12, 10))
-    paint_screen(screen, gl.IMGV_COLOR, (change_msg_wpos+1, 224, 10, 8))
+    paint_screen(gl.WHITE, (change_msg_wpos, 223, 12, 10))
+    paint_screen(gl.IMGV_COLOR, (change_msg_wpos+1, 224, 10, 8))
     screen_bgcolor_rect = change_box(screen, (224, change_wpos))
 
-    paint_screen(screen, gl.WHITE, (change_msg_wpos, 239, 12, 10))
-    paint_screen(screen, gl.MSG_COLOR, (change_msg_wpos+1, 240, 10, 8))
+    paint_screen(gl.WHITE, (change_msg_wpos, 239, 12, 10))
+    paint_screen(gl.MSG_COLOR, (change_msg_wpos+1, 240, 10, 8))
     font_color_rect = change_box(screen, (240, change_wpos))
 
-    paint_screen(screen, gl.WHITE, (change_msg_wpos, 255, 12, 10))
-    paint_screen(screen, gl.FONT_BG, (change_msg_wpos+1, 256, 10, 8))
+    paint_screen(gl.WHITE, (change_msg_wpos, 255, 12, 10))
+    paint_screen(gl.FONT_BG, (change_msg_wpos+1, 256, 10, 8))
     font_bgcolor_rect = change_box(screen, (256, change_wpos))
 
-    paint_screen(screen, gl.WHITE, (change_msg_wpos, 271, 12, 10))
-    paint_screen(screen, gl.IMG_BORDER_COLOR, (change_msg_wpos+1, 272, 10, 8))
+    paint_screen(gl.WHITE, (change_msg_wpos, 271, 12, 10))
+    paint_screen(gl.IMG_BORDER_COLOR, (change_msg_wpos+1, 272, 10, 8))
     img_border_color_rect = change_box(screen, (272, change_wpos))
 
-    paint_screen(screen, gl.WHITE, (change_msg_wpos, 287, 12, 10))
-    paint_screen(screen, gl.THUMB_BORDER_COLOR, (change_msg_wpos+1, 288, 10, 8))
+    paint_screen(gl.WHITE, (change_msg_wpos, 287, 12, 10))
+    paint_screen(gl.THUMB_BORDER_COLOR, (change_msg_wpos+1, 288, 10, 8))
     thumb_border_color_rect = change_box(screen, (288, change_wpos))
 
-    paint_screen(screen, gl.WHITE, (change_msg_wpos, 303, 12, 10))
-    paint_screen(screen, gl.THUMB_BG_COLOR_VAL, (change_msg_wpos+1, 304, 10, 8))
+    paint_screen(gl.WHITE, (change_msg_wpos, 303, 12, 10))
+    paint_screen(gl.THUMB_BG_COLOR_VAL, (change_msg_wpos+1, 304, 10, 8))
     thumb_bgcolor_rect = change_box(screen, (304, change_wpos))
 
-    paint_screen(screen, gl.WHITE, (change_msg_wpos, 320, 12, 10))
-    paint_screen(screen, gl.FOUR_DIV_COLOR, (change_msg_wpos+1, 321, 10, 8))
+    paint_screen(gl.WHITE, (change_msg_wpos, 320, 12, 10))
+    paint_screen(gl.FOUR_DIV_COLOR, (change_msg_wpos+1, 321, 10, 8))
     four_divcolor_rect = change_box(screen, (321, change_wpos))
 
-    paint_screen(screen, gl.WHITE, (change_msg_wpos, 336, 12, 10))
-    paint_screen(screen, gl.BUTTON_BGCOLOR, (change_msg_wpos+1, 337, 10, 8))
+    paint_screen(gl.WHITE, (change_msg_wpos, 336, 12, 10))
+    paint_screen(gl.BUTTON_BGCOLOR, (change_msg_wpos+1, 337, 10, 8))
     button_bgcolor_rect = change_box(screen, (337, change_wpos))
 
-    paint_screen(screen, gl.WHITE, (change_msg_wpos, 352, 12, 10))
-    paint_screen(screen, gl.BUTTON_HOVERCOLOR, (change_msg_wpos+1, 353, 10, 8))
+    paint_screen(gl.WHITE, (change_msg_wpos, 352, 12, 10))
+    paint_screen(gl.BUTTON_HOVERCOLOR, (change_msg_wpos+1, 353, 10, 8))
     button_hover_color_rect = change_box(screen, (353, change_wpos))
 
-    paint_screen(screen, gl.WHITE, (change_msg_wpos, 368, 12, 10))
-    paint_screen(screen, gl.BUTTON_TEXTCOLOR, (change_msg_wpos+1, 369, 10, 8))
+    paint_screen(gl.WHITE, (change_msg_wpos, 368, 12, 10))
+    paint_screen(gl.BUTTON_TEXTCOLOR, (change_msg_wpos+1, 369, 10, 8))
     button_textcolor_rect = change_box(screen, (369, change_wpos))
 
-    paint_screen(screen, gl.WHITE, (change_msg_wpos, 384, 12, 10))
-    paint_screen(screen, gl.BUTTON_TEXTHOVERCOLOR, (change_msg_wpos+1, 385, 10, 8))
+    paint_screen(gl.WHITE, (change_msg_wpos, 384, 12, 10))
+    paint_screen(gl.BUTTON_TEXTHOVERCOLOR, (change_msg_wpos+1, 385, 10, 8))
     button_texthovercolor_rect = change_box(screen, (385, change_wpos))
 
-    paint_screen(screen, gl.WHITE, (change_msg_wpos, 400, 12, 10))
-    paint_screen(screen, gl.CLOSE_BUTTONCOLOR, (change_msg_wpos+1, 401, 10, 8))
+    paint_screen(gl.WHITE, (change_msg_wpos, 400, 12, 10))
+    paint_screen(gl.CLOSE_BUTTONCOLOR, (change_msg_wpos+1, 401, 10, 8))
     close_button_color_rect = change_box(screen, (401, change_wpos))
 
     show_message("%s" % ('Fit nothing', 'Fit large images', 'Fit all images', 'Fit window to image')[gl.FIT_IMAGE_VAL], (change_msg_wpos, 416), 10, ("transparent"))

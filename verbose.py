@@ -260,7 +260,7 @@ class verbose:
     def loaded_time(self):
         self.print_info("Loaded in: %s milliseconds %s" % (comma_it(gl.N_MILLISECONDS), ('', '(From Zoom)')[gl.CURRENT_ZOOM_PERCENT != 100]), 10)
     def exif_data(self, filen):
-        paint_screen(self.screen, gl.BLACK)
+        paint_screen(gl.BLACK)
         close_button(self.screen)
         if not self.show_exif:
             gl.SHOW_EXIFBUTTON = 0
@@ -364,7 +364,7 @@ class verbose:
 def command_verbose_info(screen, new_img, rect, file):
     gl.ORIG_WINSIZE = "%sx%s" % (screen.get_width(), screen.get_height())
     (screen, before_winsize, not_accepted) = adjust_screen(screen)
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     if gl.REMOTE:
         remote_img_details(screen, new_img, rect, file)
     else:
@@ -377,7 +377,7 @@ def command_verbose_info(screen, new_img, rect, file):
 def verbose_info(screen, new_img, file):
     # main engine
     wait_cursor()
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     try:
         (uniquecolors_rect, total_colors, row, font, im, verb) = print_verbose_info(screen, new_img, file)
     except:
@@ -475,7 +475,7 @@ def print_verbose_info(screen, new_img, file):
 
 def remote_img_details(screen, new_img, rect, file):
     # show no details if image is on a web server
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     while 1:
         event = pygame.event.wait()
         show_message(gl.REMOTE_IMG, (0, 30, 0, 0), 12)

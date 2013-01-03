@@ -27,7 +27,7 @@ def command_help(screen, new_img, file, rect):
 
 
 def help(screen):
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     (screen_width, screen_height) = (screen.get_width(), screen.get_height())
     (esc_rect, font) = close_button(screen)
     show_message("Main Keyboard Commands", "top", 11, ("bold", "underline", "transparent"))

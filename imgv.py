@@ -89,7 +89,7 @@ class Imgv(object):
             if gl.HAND_TOOL:
                 if left_click(event):  # calculate drag coordinates:
                     if gl.IMG_BORDER:
-                        border_fix(self.gfx['screen'])  # erase the current border
+                        border_fix()  # erase the current border
                     grab_hand_cursor()
                     self.minus1 = cursor[0] - self.gfx['rect'][0]
                     self.minus2 = cursor[1] - self.gfx['rect'][1]
@@ -150,48 +150,48 @@ def start_auto_repeat(gfx, last_rect, event):
         if rect.bottom > screen_height:
             command_up(rect, last_rect, new_img, screen, file, screen_height)
             if gl.IMG_BORDER:
-                border_fix(screen)
+                border_fix()
                 img_border(screen, new_img.get_width(), new_img.get_height(), rect[0], rect[1])
     if gl.MY_KEYUP:
         if rect.top < 0:
             command_down(rect, last_rect, new_img, screen, file)
             if gl.IMG_BORDER:
-                border_fix(screen)
+                border_fix()
                 img_border(screen, new_img.get_width(), new_img.get_height(), rect[0], rect[1])
     if gl.MY_KEYRIGHT:
         if rect.right > screen_width:
             command_left(rect, last_rect, new_img, screen, file, screen_width)
             if gl.IMG_BORDER:
-                border_fix(screen)
+                border_fix()
                 img_border(screen, new_img.get_width(), new_img.get_height(), rect[0], rect[1])
     if gl.MY_KEYLEFT:
         if rect.left < 0:
             command_right(rect, last_rect, new_img, screen, file)
             if gl.IMG_BORDER:
-                border_fix(screen)
+                border_fix()
                 img_border(screen, new_img.get_width(), new_img.get_height(), rect[0], rect[1])
     if event.type == MOUSEBUTTONDOWN:
         if event.dict['button'] == 4:  # mouse wheel up
             if rect.top < 0:
                 command_down(rect, last_rect, new_img, screen, file)
                 if gl.IMG_BORDER:
-                    border_fix(screen)
+                    border_fix()
                     img_border(screen, new_img.get_width(), new_img.get_height(), rect[0], rect[1])
         if event.dict['button'] == 5:  # mouse wheel down
             if rect.bottom > screen_height:
                 command_up(rect, last_rect, new_img, screen, file, screen_height)
                 if gl.IMG_BORDER:
-                    border_fix(screen)
+                    border_fix()
                     img_border(screen, new_img.get_width(), new_img.get_height(), rect[0], rect[1])
 
 
-def border_fix(screen):
+def border_fix():
     "draw over the last placed border with the background color to make it disappear"
     if gl.LRECT or gl.RRECT or gl.TRECT or gl.BRECT:
-        paint_screen(screen, gl.IMGV_COLOR, gl.LRECT)
-        paint_screen(screen, gl.IMGV_COLOR, gl.RRECT)
-        paint_screen(screen, gl.IMGV_COLOR, gl.TRECT)
-        paint_screen(screen, gl.IMGV_COLOR, gl.BRECT)
+        paint_screen(gl.IMGV_COLOR, gl.LRECT)
+        paint_screen(gl.IMGV_COLOR, gl.RRECT)
+        paint_screen(gl.IMGV_COLOR, gl.TRECT)
+        paint_screen(gl.IMGV_COLOR, gl.BRECT)
 
 
 def stop_auto_repeat():

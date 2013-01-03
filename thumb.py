@@ -32,7 +32,7 @@ def command_thumbs(screen, new_img, file, ns):
 
     if not gl.TOGGLE_FULLSCREEN_SET:
         screen = set_mode(screen.get_size()) # take away resize priviledges
-    paint_screen(screen, gl.IMGV_COLOR)
+    paint_screen(gl.IMGV_COLOR)
     set_caption("imgv")
     orig_ns = ns
     (new_img, new_img, new_img, file, start) = thumbs_engine(screen, new_img, file, ns)
@@ -109,7 +109,7 @@ def thumbs_engine(screen, new_img, file, ns):
                 if hit_key(event, K_SPACE) or hit_key(event, K_t) or hit_key(event, K_n) or hit_key(event, K_p) or hit_key(event, K_PAUSE) or right_click(event):
                     if not place >= len(gl.files):
                         if not gl.PAUSED: # go to next thumb page:
-                            paint_screen(screen, gl.IMGV_COLOR)
+                            paint_screen(gl.IMGV_COLOR)
                             close_button(screen)
                             set_caption("Thumbnails [Paused]")
                             x = []
@@ -126,7 +126,7 @@ def thumbs_engine(screen, new_img, file, ns):
                         i = j = SPACER
                         if gl.PAUSED:
                             gl.PAUSED = 0
-                        paint_screen(screen, gl.IMGV_COLOR)
+                        paint_screen(gl.IMGV_COLOR)
                         close_button(screen)
                         screen_pause = 0
                         place = place - (marker + gl.MAX_THUMBS)
@@ -203,7 +203,7 @@ def show_thumbs(screen, SPACER, x, i, j, place, marker, font, font_size):
             return (x, i, j, place, 1, marker)
 
         # draw individual thumbnail backgrounds:
-        paint_screen(screen, gl.THUMB_BG_COLOR_VAL, (i, j, square_width, square_height))
+        paint_screen(gl.THUMB_BG_COLOR_VAL, (i, j, square_width, square_height))
 
         if gl.THUMB_BORDER_VAL:
             # draw borders:

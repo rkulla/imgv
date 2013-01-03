@@ -7,13 +7,15 @@ from img_screen import paint_screen
 from usr_event import check_quit, left_click, hit_key
 from buttons import close_button
 from cursor import hover_cursor
-import pygame.event, pygame.font, pygame.mouse
+import pygame.event
+import pygame.font
+import pygame.mouse
 from pygame.display import update, set_caption
 from pygame.locals import MOUSEBUTTONDOWN, MOUSEMOTION, KEYDOWN, K_ESCAPE, K_1, K_2, K_3, K_4, K_5, K_6, K_7, K_8, K_9, K_KP1, K_KP2, K_KP3, K_KP4, K_KP5, K_KP6, K_KP7, K_KP8, K_KP9
 
 
 def command_get_filter_info(screen):
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     set_caption("imgv")
     menu_items = []
     (esc_rect, font) = close_button(screen)
@@ -175,7 +177,7 @@ def convert_to_list(name):
 
 
 def view_filter(screen):
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     show_message("Current filter", "top", 20, ("underline", "bold"))
     show_message("Imgv will only display files whose filenames:", (5, 30), 15, ("bold"))
     line = 60
@@ -207,7 +209,7 @@ def view_filter(screen):
 
 
 def do_startwith(screen):
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     show_message("Enter the string you want all image names to start with.", (10, 25), 12, ("bold"))
     show_message('Example: Type red to view only images that start with the string'
                          ' "red" (i.e., red_car.jpg)', (10, 55), 12)
@@ -219,7 +221,7 @@ def do_startwith(screen):
 
 
 def do_donot_startwith(screen):
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     show_message("Enter the string that you do not want image names to start with.", (10, 25), 12, ("bold"))
     show_message('Example: Type blue to view all images that do not start with the string'
                          ' "blue"', (10, 55), 12)
@@ -231,7 +233,7 @@ def do_donot_startwith(screen):
 
 
 def do_endwith(screen):
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     show_message("Enter the string you want all image names to end with.", (10, 25), 12, ("bold"))
     show_message('Example 1: Type .jpg to view all images that end with the string'
                          ' ".jpg" (i.e., dog.jpg)', (10, 55), 12)
@@ -244,7 +246,7 @@ def do_endwith(screen):
 
 
 def do_donot_endwith(screen):
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     show_message("Enter the string that you do not want image names to end with.", (10, 25), 12, ("bold"))
     show_message('Example 1: Type .jpg to view all images that do not end with the string'
                          ' ".jpg" (i.e., car.jpg)', (10, 55), 12)
@@ -257,7 +259,7 @@ def do_donot_endwith(screen):
 
 
 def do_contain(screen):
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     show_message("Enter the string you want all image names to contain.", (10, 25), 12, ("bold"))
     show_message('Example: Type red to view all images that contain the string'
                          ' "red" (i.e., my_red_car.jpg)', (10, 55), 12)
@@ -269,7 +271,7 @@ def do_contain(screen):
 
 
 def do_donot_contain(screen):
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     show_message("Enter the string that you do not want image names to contain.", (10, 25), 12, ("bold"))
     show_message('Example: Type blue to view only images that do not contain the string'
                          ' "blue" (i.e., my_blue_car.jpg)', (10, 55), 12)

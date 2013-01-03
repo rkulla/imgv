@@ -24,7 +24,7 @@ def command_hide(screen, new_img, rect, file):
 
 
 def hide(screen):
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     set_icon(pygame.image.load(gl.DATA_DIR + "imgv-icon-blank.png"))
     normal_cursor()
     while 1:

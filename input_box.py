@@ -53,7 +53,7 @@ def ask(screen, question, hist_list=[''], count=0):
     current_string = []
     (esc_rect, font) = close_button(screen)
     if question in ("Password", "New password"):
-        paint_screen(screen, gl.BLACK, esc_rect) # Erase the close button, no need for it
+        paint_screen(gl.BLACK, esc_rect) # Erase the close button, no need for it
     if gl.ISURL:
         display_box(screen, "%s%s_" % (question, "".join(current_string)))
     else:
@@ -73,7 +73,7 @@ def ask(screen, question, hist_list=[''], count=0):
             gl.ISURL = 0
             if gl.WAS_IN_CHANGE_DRIVES:
                 gl.ADDED_DIR_NUMS = 0
-            paint_screen(screen, gl.BLACK, Rect(0, 255, screen.get_width(), 100)) # erase box from screen
+            paint_screen(gl.BLACK, Rect(0, 255, screen.get_width(), 100)) # erase box from screen
             show_message(' ' * 40, "bottom", 12) # erase message
             return None
         elif inkey == K_UP:

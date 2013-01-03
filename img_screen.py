@@ -7,7 +7,8 @@ from status_bar import img_info
 from pygame.locals import Rect
 
 
-def paint_screen(screen, color, *rect):
+def paint_screen(color, *rect):
+    screen = get_surface()
     if not rect:
         screen.fill(color)
         update()

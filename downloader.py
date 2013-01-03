@@ -20,7 +20,7 @@ from pygame.locals import KEYDOWN, MOUSEBUTTONDOWN, K_LALT, K_RALT
 def save_remote_img(screen, file):
     save_path = gl.DATA_DIR + "downloads" + sep
     filename = gl.files[file]
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     try:
         im = Image.open(gl.REMOTE_IMG_DATA)
 

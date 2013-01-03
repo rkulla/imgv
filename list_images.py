@@ -11,7 +11,7 @@ from res import  adjust_screen, restore_screen
 def command_img_names(screen, new_img, img, file, rect):
     num_imgs = len(gl.files)
     (screen, before_winsize, not_accepted) = adjust_screen(screen)
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     normal_cursor()
     gl.SORT_HIT = 0
     (list_names, filename, x, my_string) = command_file_master(screen, gl.files,\

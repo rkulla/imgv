@@ -165,7 +165,7 @@ def get_resolution():
 
 
 def command_show_res_modes(screen, new_img, file, rect):
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     set_caption("Resize Options - imgv")
     menu_items = []
     (esc_rect, font) = close_button(screen)
@@ -349,7 +349,7 @@ def update_res_screen(screen, file, new_img):
 
 
 def do_custom(screen, new_img, file, rect):
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     show_message("Enter a custom window size/resolution. (Example:  455x500)",
                  "top", 12, ("bold"))
     res = ask(screen, "New size")

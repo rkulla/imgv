@@ -13,7 +13,7 @@ from pygame.locals import MOUSEBUTTONDOWN, KEYDOWN
 
 
 def command_add_to_play_list(screen, filename):
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     normal_cursor()
     gl.SORT_HIT = 1
     small_font = pygame.font.Font(gl.FONT_NAME, 10)
@@ -45,7 +45,7 @@ def command_add_to_play_list(screen, filename):
 
 
 def command_play_list_options(screen, file):
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     old_file = file
     (file, msg) = play_list_options(screen, file)
     if (msg != None and file != "rclicked" and file != "deleteit"):
@@ -107,7 +107,7 @@ def play_list_options(screen, file):
 
 
 def edit_play_list(screen, play_list_name):
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     keep_going = 1
     play_list = gl.DATA_DIR + play_list_name
     f = open(play_list)
@@ -176,7 +176,7 @@ def delete_play_list(play_list):
 
 
 def play_list_options_msg(screen, msg):
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     show_message(msg, 100, 10)
     normal_cursor()
     while 1:

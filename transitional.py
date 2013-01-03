@@ -20,7 +20,7 @@ def transitional_fx(screen, img):
             melt_it(screen)
         if gl.TRANS_FX in ("FADE_IN", "fade_in"):
             fade_in(screen, img)
-    
+
 
 def melt_it(screen):
     meltdown = Meltdown(screen)
@@ -35,7 +35,7 @@ def melt_it(screen):
 
 
 def fade_in(screen, image):
-    paint_screen(screen, gl.IMGV_COLOR)
+    paint_screen(gl.IMGV_COLOR)
     for darken in range(50):
         image.set_alpha(darken)
         r = screen.blit(image, get_center(screen, image))

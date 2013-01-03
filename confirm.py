@@ -10,7 +10,7 @@ from pygame.locals import MOUSEBUTTONDOWN, MOUSEMOTION, K_ESCAPE, K_y, K_n
 
 
 def get_confirmation(screen, confirm_msg):
-    paint_screen(screen, gl.IMGV_COLOR)
+    paint_screen(gl.IMGV_COLOR)
     pygame.display.update()
     normal_cursor()
     show_message(confirm_msg, "top", 12, ("bold"))

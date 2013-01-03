@@ -9,7 +9,7 @@ from pygame.locals import KEYDOWN, K_ESCAPE, MOUSEBUTTONDOWN, K_LALT, K_RALT, K_
 
 
 def error_screen(screen, msg):
-   paint_screen(screen, gl.BLACK)
+   paint_screen(gl.BLACK)
    while 1:
         event = pygame.event.wait()
         show_message(msg, "top", 12)

@@ -49,7 +49,7 @@ def get_imgs(start_dir, show_subdirs):
 def command_show_dirs(new_img, img, screen, rect, file):
     (screen, before_winsize, not_accepted) = adjust_screen(screen)
     set_caption("Directory Browser - imgv")
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     file = show_dirs(screen, file)
     wait_cursor()
     num_imgs = len(gl.files)
@@ -92,7 +92,7 @@ def show_dirs(screen, file):
         curdir = get_curdir
     else:
         curdir = get_curdir + slash
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     screen_height = screen.get_height()
 
     if not gl.BEEN_THERE_DONE_THAT:
@@ -402,7 +402,7 @@ def get_dirnum(screen, key_type):
 
 def do_view_tagged(screen, file):
     "show all tagged dir names"
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     (esc_rect, close_font) = close_button(screen)
     line = 5
     if len(gl.MULT_DIRS) == 0:
@@ -445,7 +445,7 @@ def do_subdirs_too():
 
 
 def do_change_drive(screen, file):
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     my_string = ask(screen, "Enter a Drive Letter")
     if my_string != None:
         gl.ADDED_DIR_NUMS = 0

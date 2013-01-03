@@ -66,7 +66,7 @@ def command_file_master(screen, file_names, msg, down, button_op, disable_right_
                             if item[0].collidepoint(cursor):
                                 if not os.path.isfile(gl.DATA_DIR + item[1]):
                                     if edit_rect != junk_rect():
-                                        paint_screen(screen, gl.BLACK)
+                                        paint_screen(gl.BLACK)
                                     edit_rect = show_message(
                                     "%s doesn't exist in %s" % (item[1], gl.DATA_DIR), "top", 9, ("bold", "transparent"))
                                 else:
@@ -86,7 +86,7 @@ def command_file_master(screen, file_names, msg, down, button_op, disable_right_
                             break
                 if hit_key(event, K_BACKSPACE) or middle_click(event):
                     if ((place - marker) > 0):
-                        paint_screen(screen, gl.BLACK)
+                        paint_screen(gl.BLACK)
                         screen_pause = 0
                         place = place - (gl.MAX_SCREEN_FILES + marker)
                         marker = 0
@@ -95,7 +95,7 @@ def command_file_master(screen, file_names, msg, down, button_op, disable_right_
                 if left_click(event):
                     if back_rect.collidepoint(cursor):
                         if ((place - marker) > 0):
-                            paint_screen(screen, gl.BLACK)
+                            paint_screen(gl.BLACK)
                             screen_pause = 0
                             place = place - (gl.MAX_SCREEN_FILES + marker)
                             marker = 0
@@ -121,7 +121,7 @@ def command_file_master(screen, file_names, msg, down, button_op, disable_right_
 
 
 def file_master(screen, file_names, place, marker, menu_items, msg, down, button_op):
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     show_message(msg, down, 10, ("bold", "transparent"))
     font = pygame.font.Font(gl.FONT_NAME, 9)
     font.set_bold(1)

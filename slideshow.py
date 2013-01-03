@@ -34,7 +34,7 @@ def pause(screen):
         check_quit(event)
         if event.type == KEYDOWN and event.key not in(K_LALT, K_RALT, K_LCTRL, K_RCTRL, K_TAB):
             set_caption("Slideshow = imgv")
-            paint_screen(screen, gl.BLACK, ren_rect)
+            paint_screen(gl.BLACK, ren_rect)
             break
 
 
@@ -112,7 +112,7 @@ def show_slideshow_img(screen, new_img, file, speed):
 
 def get_speed(screen, new_img, rect, filename, file):
     "get input from keyboard (including number pad) and only accept/display digits"
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
     normal_cursor()
     DEFAULT_SPEED = 5
     MAX_SPEED = 100000
@@ -178,7 +178,7 @@ def get_speed(screen, new_img, rect, filename, file):
             speed = ['0']
             try:
                 for rect in dirty_rects:
-                    paint_screen(screen, gl.BLACK, rect)
+                    paint_screen(gl.BLACK, rect)
                 char_space = ren_speed.get_width()
             except:
                 pass

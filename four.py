@@ -20,7 +20,7 @@ K_LALT, K_RALT, K_LCTRL, K_RCTRL, K_p, K_PAUSE, K_w, K_TAB, K_n, K_b, VIDEOEXPOS
 def command_four(screen, file, new_img, ns):
     gl.MULTI_VIEWING = 1
     orig_ns = ns
-    paint_screen(screen, gl.IMGV_COLOR)
+    paint_screen(gl.IMGV_COLOR)
     set_caption("Four at a time - imgv")
     (file, new_img, start) = four(screen, file, new_img, ns)
     rect = get_center(screen, new_img)
@@ -35,7 +35,7 @@ def command_four(screen, file, new_img, ns):
 
 
 def four(screen, file, new_img, ns):
-    paint_screen(screen, gl.IMGV_COLOR) # so transparent status bars don't mess up on VIDEOEXPOSE repaints
+    paint_screen(gl.IMGV_COLOR) # so transparent status bars don't mess up on VIDEOEXPOSE repaints
     old_file = file
     (img_one_rect, img_two_rect, img_three_rect, img_four_rect) = (0, 0, 0, 0)
     (img_one_name, img_two_name, img_three_name, img_four_name) = (0, 0, 0, 0)
@@ -70,10 +70,10 @@ def four(screen, file, new_img, ns):
             break
         check_quit(event)
         if hit_key(event, K_SPACE) or hit_key(event, K_n) or hit_key(event, K_4) or right_click(event): # show next 4 images
-            paint_screen(screen, gl.IMGV_COLOR)
+            paint_screen(gl.IMGV_COLOR)
             flag = 1
         if hit_key(event, K_BACKSPACE) or hit_key(event, K_b) or middle_click(event): # show previous 4 images
-            paint_screen(screen, gl.IMGV_COLOR)
+            paint_screen(gl.IMGV_COLOR)
             file = file - 8
             flag = 1
 
@@ -103,7 +103,7 @@ def four(screen, file, new_img, ns):
             (file, img_one_file, img_two_file, img_three_file, img_four_file) =\
             my_fourslideshow(screen, new_img, rect, gl.files[file], file - 4,\
             len(gl.files), img_one_file, img_two_file, img_three_file, img_four_file, ns)
-            paint_screen(screen, gl.IMGV_COLOR)
+            paint_screen(gl.IMGV_COLOR)
             (file, new_img, start) = four(screen, file - 4, new_img, ns)
             flag = 1
             break
@@ -419,7 +419,7 @@ def my_fourslideshow(screen, new_img, rect, filename, file, num_imgs, img_one_fi
 
 
 def show_fourslideshow_imgs(screen, file, speed):
-    paint_screen(screen, gl.IMGV_COLOR)
+    paint_screen(gl.IMGV_COLOR)
     set_caption("Slideshow - imgv")
     (file, img_one_rect, img_one_name, img_one_file) = square_one(screen, file)
     (file, img_two_rect, img_two_name, img_two_file) = square_two(screen, file)

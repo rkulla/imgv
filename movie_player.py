@@ -15,7 +15,7 @@ def load_movie(screen, movie_file, *options):
     paused = 0
     skipped = 0
     image = pygame.image.load(gl.MOVIE_FILE).convert()
-    paint_screen(screen, gl.BLACK)
+    paint_screen(gl.BLACK)
 
     pygame.mixer.quit()  # so sound in the movie works
     set_caption("imgv - %s" % movie_file)
