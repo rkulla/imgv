@@ -9,18 +9,18 @@ from show_message import show_message, truncate_name
 from buttons import imgv_button, hover_button, close_button
 from cursor import wait_cursor, normal_cursor, hover_cursor
 from load_img import load_img
-from usr_event import check_quit, hit_key
+from usr_event import check_quit
 if platform == 'win32':
     import BmpImagePlugin, JpegImagePlugin, PngImagePlugin, SgiImagePlugin, SunImagePlugin, TgaImagePlugin, TiffImagePlugin, PcxImagePlugin, PpmImagePlugin, XpmImagePlugin # for py2exe to work with PIL
 import Image # PIL
 import pygame.font, pygame.event
 from pygame.transform import scale
 from pygame.display import update, flip, set_caption
-from pygame.locals import KEYDOWN, K_LALT, K_RALT, K_LCTRL, K_RCTRL, K_TAB, MOUSEBUTTONDOWN, MOUSEMOTION
+from pygame.locals import KEYDOWN, K_LALT, K_RALT, K_LCTRL, K_RCTRL, K_TAB, MOUSEBUTTONDOWN
 from types import StringType, NoneType
 import exif
-from time import ctime, time, strptime, strftime
-from stat import S_IMODE, ST_MODE, ST_MTIME, ST_ATIME, ST_CTIME, ST_UID, ST_GID
+from time import ctime, strptime, strftime
+from stat import ST_MTIME, ST_ATIME, ST_CTIME
 
 
 class verbose:
@@ -109,29 +109,29 @@ class verbose:
                 #pass
     def img_type(self, file):
         self.img_type = imghdr.what(gl.files[file])
-        if self.img_type != None:
+        if self.img_type is not None:
             self.img_type = self.img_type.upper()
         if self.pil_info:
-            if self.im.info.has_key("progression"):
+            if "progression" in self.im.info:
                 if type(self.img_type) != NoneType:
                     self.img_type += " (Progressive)"
-        if self.img_type != None:
+        if self.img_type is not None:
             self.print_info("File type: %s" % self.img_type, 10)
     def compression(self):
         img_format = " "
         if self.pil_info:
-            if self.im.info.has_key('compression'):
+            if "compression" in self.im.info:
                 if self.img_type == "TIF" or self.img_type == "TIFF":
                     self.show_exif = 0 # compressed tiff's seem to break exif code
                 compression = "Compression:  %s" % self.im.info['compression']
             else:
                 compression = " "
-            if self.im.info.has_key('version'): # gif
+            if "version" in self.im.info: # gif
                 if self.im.info['version'] in ('GIF87a', 'GIF89a'):
                     img_format = "Format: %s. Compression: LZW " % self.im.info['version']
                 else:
                     img_format = "Format: %s.  " % self.im.info['version']
-            if self.im.info.has_key('jfif'):
+            if "jfif" in self.im.info:
                 compression = "Compression: JPEG"
                 img_format = "Format: JFIF.  "
             if self.img_type == "PNG":
@@ -139,8 +139,8 @@ class verbose:
             if img_format != " ":
                 self.print_info(img_format + compression, 7)
     def aspect_ratio(self):
-        if self.pil_info and self.im.info.has_key('jfif_unit'):
-            if self.im.info.has_key('jfif_density'):
+        if self.pil_info and "jfif_unit" in self.im.info:
+            if "jfif_density" in self.im.info:
                 aspect_ratio = str(self.im.info['jfif_density'][0]) + ' x ' + str(self.im.info['jfif_density'][1])
             if self.im.info['jfif_unit'] == 0:
                 self.print_info("Aspect Ratio: %s" % aspect_ratio, 13)
@@ -183,7 +183,7 @@ class verbose:
         return (uniquecolors_rect, total_colors, self.row, self.font, imret)
     def resolution(self):
         if self.pil_info:
-            if self.im.info.has_key('dpi'):
+            if "dpi" in self.im.info:
                 x, y = self.im.info['dpi']
                 dpi = "Resolution: %d x %d PPI (Pixels Per Inch)" % (x, y)
                 emph_len = 11
@@ -198,15 +198,15 @@ class verbose:
                 #pass
     def gamma(self):
         if self.pil_info:
-            if self.im.info.has_key('gamma'):
+            if "gamma" in self.im.info:
                 self.print_info("Gamma:  %s" % self.im.info['gamma'], 6)
     def transparency(self):
         if self.pil_info:
-            if self.im.info.has_key('transparency'):
+            if "transparency" in self.im.info:
                 self.print_info("Transparency:  %s" % self.im.info['transparency'], 13)
     def software(self):
         if self.pil_info:
-            if self.im.info.has_key('Software'):
+            if "Software" in self.im.info:
                 self.print_info("Software: %s" % self.im.info['Software'], 9)
     def original_size(self):
         if gl.CURRENT_ZOOM_PERCENT != 100:
@@ -256,7 +256,7 @@ class verbose:
         current_rect[1] = self.prev_pic_row
         self.screen.blit(self.current, current_rect)
         update(current_rect)
-        img_border(self.screen, img_width, img_height, 15, self.prev_pic_row - 2)
+        img_border(self.current, 15, self.prev_pic_row - 2)
     def loaded_time(self):
         self.print_info("Loaded in: %s milliseconds %s" % (comma_it(gl.N_MILLISECONDS), ('', '(From Zoom)')[gl.CURRENT_ZOOM_PERCENT != 100]), 10)
     def exif_data(self, filen):
@@ -310,14 +310,13 @@ class verbose:
     def histogram(self):
         if not self.pil_info:
             return
-        w = self.screen.get_width()
         h = gl.ROW_SEP + 415
         hist = self.im.histogram()
         redlist = hist[0:255]
         greenlist = hist[256:(256 + 255)]
         bluelist = hist[(256 + 255 + 1):]
-        wdiv = 1.3 # shorten the width of the histogram
-        vdiv = max(hist) / 130 # shorten the height of the histogram
+        wdiv = 1.3  # shorten the width of the histogram
+        vdiv = max(hist) / 130  # shorten the height of the histogram
         wpos = 16
         vlen = 175
         if self.pixel_format == "Grayscale":

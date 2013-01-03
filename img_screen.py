@@ -64,9 +64,11 @@ def get_center(screen, new_img):
     return rect
 
 
-def img_border(img_width, img_height, wpos, downpos):
+def img_border(new_img, wpos, downpos):
     "draw a border around the image"
     screen = get_surface()
+    img_width = new_img.get_width()
+    img_height = new_img.get_height()
     ll = line(screen, gl.IMG_BORDER_COLOR, (wpos, downpos), (wpos, img_height + downpos + 2))  # left side of border
     rl = line(screen, gl.IMG_BORDER_COLOR, (wpos + img_width, downpos), (wpos + img_width, img_height + downpos + 2))  # right side
     tl = line(screen, gl.IMG_BORDER_COLOR, (wpos, downpos), ((wpos + img_width), downpos))  # top of border

@@ -42,8 +42,6 @@ def handle_keyboard(event, gfx, last_rect, ns):
     refresh_img = gfx['refresh_img']
     file = gfx['file']
 
-    new_img_width = new_img.get_width()
-    new_img_height = new_img.get_height()
     if hit_key(event, K_d):
         gl.USING_SCROLL_MENU = 1
         # save current things in case the user ESCAPES out of show_dirs()
@@ -67,8 +65,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
         gl.ESCAPED = 0
         gl.USING_SCROLL_MENU = 0
     if hit_key(event, K_i):
-        (new_img, img, refresh_img, file,
-         rect) = command_img_names(screen, new_img, img, file, rect)
+        (new_img, img, refresh_img, file, rect) = command_img_names(screen, new_img, img, file, rect)
     if hit_key(event, K_F1):
         gl.CALC_ZOOM = 0
         zoom_percent = gl.CURRENT_ZOOM_PERCENT
@@ -123,8 +120,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
         if event.key == K_r and mods & KMOD_CTRL == 0:
             if int(gl.N_MILLISECONDS) < gl.MAX_ZOOM_MAX_MS and gl.CURRENT_ZOOM_PERCENT < gl.ZOOM_PERCENT_MAX:
                 gl.CALC_ZOOM = 0
-                (new_img, img,
-                 rect) = command_rotate_right(new_img, screen, file, rect)
+                (new_img, img, rect) = command_rotate_right(new_img, screen, file, rect)
             else:
                 print "Can't rotate. Out of memory."
     if event.type == KEYDOWN:
@@ -132,8 +128,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
         if event.key == K_r and mods & KMOD_CTRL:
             if int(gl.N_MILLISECONDS) < gl.MAX_ZOOM_MAX_MS and gl.CURRENT_ZOOM_PERCENT < gl.ZOOM_PERCENT_MAX:
                 gl.CALC_ZOOM = 0
-                (new_img, img, rect) = command_rotate_left(
-                    new_img, screen, file, rect)
+                (new_img, img, rect) = command_rotate_left(new_img, screen, file, rect)
             else:
                 print "Can't rotate. Out of memory."
     if event.type == KEYDOWN:
@@ -145,8 +140,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
     if event.type == KEYDOWN:
         mods = pygame.key.get_mods()
         if event.key == K_p and mods & KMOD_CTRL:
-            (new_img, new_img, new_img, file,
-             rect) = command_play_list_options(screen, file)
+            (new_img, new_img, new_img, file, rect) = command_play_list_options(screen, file)
             gl.SORT_HIT = 0
     if event.type == KEYDOWN:
         mods = pygame.key.get_mods()
@@ -213,8 +207,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
         mods = pygame.key.get_mods()
         if (event.key == K_EQUALS or event.key == K_KP_PLUS) and (mods & KMOD_CTRL and mods & KMOD_ALT):
             try:
-                (
-                    new_img, img, rect) = command_zoom_in(new_img, new_img, file, rect, "scale2x")
+                (new_img, img, rect) = command_zoom_in(new_img, new_img, file, rect, "scale2x")
             except:
                 print 'Zoom max. Out of memory.'
     if hit_key(event, K_DOWN):
@@ -237,25 +230,22 @@ def handle_keyboard(event, gfx, last_rect, ns):
         pygame.event.set_allowed(MOUSEMOTION)
         command_full_right(rect, last_rect, new_img, file)
         if gl.IMG_BORDER:
-            img_border(screen, new_img.get_width(
-            ), new_img.get_height(), rect[0], rect[1])
+            img_border(new_img, rect[0], rect[1])
     if hit_key(event, K_END):
         pygame.event.set_allowed(MOUSEMOTION)
         command_full_left(rect, last_rect, new_img, file)
         if gl.IMG_BORDER:
-            img_border(screen, new_img.get_width(
-            ), new_img.get_height(), rect[0], rect[1])
+            img_border(new_img, rect[0], rect[1])
     if hit_key(event, K_PAGEDOWN):
         pygame.event.set_allowed(MOUSEMOTION)
         command_full_up(rect, last_rect, new_img, file)
         if gl.IMG_BORDER:
-            img_border(screen, new_img.get_width(
-            ), new_img.get_height(), rect[0], rect[1])
+            img_border(new_img, rect[0], rect[1])
     if hit_key(event, K_PAGEUP):
         pygame.event.set_allowed(MOUSEMOTION)
         command_full_down(rect, last_rect, new_img, file)
         if gl.IMG_BORDER:
-            img_border(screen, new_img.get_width(), new_img.get_height(), rect[0], rect[1])
+            img_border(new_img, rect[0], rect[1])
     if hit_key(event, K_m):
         (new_img, img, rect) = command_horiz(new_img, screen, file, rect)
     if hit_key(event, K_v):
@@ -289,8 +279,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
         my_update_screen(new_img, rect, file)
         normal_cursor()
     if hit_key(event, K_ESCAPE):
-        (new_img, img, rect, file) = command_refresh(refresh_img,
-                                                     screen, gl.files, file)
+        (new_img, img, rect, file) = command_refresh(refresh_img, screen, gl.files, file)
         my_update_screen(new_img, rect, file)
     if event.type == KEYDOWN:  # Ctrl+0 (Fit to Window) code
         mods = pygame.key.get_mods()
@@ -393,8 +382,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
         if gl.ESCAPED:
             gl.CURRENT_ZOOM_PERCENT = zoom_percent
             gl.REAL_WIDTH = real_width
-        screen = restore_screen(
-            screen, before_winsize, not_accepted, new_img, file, rect)
+        screen = restore_screen(screen, before_winsize, not_accepted, new_img, file, rect)
         my_update_screen(new_img, rect, file)
         gl.ESCAPED = 0
         gl.USING_SCROLL_MENU = 0
@@ -411,8 +399,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
         gl.CALC_ZOOM = 0
         zoom_percent = gl.CURRENT_ZOOM_PERCENT
         real_width = gl.REAL_WIDTH
-        (file, new_img, img, refresh_img, rect) = command_four(
-            screen, file, new_img, ns)
+        (file, new_img, img, refresh_img, rect) = command_four(screen, file, new_img, ns)
         if gl.ESCAPED:
             gl.CURRENT_ZOOM_PERCENT = zoom_percent
             gl.REAL_WIDTH = real_width
