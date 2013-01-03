@@ -356,7 +356,7 @@ def get_dirnum(screen, key_type):
     else:
         msg1 = "Directory number or shortcut: _"
         msg2 = "Directory number or shortcut: %s" % dirnum[1] # start with num showing
-    show_message("bottom", 11)
+    show_message(msg2, "bottom", 11)
     my_digits = [] # keypad number list.
 
     for num in range(10):

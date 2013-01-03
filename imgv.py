@@ -60,18 +60,12 @@ class Imgv(object):
         if gl.START_FULLSCREEN:
             command_fullscreen(self.gfx['new_img'], self.gfx['file'], self.gfx['rect'])
             my_update_screen(self.gfx['new_img'], self.gfx['rect'], self.gfx['file'], self.ns)
-        self.screen_width = self.gfx['screen'].get_width()
-        self.screen_height = self.gfx['screen'].get_height()
-        self.new_img_width = self.gfx['new_img'].get_width()
-        self.new_img_height = self.gfx['new_img'].get_height()
-
         self.minus1 = 0
         self.minus2 = 0
 
     def main(self):
         # start with menu open
-        gfx = gl.build_gfx_dict(self.gfx['img'], self.gfx['rect'], self.gfx['refresh_img'], self.gfx['new_img'], self.gfx['file'])
-        self.gfx = command_main_menu(gfx, self.ns)
+        self.gfx = command_main_menu(self.gfx, self.ns)
 
         # main loop
         while 1:
@@ -79,10 +73,6 @@ class Imgv(object):
             pygame.time.wait(1)  # so pygame doesn't use 100% CPU
             cursor = pygame.mouse.get_pos()
             last_rect = Rect(self.gfx['rect'])
-            self.screen_width = self.gfx['screen'].get_width()
-            self.screen_height = self.gfx['screen'].get_height()
-            self.new_img_width = self.gfx['new_img'].get_width()
-            self.new_img_height = self.gfx['new_img'].get_height()
 
             # drag image code:
             if gl.HAND_TOOL:
@@ -123,15 +113,13 @@ class Imgv(object):
             if event.type == MOUSEBUTTONDOWN:  # open main menu:
                 if right_click(event):
                     gl.HAND_TOOL = 0
-                    gfx = gl.build_gfx_dict(self.gfx['img'], self.gfx['rect'], self.gfx['refresh_img'], self.gfx['new_img'], self.gfx['file'])
-                    self.gfx = command_main_menu(gfx, self.ns)
+                    self.gfx = command_main_menu(self.gfx, self.ns)
 
             # Re-open the purposely closed window that frees up RAM
             if (gl.KEEP_MENU_OPEN == "1" and gl.COUNT_CLICKS == 1) or gl.JUST_RESIZED:
                 gl.COUNT_CLICKS = 0
                 gl.JUST_RESIZED = 0
-                gfx = gl.build_gfx_dict(self.gfx['img'], self.gfx['rect'], self.gfx['refresh_img'], self.gfx['new_img'], self.gfx['file'])
-                self.gfx = command_main_menu(gfx, self.ns)
+                self.gfx = command_main_menu(self.gfx, self.ns)
 
             start_auto_repeat(self.gfx, last_rect, event)
 

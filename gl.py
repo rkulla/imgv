@@ -8,7 +8,6 @@ from dir_nav import strip_dirs, get_imgs
 from error_box import errorbox
 from res import my_toggle_fullscreen
 from pygame import version
-from pygame.display import get_surface
 
 
 BASE_DIR = os.getcwd()
@@ -335,8 +334,3 @@ PREF_LIST = [
     ("Fit slideshow images:", "How to scale the images or window to fit eachother while in a slideshow. Default = Fit large images"),
     ("Password", "Password to use in when hiding images. Default = None"),
 ]
-
-
-def build_gfx_dict(img, rect, refresh_img, new_img, file):
-    return {'screen': get_surface(), 'img': img, 'rect': rect, 'refresh_img':
-            refresh_img, 'new_img': new_img, 'file': file}
