@@ -13,14 +13,14 @@ from time import ctime
 from random import shuffle
 
 
-def command_hide(screen, new_img, rect, file, num_imgs):
+def command_hide(screen, new_img, rect, file):
     "hide the image by making the screen blank"
     (screen, before_winsize, not_accepted) = adjust_screen(screen, NOFRAME)
     set_caption("")
     hide(screen)
-    screen = restore_screen(screen, before_winsize, not_accepted, new_img, file, num_imgs, rect)
+    screen = restore_screen(screen, before_winsize, not_accepted, new_img, file, rect)
     rect = get_center(screen, new_img)
-    my_update_screen(new_img, screen, rect, file, num_imgs)
+    my_update_screen(new_img, screen, rect, file)
 
 
 def hide(screen):

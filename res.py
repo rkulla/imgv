@@ -13,14 +13,6 @@ from pygame.display import set_mode, toggle_fullscreen, list_modes, update, set_
 from pygame.locals import FULLSCREEN, MOUSEBUTTONDOWN, MOUSEMOTION, K_ESCAPE, KEYDOWN, K_F2, K_F3, K_F4, K_F5, K_F6, K_c, RESIZABLE, VIDEORESIZE#
 
 
-#def resize_it(event, screen, new_img, file, num_imgs):
-#    resolution = event.size
-#    screen = set_mode(resolution)
-#    rect = get_center(screen, new_img)
-#    my_update_screen(new_img, screen, rect, file, num_imgs)
-#    return rect
-
-
 def adjust_screen(screen, *flags):
     before_winsize = screen.get_size()
     not_accepted = 0
@@ -41,7 +33,7 @@ def adjust_screen(screen, *flags):
             screen = set_mode((1024, 768), flags)
         elif gl.DEFAULT_RES[0] <= 1280:
             gl.MAX_SCREEN_FILES = gl.MAX_SF["1280x1024"]
-            screen = set_mode((1280, 1024), flags) 
+            screen = set_mode((1280, 1024), flags)
         else:
             # default to 800x600 if the screen size isn't an imgv preset size:
             gl.MAX_SCREEN_FILES = gl.MAX_SF["800x600"]
@@ -55,80 +47,80 @@ def adjust_screen(screen, *flags):
     return (screen, before_winsize, not_accepted)
 
 
-def restore_screen(screen, before_winsize, not_accepted, new_img, file, num_imgs, rect):
-    if gl.TOGGLE_FULLSCREEN_SET and not_accepted: 
+def restore_screen(screen, before_winsize, not_accepted, new_img, file, rect):
+    if gl.TOGGLE_FULLSCREEN_SET and not_accepted:
         # we were fullscreen with gl.FULLSCREEN_SPECIAL on a non-accepted window size
-        screen = command_fullscreen(screen, new_img, file, num_imgs, rect)
+        screen = command_fullscreen(screen, new_img, file, rect)
     else:
         if not gl.TOGGLE_FULLSCREEN_SET:
             screen = set_mode(before_winsize, RESIZABLE)
     return screen
 
 
-def command_640x480(new_img, file, num_imgs, rect):
+def command_640x480(new_img, file, rect):
     "switch to 640x480"
     gl.MAX_SCREEN_FILES = gl.MAX_SF["640x480"]
     wait_cursor()
     resolution = 640, 480
     screen = set_mode(resolution, RESIZABLE)
     rect = get_center(screen, new_img)
-    my_update_screen(new_img, screen, rect, file, num_imgs)
+    my_update_screen(new_img, screen, rect, file)
     if gl.TOGGLE_FULLSCREEN_SET:
         my_toggle_fullscreen()
     return rect
 
 
-def command_800x600(new_img, file, num_imgs, rect):
+def command_800x600(new_img, file, rect):
     "switch to 800x600"
     gl.MAX_SCREEN_FILES = gl.MAX_SF["800x600"]
     wait_cursor()
     resolution = 800, 600
     screen = set_mode(resolution, RESIZABLE)
     rect = get_center(screen, new_img)
-    my_update_screen(new_img, screen, rect, file, num_imgs)
+    my_update_screen(new_img, screen, rect, file)
     if gl.TOGGLE_FULLSCREEN_SET:
         my_toggle_fullscreen()
     return rect
 
 
-def command_1024x768(new_img, file, num_imgs, rect):
+def command_1024x768(new_img, file, rect):
     "switch to 1024x768"
     gl.MAX_SCREEN_FILES = gl.MAX_SF["1024x768"]
     wait_cursor()
     resolution = 1024, 768
     screen = set_mode(resolution, RESIZABLE)
     rect = get_center(screen, new_img)
-    my_update_screen(new_img, screen, rect, file, num_imgs)
+    my_update_screen(new_img, screen, rect, file)
     if gl.TOGGLE_FULLSCREEN_SET:
         my_toggle_fullscreen()
     return rect
 
 
-def command_1280x1024(new_img, file, num_imgs, rect):
+def command_1280x1024(new_img, file, rect):
     "switch to 1280x1024"
     gl.MAX_SCREEN_FILES = gl.MAX_SF["1280x1024"]
     wait_cursor()
     resolution = 1280, 1024
     screen = set_mode(resolution, RESIZABLE)
     rect = get_center(screen, new_img)
-    my_update_screen(new_img, screen, rect, file, num_imgs)
+    my_update_screen(new_img, screen, rect, file)
     if gl.TOGGLE_FULLSCREEN_SET:
         my_toggle_fullscreen()
     return rect
 
 
-def command_custom_res(screen, new_img, file, num_imgs, rect, resolution):
+def command_custom_res(screen, new_img, file, rect, resolution):
     "switch to customxcustom"
     wait_cursor()
     screen = set_mode(resolution, RESIZABLE)
     rect = get_center(screen, new_img)
-    my_update_screen(new_img, screen, rect, file, num_imgs)
+    my_update_screen(new_img, screen, rect, file)
     if gl.TOGGLE_FULLSCREEN_SET:
         my_toggle_fullscreen()
     return rect
 
 
-def command_fullscreen(screen, new_img, file, num_imgs, rect):
+def command_fullscreen(screen, new_img, file, rect):
     "Toggle between full screen and last screen resolution"
     wait_cursor()
     if not toggle_fullscreen():
@@ -152,7 +144,7 @@ def command_fullscreen(screen, new_img, file, num_imgs, rect):
     return screen
 
 
-def get_resolution():#
+def get_resolution():
     default_res = (800, 600)
     if platform == 'win32':
         from win32api import GetSystemMetrics
@@ -164,7 +156,7 @@ def get_resolution():#
     return screen_res
 
 
-def command_show_res_modes(screen, new_img, file, num_imgs, rect):
+def command_show_res_modes(screen, new_img, file, rect):
     paint_screen(screen, gl.BLACK)
     set_caption("Resize Options - imgv")
     menu_items = []
@@ -190,7 +182,7 @@ def command_show_res_modes(screen, new_img, file, num_imgs, rect):
        if event.type == VIDEORESIZE:
             screen = pygame.display.set_mode(event.dict['size'], RESIZABLE)
             rect = get_center(screen, new_img)
-            command_show_res_modes(screen, new_img, file, num_imgs, rect)
+            command_show_res_modes(screen, new_img, file, rect)
             break
 
        # draw checked box:
@@ -222,19 +214,19 @@ def command_show_res_modes(screen, new_img, file, num_imgs, rect):
            return rect
        if event.type == KEYDOWN and event.key in (K_F2, K_F3, K_F4, K_F5, K_F6, K_c):
            if hit_key(event, K_F2):
-               rect = command_640x480(new_img, file, num_imgs, rect)
+               rect = command_640x480(new_img, file, rect)
            if hit_key(event, K_F3):
-               rect = command_800x600(new_img, file, num_imgs, rect)
+               rect = command_800x600(new_img, file, rect)
            if hit_key(event, K_F4):
-               rect = command_1024x768(new_img, file, num_imgs, rect)
+               rect = command_1024x768(new_img, file, rect)
            if hit_key(event, K_F5):
-               rect = command_1280x1024(new_img, file, num_imgs, rect)
+               rect = command_1280x1024(new_img, file, rect)
            if hit_key(event, K_F6):
-               screen = command_fullscreen(screen, new_img, file, num_imgs, rect)
+               screen = command_fullscreen(screen, new_img, file, rect)
                rect = get_center(screen, new_img)
-               my_update_screen(new_img, screen, rect, file, num_imgs)
+               my_update_screen(new_img, screen, rect, file)
            if hit_key(event, K_c):
-               rect = do_custom(screen, new_img, file, num_imgs, rect)
+               rect = do_custom(screen, new_img, file, rect)
            return rect
        if left_click(event):
            if esc_rect.collidepoint(cursor):
@@ -246,23 +238,23 @@ def command_show_res_modes(screen, new_img, file, num_imgs, rect):
            for it in menu_items:
                if it[0].collidepoint(cursor) and it[1] in men_ops:
                    if it[1] == "F2) 640x480":
-                       rect = command_640x480(new_img, file, num_imgs, rect)
+                       rect = command_640x480(new_img, file, rect)
                    elif it[1] == "F3) 800x600":
-                       rect = command_800x600(new_img, file, num_imgs, rect)
+                       rect = command_800x600(new_img, file, rect)
                    elif it[1] == "F4) 1024x768":
-                       rect = command_1024x768(new_img, file, num_imgs, rect)
+                       rect = command_1024x768(new_img, file, rect)
                    elif it[1] == "F5) 1280x1024":
-                       rect = command_1280x1024(new_img, file, num_imgs, rect)
+                       rect = command_1280x1024(new_img, file, rect)
                    elif it[1] == "F6) Fullscreen":
-                       screen = command_fullscreen(screen, new_img, file, num_imgs, rect)
+                       screen = command_fullscreen(screen, new_img, file, rect)
                        rect = get_center(screen, new_img)
-                       my_update_screen(new_img, screen, rect, file, num_imgs)
+                       my_update_screen(new_img, screen, rect, file)
                    elif it[1] == "C) Custom":
-                       rect = do_custom(screen, new_img, file, num_imgs, rect)
+                       rect = do_custom(screen, new_img, file, rect)
                    return rect
        gl.NOT_HOVERED = 1
     return rect
-     
+
 
 def show_res_modes(screen, menu_items, font):
     men_ops = ["F2) 640x480", "F3) 800x600", "F4) 1024x768", "F5) 1280x1024", "F6) Fullscreen", "C) Custom"]
@@ -300,7 +292,7 @@ def hover_fx(screen, menu_items, cursor, font):
                 blank_fx(screen, 4)
                 gl.FOURTH_RECT = index_fx(screen, it, font, "Resize to 1280x1024")
                 break
-            elif it[1] == "F6) Fullscreen": 
+            elif it[1] == "F6) Fullscreen":
                 if gl.FULLSCREEN_SPECIAL:
                     sw, sh = screen.get_size()
                     fsmsg = "Toggle Fullscreen @ %sx%s" % (sw, sh)
@@ -333,11 +325,10 @@ def index_fx(screen, it, font, msg):
 
 def update_res_screen(screen, file, new_img):
     rect = get_center(screen, new_img)
-    num_imgs = len(gl.files)
-    my_update_screen(new_img, screen, rect, file, num_imgs)
+    my_update_screen(new_img, screen, rect, file)
 
 
-def do_custom(screen, new_img, file, num_imgs, rect):
+def do_custom(screen, new_img, file, rect):
     paint_screen(screen, gl.BLACK)
     show_message(screen, "Enter a custom window size/resolution. (Example:  455x500)", "top", 12, ("bold"))
     res = ask(screen, "New size")
@@ -346,7 +337,7 @@ def do_custom(screen, new_img, file, num_imgs, rect):
     try:
         res = res.lower().split('x')
         res = int(res[0]), int(res[1])
-        rect = command_custom_res(screen, new_img, file, num_imgs, rect, res)
+        rect = command_custom_res(screen, new_img, file, rect, res)
     except:
        return rect
     return rect

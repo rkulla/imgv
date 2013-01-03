@@ -56,12 +56,11 @@ def command_play_list_options(screen, file):
     if (file == "deleteit"):
         delete_play_list(msg)
         file = old_file
-    num_imgs = len(gl.files)
     new_img = load_img(gl.files[file], screen)
     rect = get_center(screen, new_img)
-    my_update_screen(new_img, screen, rect, file, num_imgs)
+    my_update_screen(new_img, screen, rect, file)
     normal_cursor()
-    return (new_img, new_img, new_img, file, rect, num_imgs)
+    return (new_img, new_img, new_img, file, rect)
 
 
 def play_list_options(screen, file):

@@ -6,7 +6,7 @@ from load_timers import start_timer, check_timer
 from pygame.transform import scale, scale2x
 
 
-def command_zoom_out(new_img, new_img_width, new_img_height, img, screen, file, num_imgs, rect, zoom_type):
+def command_zoom_out(new_img, new_img_width, new_img_height, img, screen, file, rect, zoom_type):
     wait_cursor()
     start = start_timer()
     if new_img.get_width() >= gl.MIN_WIDTH and new_img.get_height() >= gl.MIN_HEIGHT:
@@ -18,12 +18,12 @@ def command_zoom_out(new_img, new_img_width, new_img_height, img, screen, file, 
             gl.ZOOM_DOUBLE = 1
             new_img = scale(img, (new_img.get_width() / 2, new_img.get_height() / 2))
         rect = get_center(screen, new_img)
-        my_update_screen(new_img, screen, rect, file, num_imgs, check_timer(start))
+        my_update_screen(new_img, screen, rect, file, check_timer(start))
     normal_cursor()
     return (new_img, img, rect)
 
 
-def command_zoom_in(new_img, new_img_width, new_img_height, img, screen, files, file, num_imgs, rect, zoom_type):
+def command_zoom_in(new_img, new_img_width, new_img_height, img, screen, files, file, rect, zoom_type):
     wait_cursor()
     start = start_timer()
     gl.ZOOM_EXP += 1
@@ -37,6 +37,6 @@ def command_zoom_in(new_img, new_img_width, new_img_height, img, screen, files, 
         gl.ZOOM_DOUBLE = 1
         new_img = scale2x(img) # don't alias simple solid color images (ie., black & white GIFs)
     rect = get_center(screen, new_img)
-    my_update_screen(new_img, screen, rect, file, num_imgs, check_timer(start))
+    my_update_screen(new_img, screen, rect, file, check_timer(start))
     normal_cursor()
     return (new_img, img, rect)

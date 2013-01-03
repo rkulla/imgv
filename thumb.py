@@ -41,9 +41,9 @@ def command_thumbs(screen, new_img, file, ns):
     rect = get_center(screen, new_img)
     if start != orig_ns:
         ns = check_timer(start)
-        my_update_screen(new_img, screen, rect, file, len(gl.files), ns)
+        my_update_screen(new_img, screen, rect, file, ns)
     else:
-        my_update_screen(new_img, screen, rect, file, len(gl.files))
+        my_update_screen(new_img, screen, rect, file)
     normal_cursor()
     gl.THUMBING = 0
     return (new_img, new_img, new_img, file, rect)
@@ -120,7 +120,7 @@ def thumbs_engine(screen, new_img, file, ns):
                         gl.PAUSED = 0
                         screen_pause = 0
                         break
-                if hit_key(event, K_BACKSPACE) or hit_key(event, K_b) or middle_click(event): 
+                if hit_key(event, K_BACKSPACE) or hit_key(event, K_b) or middle_click(event):
                     # go back to previous thumb page, even if paused:
                     if ((place - marker) > 0):
                         i = j = SPACER
@@ -166,7 +166,7 @@ def show_thumbs(screen, SPACER, x, i, j, place, marker, font, font_size):
                 new_height = int(new_width / r)
                 scale_val = new_width, new_height
                 if scale_val[0] > square_width or scale_val[1] > square_height:
-                    scale_val = int(new_width / 1.32), int(new_height / 1.32) 
+                    scale_val = int(new_width / 1.32), int(new_height / 1.32)
                 if scale_val[0] > square_width or scale_val[1] > square_height:
                     if square_width >= 200 or square_height >= 200:
                         scale_val = int(scale_val[0] / 2), int(scale_val[1] / 2)
@@ -178,11 +178,11 @@ def show_thumbs(screen, SPACER, x, i, j, place, marker, font, font_size):
                 new_width = int(new_height / r)
                 scale_val = new_width, new_height
                 if scale_val[0] > square_width or scale_val[1] > square_height:
-                    scale_val = int(new_width / 2), int(new_height / 2) 
+                    scale_val = int(new_width / 2), int(new_height / 2)
                 else:
                     scale_val = new_width, new_height
                 small_img = pygame.transform.scale(img, scale_val)
-        if img_width == img_height: 
+        if img_width == img_height:
             if (not img_width < square_width and not img_height < square_height) or (img_width > square_width) or (img_height > square_height) or (img_width > square_width and img_height > square_height):
                 r = float(img_width) / float(img_height)
                 new_height = square_height
@@ -207,10 +207,10 @@ def show_thumbs(screen, SPACER, x, i, j, place, marker, font, font_size):
 
         if gl.THUMB_BORDER_VAL:
             # draw borders:
-            left_line = line(screen, gl.THUMB_BORDER_COLOR, (i - 1, j - 1), (i - 1, square_height + j)) 
+            left_line = line(screen, gl.THUMB_BORDER_COLOR, (i - 1, j - 1), (i - 1, square_height + j))
             right_line = line(screen, gl.THUMB_BORDER_COLOR, (i + square_width, j), (i + square_width, square_height + j))
-            top_line = line(screen, gl.THUMB_BORDER_COLOR, (i, j - 1), ((i + square_width), j - 1)) 
-            bottom_line = line(screen, gl.THUMB_BORDER_COLOR, (i, square_height + j), ((i + square_width), square_height + j)) 
+            top_line = line(screen, gl.THUMB_BORDER_COLOR, (i, j - 1), ((i + square_width), j - 1))
+            bottom_line = line(screen, gl.THUMB_BORDER_COLOR, (i, square_height + j), ((i + square_width), square_height + j))
             update(left_line), update(top_line), update(right_line), update(bottom_line)
 
         thumb_name = check_truncate(square_width, basename(img_name))

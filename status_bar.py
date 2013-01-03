@@ -42,7 +42,7 @@ def exif_data(screen, filename):
                 mm = data[i].printable.split('/')
                 mm = float(mm[0]) / float(mm[1])
                 exif_data1.append("Focal Length: %smm" % mm)
-            if i == "EXIF ExposureTime": # shutter speed
+            if i == "EXIF ExposureTime":  # shutter speed
                 exif_data1.append("Shutter Speed: " + data[i].printable + "sec")
             if i == "EXIF FNumber":
                 aperture = data[i].printable.split('/')
@@ -72,7 +72,7 @@ def exif_data(screen, filename):
     try:
         divider = ",  "
         exif_data1 = [x + divider for x in exif_data1[:-1]] + [exif_data1[-1]] # add a divider
-        exif_data2 = [x + divider for x in exif_data2[:-1]] + [exif_data2[-1]] 
+        exif_data2 = [x + divider for x in exif_data2[:-1]] + [exif_data2[-1]]
         exif_data1_msg = " " + ' '.join(exif_data1) + " "
         exif_data2_msg = " " + ' '.join(exif_data2) + " "
 
@@ -104,7 +104,8 @@ def exif_data(screen, filename):
         pass
 
 
-def img_info(screen, filename, file, num_imgs, new_img, ns):
+def img_info(screen, filename, file, new_img, ns):
+    num_imgs = len(gl.files)
     if screen.get_width() < 800:
         font_size = 9
     else:
@@ -150,7 +151,7 @@ def img_info(screen, filename, file, num_imgs, new_img, ns):
         else:
             fsize = getsize(filename)
             filename = basename(filename)
-        
+
         if fsize <= 1024:
             file_size = "%d b" % fsize
         elif fsize >= 1024 and fsize <= (1024 * 1024):
@@ -158,7 +159,7 @@ def img_info(screen, filename, file, num_imgs, new_img, ns):
         elif fsize >= 1024 and fsize <= (1024 * 1024 * 1024):
             file_size = "%.2f MB" % (fsize / (1024.0 * 1024.0))
         else:
-            file_size = "0 bytes"     
+            file_size = "0 bytes"
 
         memsizemsg = "?"
         try:
@@ -172,7 +173,7 @@ def img_info(screen, filename, file, num_imgs, new_img, ns):
                 memsizemsg = "%.2f MB" % (curmembytesize / (1024.0 * 1024.0))
         except:
             pass
-    
+
         if gl.PLAY_LIST_NAME != " ":
             set_caption("%s [%s] - imgv" % (get_caption()[0].replace(' - imgv', ''), gl.PLAY_LIST_NAME))
         if gl.SLIDE_SHOW_RUNNING == 1:

@@ -24,7 +24,7 @@ from stat import S_IMODE, ST_MODE, ST_MTIME, ST_ATIME, ST_CTIME, ST_UID, ST_GID
 
 
 class verbose:
-    # generate image information 
+    # generate image information
     def __init__(self, screen, file):
         if screen.get_width() == 640:
             self.font_size = 10
@@ -46,7 +46,7 @@ class verbose:
         except:
             self.pil_info = 0
             self.show_exif = 0
-    def file_and_dir_name(self, file, num_imgs):
+    def file_and_dir_name(self, file):
         sw = self.screen.get_width()
         file_msg = "File name: "
         file_msg = check_truncate(sw, file_msg + os.path.basename(gl.files[file]))
@@ -60,7 +60,7 @@ class verbose:
         fpmsg = check_truncate(sw, fpmsg + gl.files[file])
         self.print_info(fpmsg, 10)
 
-        self.print_info("Current index: %s / %s" % (comma_it(str(file + 1)), comma_it(str(num_imgs))), 14)
+        self.print_info("Current index: %s / %s" % (comma_it(str(file + 1)), comma_it(str(len(gl.files)))), 14)
     def bits_per_pixel(self):
         if self.bitsperpixel:
             self.print_info("BPP (Bits Per Pixel): %s" % self.bitsperpixel, 21)
@@ -262,9 +262,9 @@ class verbose:
     def exif_data(self, filen):
         paint_screen(self.screen, gl.BLACK)
         close_button(self.screen)
-        if not self.show_exif: 
+        if not self.show_exif:
             gl.SHOW_EXIFBUTTON = 0
-            return 
+            return
         exif_info = []
         filename = gl.files[filen]
         try:
@@ -305,7 +305,7 @@ class verbose:
                     pos = pos + 9
         except:
             print "Couldn't exif"
-            #pass 
+            #pass
         flip()
     def histogram(self):
         if not self.pil_info:
@@ -337,8 +337,8 @@ class verbose:
         show_message(self.screen, "Histogram", (wpos + 1, h - 174), 11, ("transparent"))
         pygame.draw.line(self.screen, gl.MSG_COLOR, (wpos - 2, h + 2), (wpos - 2, h - vlen)) # left side of border
         pygame.draw.line(self.screen, gl.MSG_COLOR, ((i / wdiv) + wpos, h - vlen), ((i / wdiv) + wpos, h + 2)) # right side
-        pygame.draw.line(self.screen, gl.MSG_COLOR, (wpos - 2, h - vlen), ((i / wdiv) + wpos, h - vlen)) # top 
-        pygame.draw.line(self.screen, gl.MSG_COLOR, (wpos - 2, h + 2), ((i / wdiv) + wpos, h + 2)) # bottom 
+        pygame.draw.line(self.screen, gl.MSG_COLOR, (wpos - 2, h - vlen), ((i / wdiv) + wpos, h - vlen)) # top
+        pygame.draw.line(self.screen, gl.MSG_COLOR, (wpos - 2, h + 2), ((i / wdiv) + wpos, h + 2)) # bottom
     def system_info(self):
         info = pygame.display.Info()
         self.row += gl.ROW_SEP * 2
@@ -361,25 +361,25 @@ class verbose:
         gl.MSG_COLOR = before_color
 
 
-def command_verbose_info(screen, new_img, rect, file, num_imgs):
+def command_verbose_info(screen, new_img, rect, file):
     gl.ORIG_WINSIZE = "%sx%s" % (screen.get_width(), screen.get_height())
     (screen, before_winsize, not_accepted) = adjust_screen(screen)
     paint_screen(screen, gl.BLACK)
     if gl.REMOTE:
-        remote_img_details(screen, new_img, rect, file, num_imgs)
+        remote_img_details(screen, new_img, rect, file)
     else:
-        verbose_info(screen, new_img, file, num_imgs)
-    screen = restore_screen(screen, before_winsize, not_accepted, new_img, file, num_imgs, rect)
+        verbose_info(screen, new_img, file)
+    screen = restore_screen(screen, before_winsize, not_accepted, new_img, file, rect)
     rect = get_center(screen, new_img)
-    my_update_screen(new_img, screen, rect, file, num_imgs)
+    my_update_screen(new_img, screen, rect, file)
 
 
-def verbose_info(screen, new_img, file, num_imgs):
+def verbose_info(screen, new_img, file):
     # main engine
     wait_cursor()
     paint_screen(screen, gl.BLACK)
     try:
-        (uniquecolors_rect, total_colors, row, font, im, verb) = print_verbose_info(screen, new_img, file, num_imgs)
+        (uniquecolors_rect, total_colors, row, font, im, verb) = print_verbose_info(screen, new_img, file)
     except:
         print 'print verbose'
         #(uniquecolors_rect, total_colors, row, font, im, verb) = junk_rect()#
@@ -434,11 +434,11 @@ def verbose_info(screen, new_img, file, num_imgs):
             break
 
 
-def print_verbose_info(screen, new_img, file, num_imgs):
+def print_verbose_info(screen, new_img, file):
     verb = verbose(screen, file)
     verb.bit_depth()
     verb.show_current_image(file)
-    verb.file_and_dir_name(file, num_imgs)
+    verb.file_and_dir_name(file)
     verb.original_size()
     if gl.CURRENT_ZOOM_PERCENT != 100:
         verb.current_size(new_img)
@@ -459,7 +459,7 @@ def print_verbose_info(screen, new_img, file, num_imgs):
         print "Couldn't display picture taken time"
         #pass
     verb.file_times(file)
-    try: 
+    try:
         verb.histogram()
     except: # a few rare images cause a ZeroDivisionError from histogram()
         print "Couldn't display histogram"
@@ -473,7 +473,7 @@ def print_verbose_info(screen, new_img, file, num_imgs):
     return (uniquecolors_rect, total_colors, row, font, im, verb)
 
 
-def remote_img_details(screen, new_img, rect, file, num_imgs):
+def remote_img_details(screen, new_img, rect, file):
     # show no details if image is on a web server
     paint_screen(screen, gl.BLACK)
     while 1:
@@ -505,7 +505,7 @@ def preview_img(screen, img):
             new_width = int(new_height / r)
             scale_val = new_width, new_height
             small_img = scale(img, scale_val)
-    if img_width == img_height: 
+    if img_width == img_height:
         if (not img_width < square_width and not img_height < square_height) or (img_width > square_width) or (img_height > square_height) or (img_width > square_width and img_height > square_height):
             r = float(img_width) / float(img_height)
             new_height = square_height

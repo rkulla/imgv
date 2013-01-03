@@ -8,7 +8,8 @@ from cursor import normal_cursor, wait_cursor
 from res import  adjust_screen, restore_screen
 
 
-def command_img_names(screen, new_img, img, file, num_imgs, rect):
+def command_img_names(screen, new_img, img, file, rect):
+    num_imgs = len(gl.files)
     (screen, before_winsize, not_accepted) = adjust_screen(screen)
     paint_screen(screen, gl.BLACK)
     normal_cursor()
@@ -17,17 +18,16 @@ def command_img_names(screen, new_img, img, file, num_imgs, rect):
     "(%d Images)" % len(gl.files), 15, 0, 1, 0)
     wait_cursor()
     start = start_timer()
-    screen = restore_screen(screen, before_winsize, not_accepted, new_img, file, num_imgs, rect)
+    screen = restore_screen(screen, before_winsize, not_accepted, new_img, file, rect)
     if not filename == None:
         if num_imgs > 1:
             file = gl.files.index(filename)
         new_img = load_img(gl.files[file], screen)
         rect = get_center(screen, new_img)
         ns = check_timer(start)
-        my_update_screen(new_img, screen, rect, file, num_imgs, ns)
+        my_update_screen(new_img, screen, rect, file, ns)
     normal_cursor()
     rect = get_center(screen, new_img)
-    num_imgs = len(gl.files)
-    my_update_screen(new_img, screen, rect, file, num_imgs)
+    my_update_screen(new_img, screen, rect, file)
     return (new_img, new_img, new_img, file, rect)
 

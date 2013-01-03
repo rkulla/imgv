@@ -43,15 +43,16 @@ def get_imgs(start_dir, show_subdirs):
         for ext in gl.IMG_TYPES:
             if i.endswith(ext):
                 gl.files.append(i)
-    return gl.files 
+    return gl.files
 
 
-def command_show_dirs(new_img, img, screen, rect, file, num_imgs):
+def command_show_dirs(new_img, img, screen, rect, file):
     (screen, before_winsize, not_accepted) = adjust_screen(screen)
     set_caption("Directory Browser - imgv")
     paint_screen(screen, gl.BLACK)
-    (num_imgs, file) = show_dirs(screen, num_imgs, file)
+    file = show_dirs(screen, file)
     wait_cursor()
+    num_imgs = len(gl.files)
     if gl.ESCAPED != 1:
         start = start_timer()
         if num_imgs < 1 or len(gl.files) == 0:
@@ -60,18 +61,19 @@ def command_show_dirs(new_img, img, screen, rect, file, num_imgs):
             new_img = img = load_img(gl.files[file], screen)
         else:
             new_img = load_img(gl.files[file], screen)
-    screen = restore_screen(screen, before_winsize, not_accepted, new_img, file, num_imgs, rect)
+    screen = restore_screen(screen, before_winsize, not_accepted, new_img, file, rect)
     rect = get_center(screen, new_img)
     if gl.ESCAPED != 1:
         ns = check_timer(start)
-        my_update_screen(new_img, screen, rect, file, num_imgs, ns)
+        my_update_screen(new_img, screen, rect, file, ns)
     else:
-        my_update_screen(new_img, screen, rect, file, num_imgs)
+        my_update_screen(new_img, screen, rect, file)
     normal_cursor()
-    return (new_img, new_img, new_img, num_imgs, file, rect)
+    return (new_img, new_img, new_img, file, rect)
 
 
-def show_dirs(screen, num_imgs, file):
+def show_dirs(screen, file):
+    num_imgs = len(gl.files)
     wait_cursor()
     if platform == 'win32':
         try:
@@ -87,7 +89,7 @@ def show_dirs(screen, num_imgs, file):
     name_max = 16 # dir name max
     menu_items = []
     if get_curdir[-1] == slash:
-        curdir = get_curdir 
+        curdir = get_curdir
     else:
         curdir = get_curdir + slash
     paint_screen(screen, gl.BLACK)
@@ -176,7 +178,7 @@ def show_dirs(screen, num_imgs, file):
                     dmsg = d + slash
                 else:
                     ren = font.render(d + slash, 1, gl.MSG_COLOR)
-            
+
         # print directory names on screen, wrapping if necessary
         font_height = font.size(' '.join(d.split(' ')[1:]))[1]
         if (line + font_height) >= (screen_height - 10):
@@ -226,7 +228,7 @@ def show_dirs(screen, num_imgs, file):
             for item in menu_items:
                 if item[0].collidepoint(cursor):
                     if pygame.mouse.get_pressed()[0] and (pygame.key.get_pressed()[K_LCTRL] or\
-                       pygame.key.get_pressed()[K_RCTRL]): 
+                       pygame.key.get_pressed()[K_RCTRL]):
                         try: # untag directory
                             gl.MULT_DIRS.remove(os.getcwd() + slash + ' '.join(item[1].split(' ')[1:]))
                             show_message(screen, " " * 30, (440, 40), 10, ("bold"))
@@ -234,8 +236,8 @@ def show_dirs(screen, num_imgs, file):
                         except:
                             pass
                     else: # (normal mode) change to a single directory and load its images
-                        (num_imgs, file) = do_change_dir(screen, num_imgs, file, item[1])
-                        return (num_imgs, file)
+                        file = do_change_dir(screen, file, item[1])
+                        return file
         if right_click(event):
             for item in menu_items:
                 if item[0].collidepoint(cursor):
@@ -246,7 +248,7 @@ def show_dirs(screen, num_imgs, file):
                         gl.MULT_DIRS.append(os.getcwd() + ' '.join(item[1].split(' ')[1:]))
                     show_message(screen, " " * 30, (440, 40), 10, ("bold"))
                     show_message(screen, "[Dirs tagged: %s]" % len(gl.MULT_DIRS), (440, 40), 10, "bold")
-                    
+
         # allow number keys to be used to change directories
         dirnum = None
         if event.type == KEYDOWN and event.key in (K_1, K_2, K_3, K_4, K_5, K_6, K_7, K_8, K_9, K_0, K_KP1, K_KP2, K_KP3, K_KP4, K_KP5, K_KP6, K_KP7, K_KP8, K_KP9, K_KP0):
@@ -254,34 +256,34 @@ def show_dirs(screen, num_imgs, file):
             if dirnum != 'backspaced':
                 for item in menu_items:
                     if item[1].startswith(str(dirnum)):
-                        (num_imgs, file) = do_change_dir(screen, num_imgs, file, item[1])
-                        return (num_imgs, file)
+                        file = do_change_dir(screen, file, item[1])
+                        return file
                 break
 
         if hit_key(event, K_RETURN) or hit_key(event, K_SPACE) or hit_key(event, K_l):
-            (num_imgs, file) = do_load_dir()
+            file = do_load_dir()
             break
         if hit_key(event, K_t): # load subdirs on keypress 't'
-            (num_imgs, file) = do_subdirs_too()
+            file = do_subdirs_too()
             break
         if hit_key(event, K_s): # search
            command_get_filter_info(screen)
-           (num_imgs, file) = show_dirs(screen, num_imgs, file)
+           file = show_dirs(screen, file)
            break
         if hit_key(event, K_d): # change drives
            if platform == 'win32':
                gl.WAS_IN_CHANGE_DRIVES = 1
-               (num_imgs, file) = do_change_drive(screen, num_imgs, file)
+               file = do_change_drive(screen, file)
                gl.WAS_IN_CHANGE_DRIVES = 0
                break
         if hit_key(event, K_c): # clear tag list
             do_untag(screen)
         if hit_key(event, K_v): # view tagged dirs
-           do_view_tagged(screen, num_imgs, file)
+           do_view_tagged(screen, file)
            break # break main loop to display properly
         if hit_key(event, K_a): # add curdir to playlist
            command_add_to_play_list(screen, curdir)
-           return (num_imgs, file) 
+           return file
         if hit_key(event, K_ESCAPE):
             gl.ESCAPED = 1
             gl.ADDED_DIR_NUMS = 0
@@ -292,32 +294,32 @@ def show_dirs(screen, num_imgs, file):
                 gl.ADDED_DIR_NUMS = 0
                 break
             if ren_load_rect.collidepoint(cursor): # load current dir
-                (num_imgs, file) = do_load_dir()
+                file = do_load_dir()
                 break
             if ren_load_subdirs_rect.collidepoint(cursor): # load subdirs too
-                (num_imgs, file) = do_subdirs_too()
+                file = do_subdirs_too()
                 break
             if platform == 'win32':
                 if ren_drive_rect.collidepoint(cursor):
                     gl.WAS_IN_CHANGE_DRIVES = 1
-                    (num_imgs, file) = do_change_drive(screen, num_imgs, file)
+                    file = do_change_drive(screen, file)
                     gl.WAS_IN_CHANGE_DRIVES = 0
                     break
             if dirpl_rect.collidepoint(cursor):
                 command_add_to_play_list(screen, curdir)
-                return (num_imgs, file)
+                return file
             if untag_all_rect.collidepoint(cursor):
                 do_untag(screen)
-            if view_tagged_rect.collidepoint(cursor): 
-                do_view_tagged(screen, num_imgs, file)
+            if view_tagged_rect.collidepoint(cursor):
+                do_view_tagged(screen, file)
                 break # break main loop to display properly
             if filter_rect.collidepoint(cursor):
                 command_get_filter_info(screen)
-                (num_imgs, file) = show_dirs(screen, num_imgs, file)
+                file = show_dirs(screen, file)
                 break
         check_quit(event)
-    gl.CACHE_DIR_OK = 1 
-    return (num_imgs, file)
+    gl.CACHE_DIR_OK = 1
+    return file
 
 
 def adjust_files(show_subdirs):
@@ -359,7 +361,7 @@ def get_dirnum(screen, key_type):
 
     for num in range(10):
         my_digits.append('[%d]' % num) # [0],[1],..[9]
-        
+
     # pass control to input gathering
     while 1:
         event = pygame.event.wait()
@@ -380,7 +382,7 @@ def get_dirnum(screen, key_type):
                         show_message(screen, msg2 + ''.join(dirnum[2:]), "bottom", 11)
             except TypeError:
                 pass
-    
+
         if hit_key(event, K_RETURN) or hit_key(event, K_KP_ENTER) or hit_key(event, K_SPACE) or hit_key(event, K_l):
             break
         if hit_key(event, K_ESCAPE):
@@ -398,7 +400,7 @@ def get_dirnum(screen, key_type):
     return dirnum
 
 
-def do_view_tagged(screen, num_imgs, file):
+def do_view_tagged(screen, file):
     "show all tagged dir names"
     paint_screen(screen, gl.BLACK)
     (esc_rect, close_font) = close_button(screen)
@@ -421,7 +423,7 @@ def do_view_tagged(screen, num_imgs, file):
         hover_cursor(pygame.mouse.get_pos(), (esc_rect,))
         if ev.type == KEYDOWN and ev.key not in (K_LALT, K_RALT, K_TAB, K_LCTRL, K_RCTRL) or ev.type == MOUSEBUTTONDOWN:
             gl.ADDED_DIR_NUMS = 0
-            (num_imgs, file) = show_dirs(screen, num_imgs, file)
+            file = show_dirs(screen, file)
             break # break event loop
 
 
@@ -430,28 +432,26 @@ def do_load_dir():
     gl.SUBDIRS = 0
     wait_cursor()
     file = adjust_files(0)
-    num_imgs = len(gl.files)
     gl.PLAY_LIST_NAME = " "
-    return (num_imgs, file)
+    return file
 
 
 def do_subdirs_too():
     gl.SUBDIRS = 1
     wait_cursor()
     file = adjust_files(1)
-    num_imgs = len(gl.files)
     gl.PLAY_LIST_NAME = " "
-    return (num_imgs, file)
+    return file
 
 
-def do_change_drive(screen, num_imgs, file):
+def do_change_drive(screen, file):
     paint_screen(screen, gl.BLACK)
     my_string = ask(screen, "Enter a Drive Letter")
     if my_string != None:
         gl.ADDED_DIR_NUMS = 0
         gl.DRIVE = my_string[0]
-    (num_imgs, file) = show_dirs(screen, num_imgs, file)
-    return (num_imgs, file)
+    file = show_dirs(screen, file)
+    return file
 
 
 def do_untag(screen):
@@ -460,7 +460,7 @@ def do_untag(screen):
     show_message(screen, "[Dirs tagged: %s]" % len(gl.MULT_DIRS), (440, 40), 10, "bold")
 
 
-def do_change_dir(screen, num_imgs, file, dirname):
+def do_change_dir(screen, file, dirname):
     wait_cursor()
     try:
         change_to = ' '.join(dirname.split(' ')[1:])
@@ -468,22 +468,19 @@ def do_change_dir(screen, num_imgs, file, dirname):
             gl.ADDED_DIR_NUMS = 0
         os.chdir(change_to)
         gl.BEEN_THERE_DONE_THAT = 1
-                            
+
         # adjust the variables for the new dir
         file = adjust_files(0)
-        
-        show_dirs(screen, num_imgs, file)
-        
-        # get new num_imgs value here for recursion reasons
-        num_imgs = len(gl.files)
-        
+
+        show_dirs(screen, file)
+
         normal_cursor()
-        return (num_imgs, file)
+        return file
     except:
         gl.ADDED_DIR_NUMS = 0
         normal_cursor()
         error_screen(screen, "Directory error2. [%s] Permission denied?" % change_to)
-        return (num_imgs, file)
+        return file
 
 
 def check_truncate(screen_width, name):

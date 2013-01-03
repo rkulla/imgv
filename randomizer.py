@@ -7,7 +7,7 @@ from load_img import load_img
 from random import shuffle
 
 
-def command_shuffle(new_img, img, screen, rect, file, num_imgs):
+def command_shuffle(new_img, img, screen, rect, file):
     "randomize the images"
     wait_cursor()
     start = start_timer()
@@ -15,12 +15,12 @@ def command_shuffle(new_img, img, screen, rect, file, num_imgs):
     new_img = load_img(gl.files[file], screen)
     rect = get_center(screen, new_img)
     ns = check_timer(start)
-    my_update_screen(new_img, screen, rect, file, num_imgs, ns)
+    my_update_screen(new_img, screen, rect, file, ns)
     normal_cursor()
     return (new_img, new_img, new_img, rect)
 
 
-def command_unshuffle(new_img, img, screen, rect, file, num_imgs):
+def command_unshuffle(new_img, img, screen, rect, file):
     "un-randomize the images"
     was_on = gl.files[file]
     wait_cursor()
@@ -30,6 +30,6 @@ def command_unshuffle(new_img, img, screen, rect, file, num_imgs):
     new_img = load_img(gl.files[file], screen)
     rect = get_center(screen, new_img)
     ns = check_timer(start)
-    my_update_screen(new_img, screen, rect, file, num_imgs, ns)
+    my_update_screen(new_img, screen, rect, file, ns)
     normal_cursor()
     return (new_img, new_img, new_img, rect, file)

@@ -34,11 +34,12 @@ def pause(screen):
             break
 
 
-def my_slideshow(new_img, img, screen, file, num_imgs, rect):
+def my_slideshow(new_img, img, screen, file, rect):
+    num_imgs = len(gl.files)
     if not gl.TOGGLE_FULLSCREEN_SET:
         screen = set_mode(screen.get_size())
     set_caption("Slideshow Options - imgv")
-    speed = get_speed(screen, new_img, rect, gl.files[file], file, num_imgs)
+    speed = get_speed(screen, new_img, rect, gl.files[file], file)
     if not speed == -1: # didn't hit Esc from get_speed:
         gl.SLIDE_SHOW_RUNNING = 1
         disable_screensaver()
@@ -50,34 +51,34 @@ def my_slideshow(new_img, img, screen, file, num_imgs, rect):
             check_quit(event)
             if event.type == KEYDOWN and event.key not in (K_LALT, K_RALT, K_LCTRL, K_RCTRL, K_p, K_PAUSE, K_TAB, K_SPACE, K_BACKSPACE):
                 stopped_msg(screen)
-                my_update_screen(new_img, screen, rect, file, len(gl.files))
+                my_update_screen(new_img, screen, rect, file)
                 file = file - 1
                 break
             if hit_key(event, K_p) or hit_key(event, K_PAUSE):
                 pause(screen)
-                my_update_screen(new_img, screen, rect, file, len(gl.files))
+                my_update_screen(new_img, screen, rect, file)
             if dont_call == 1:
                 break
             if not gl.WRAP_SLIDESHOW:
                 if file < num_imgs:
-                    (new_img, file, rect, dont_call) = show_slideshow_img(screen, new_img, file, num_imgs, speed)
+                    (new_img, file, rect, dont_call) = show_slideshow_img(screen, new_img, file, speed)
             if gl.WRAP_SLIDESHOW:
                 if file >= num_imgs:
                     file = 0
-                (new_img, file, rect, dont_call) = show_slideshow_img(screen, new_img, file, num_imgs, speed)
+                (new_img, file, rect, dont_call) = show_slideshow_img(screen, new_img, file, speed)
             pygame.time.delay(5) # don't hog CPU
     if not gl.TOGGLE_FULLSCREEN_SET:
         screen = set_mode(screen.get_size(), RESIZABLE)
     return (new_img, new_img, new_img, file, rect)
 
 
-def show_slideshow_img(screen, new_img, file, num_imgs, speed):
+def show_slideshow_img(screen, new_img, file, speed):
     start = start_timer()
     wait_cursor()
     new_img = next_img(file, new_img, screen)
     rect = get_center(screen, new_img)
     ns = check_timer(start)
-    my_update_screen(new_img, screen, rect, file, num_imgs, ns)
+    my_update_screen(new_img, screen, rect, file, ns)
     normal_cursor()
     if speed > 0:
         for i in range(speed):
@@ -87,11 +88,11 @@ def show_slideshow_img(screen, new_img, file, num_imgs, speed):
             if event.type == KEYDOWN and event.key not in (K_LALT, K_RALT, K_LCTRL, K_RCTRL,\
                 K_p, K_PAUSE, K_TAB, K_SPACE, K_BACKSPACE):
                 stopped_msg(screen)
-                my_update_screen(new_img, screen, rect, file, len(gl.files))
+                my_update_screen(new_img, screen, rect, file)
                 return (new_img, file, rect, 1)
             if hit_key(event, K_p) or hit_key(event, K_PAUSE):
                 pause(screen)
-                my_update_screen(new_img, screen, rect, file, len(gl.files))
+                my_update_screen(new_img, screen, rect, file)
             if hit_key(event, K_SPACE):
                 # skip forward an image immediately
                 file = file + 1
@@ -105,7 +106,7 @@ def show_slideshow_img(screen, new_img, file, num_imgs, speed):
     return (new_img, file, rect, 0)
 
 
-def get_speed(screen, new_img, rect, filename, file, num_imgs):
+def get_speed(screen, new_img, rect, filename, file):
     "get input from keyboard (including number pad) and only accept/display digits"
     paint_screen(screen, gl.BLACK)
     normal_cursor()
@@ -160,12 +161,12 @@ def get_speed(screen, new_img, rect, filename, file, num_imgs):
         if left_click(event):
             if esc_rect.collidepoint(cursor):
                 wait_cursor()
-                my_update_screen(new_img, screen, rect, file, num_imgs)
+                my_update_screen(new_img, screen, rect, file)
                 normal_cursor()
                 return -1
         if hit_key(event, K_ESCAPE):
             wait_cursor()
-            my_update_screen(new_img, screen, rect, file, num_imgs)
+            my_update_screen(new_img, screen, rect, file)
             normal_cursor()
             return -1
         if hit_key(event, K_BACKSPACE) or hit_key(event, K_DELETE) or hit_key(event, K_KP_PERIOD):

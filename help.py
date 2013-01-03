@@ -14,16 +14,16 @@ from usr_event import left_click, hit_key
 import webbrowser
 
 
-def command_help(screen, new_img, file, rect, num_imgs):
+def command_help(screen, new_img, file, rect):
     (screen, before_winsize, not_accepted) = adjust_screen(screen)
 
     set_caption("Help [imgv v3.1.6]")
     help(screen)
 
-    screen = restore_screen(screen, before_winsize, not_accepted, new_img, file, num_imgs, rect)
+    screen = restore_screen(screen, before_winsize, not_accepted, new_img, file, rect)
 
     rect = get_center(screen, new_img)
-    my_update_screen(new_img, screen, rect, file, len(gl.files))
+    my_update_screen(new_img, screen, rect, file)
 
 
 def help(screen):
@@ -31,35 +31,35 @@ def help(screen):
     (screen_width, screen_height) = (screen.get_width(), screen.get_height())
     (esc_rect, font) = close_button(screen)
     show_message(screen, "Main Keyboard Commands", "top", 11, ("bold", "underline", "transparent"))
-    key_list = [" Space/N/Ctrl+Tab=Next image, Backspace/B=Previous Image. Ctrl+B=Toggle Image Border ", 
-                " D=Change Directory ", 
-                " I=Image Browser ", 
-                " T=Thumbnails (Space/N/Right-Click=Next. Backspace/B/Middle-Click=Prev. P/Pause=Pause), Ctrl+T=Transparent font ", 
-                " 4=View four images at a time (Space/N/Right-Click=Next. Backspace/B/Middle-Click=Previous. W=Slideshow) ", 
-                " W=Slideshow (Space=Skip forward. Backspace=Skip backward. P/Pause=Pause) ", 
-                " P=Add to Playlist, Ctrl+P=Playlist Options ", 
+    key_list = [" Space/N/Ctrl+Tab=Next image, Backspace/B=Previous Image. Ctrl+B=Toggle Image Border ",
+                " D=Change Directory ",
+                " I=Image Browser ",
+                " T=Thumbnails (Space/N/Right-Click=Next. Backspace/B/Middle-Click=Prev. P/Pause=Pause), Ctrl+T=Transparent font ",
+                " 4=View four images at a time (Space/N/Right-Click=Next. Backspace/B/Middle-Click=Previous. W=Slideshow) ",
+                " W=Slideshow (Space=Skip forward. Backspace=Skip backward. P/Pause=Pause) ",
+                " P=Add to Playlist, Ctrl+P=Playlist Options ",
                 " C=Close Menu ",
-                " F=First Image (Jump to the first image), L=Last Image (Jump to the last image), Ctrl+L=Lock Zoom ", 
-                " '+'=Zoom In. '-'=Zoom Out. Ctrl+'+'=Zoom In (Double). Ctrl+'-'=Zoom Out (Double). Ctrl+Alt+'+'=Zoom In (Scale2X) ", 
+                " F=First Image (Jump to the first image), L=Last Image (Jump to the last image), Ctrl+L=Lock Zoom ",
+                " '+'=Zoom In. '-'=Zoom Out. Ctrl+'+'=Zoom In (Double). Ctrl+'-'=Zoom Out (Double). Ctrl+Alt+'+'=Zoom In (Scale2X) ",
                 " R=Rotate Right. Ctrl+R=Rotate Left ",
                 " Escape=Refresh (Reverts images to original state or reloads after directory changes) ",
-                " M=Flip Horizontal (Mirror), V=Flip Vertical ", 
-                " S=Shuffle, U=Unshuffle ", 
-                " A=Download Image (Saves remote images to your imgv download directory) ", 
-                " Delete/Ctrl+W=Close Image, Ctrl+Delete=Permanently delete image from harddisk", 
-                " X=Hide Image, Ctrl+X=Toggle displaying the main and on-the-fly-Exif status bars ", 
+                " M=Flip Horizontal (Mirror), V=Flip Vertical ",
+                " S=Shuffle, U=Unshuffle ",
+                " A=Download Image (Saves remote images to your imgv download directory) ",
+                " Delete/Ctrl+W=Close Image, Ctrl+Delete=Permanently delete image from harddisk",
+                " X=Hide Image, Ctrl+X=Toggle displaying the main and on-the-fly-Exif status bars ",
                 " O=Open URL to extract images from a Website ",
-                " F1=Help, F2=640x480, F3=800x600, F4=1024x768, F5=1280x1024, F6/Alt+Enter=Fullscreen, F7=Resize Options ", 
-                " H=Hand Tool (Allows you to pan/move images on the screen) ", 
-                " Q=Exit imgv at any time (except when prompted for input) ", 
-                " Arrow keys=Scroll the image left/right/up/down. PgUp/PgDown/Home/End=full up/full down/full left/full right, (Mouse Wheel=up/down) ", 
-                " E=Edit ", 
+                " F1=Help, F2=640x480, F3=800x600, F4=1024x768, F5=1280x1024, F6/Alt+Enter=Fullscreen, F7=Resize Options ",
+                " H=Hand Tool (Allows you to pan/move images on the screen) ",
+                " Q=Exit imgv at any time (except when prompted for input) ",
+                " Arrow keys=Scroll the image left/right/up/down. PgUp/PgDown/Home/End=full up/full down/full left/full right, (Mouse Wheel=up/down) ",
+                " E=Edit ",
                 " Z=Image Properties ",
                 " 1=Toggle scaling large images to fit the window ",
                 " Ctrl+Zero=Fit image to the window, Alt+Zero=Actual Size (Show image at its real size) "]
     key_list.sort()
     if screen_width == 640:
-        linesep = 13 
+        linesep = 13
         font_size = 9
     else:
         linesep =15
@@ -67,8 +67,8 @@ def help(screen):
     pos = linesep
     for line in key_list:
         show_message(screen, line, (2, pos), font_size, ("transparent"))
-        pos += linesep 
- 
+        pos += linesep
+
     mouse_msg = "Main Mouse Commands"
     show_message(screen, mouse_msg, ((screen_width / 2) - (font.size(mouse_msg)[0] / 2), pos, 0, 0), 11, ("bold", "underline", "transparent"))
     mouse_list = [" Left-Click=Select menu options/Load images in Four at a Time, Thumbnail and Image browser/Click buttons and links/Change directories ", " Right-Click=Open or move the main menu/Go forward a page in Four at a Time, Thumbnail and Image Browser/Tag directories ", " Middle-Click=Close the main menu/Go back a page in Four at a Time, Thumbnail and Image Browser ", " Mouse Scroll Wheel=Scroll images that are larger than the screen up or down/Activate the Hand Tool "]

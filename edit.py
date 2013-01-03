@@ -18,7 +18,7 @@ import pygame.font, pygame.event, pygame.mouse
 from pygame.locals import K_ESCAPE, MOUSEBUTTONDOWN, MOUSEMOTION, KEYDOWN, K_UP, K_DOWN, K_RIGHT, K_LEFT, K_RETURN, K_SPACE, K_1, K_2, K_3, K_4, K_KP1, K_KP2, K_KP3, K_KP4, RESIZABLE, VIDEORESIZE
 
 
-def command_edit_menu(screen, file, new_img, num_imgs, rect):
+def command_edit_menu(screen, file, new_img, rect):
     menu_items = []
     paint_screen(screen, gl.BLACK)
     (esc_rect, font) = close_button(screen)
@@ -36,24 +36,24 @@ def command_edit_menu(screen, file, new_img, num_imgs, rect):
        if gl.NOT_HOVERED:
            show_message(screen, "%sOption number: _%s" % (" " * 100, " " * 100), "bottom", 12)
            blank_fx(screen, -1)
- 
+
        if hit_key(event, K_ESCAPE):
            gl.USING_SCROLL_MENU = 0
            update_edit_screen(screen, file, new_img)
-           return (new_img, new_img, new_img, file, num_imgs, rect)
+           return (new_img, new_img, new_img, file, rect)
        if left_click(event):
            if esc_rect.collidepoint(cursor):
                gl.USING_SCROLL_MENU = 0
                update_edit_screen(screen, file, new_img)
-               return (new_img, new_img, new_img, file, num_imgs, rect)
+               return (new_img, new_img, new_img, file, rect)
 
        if event.type == KEYDOWN and event.key in (K_1, K_2, K_3, K_4, K_KP1, K_KP2, K_KP3, K_KP4):
            if hit_key(event, K_1) or hit_key(event, K_KP1):
-               (new_img, img, refresh_img, file, num_imgs, rect) = do_delete_image(screen, new_img, file, rect, num_imgs)
+               (new_img, img, refresh_img, file, rect) = do_delete_image(screen, new_img, file, rect)
                paint_screen(screen, gl.BLACK)
                (menu_items, men_ops) = edit_menu(screen, file, menu_items)
-           if hit_key(event, K_2) or hit_key(event, K_KP2): 
-               do_set_wallpaper(screen, file, new_img, num_imgs, rect)
+           if hit_key(event, K_2) or hit_key(event, K_KP2):
+               do_set_wallpaper(screen, file, new_img, rect)
                paint_screen(screen, gl.BLACK)
                (menu_items, men_ops) = edit_menu(screen, file, menu_items)
            if hit_key(event, K_3) or hit_key(event, K_KP3):
@@ -64,17 +64,17 @@ def command_edit_menu(screen, file, new_img, num_imgs, rect):
            if hit_key(event, K_4) or hit_key(event, K_KP4):
                preferences(screen)
                (menu_items, men_ops) = edit_menu(screen, file, menu_items)
-                   
+
        if event.type == MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
            for it in menu_items:
                if it[0].collidepoint(cursor) and it[1] in men_ops:
                    if it[1] == "1) Delete image":
-                       (new_img, new_img, new_img, file, num_imgs, rect) = do_delete_image(screen, new_img, file, rect, num_imgs)
+                       (new_img, new_img, new_img, file, rect) = do_delete_image(screen, new_img, file, rect)
                        paint_screen(screen, gl.BLACK)
                        (menu_items, men_ops) = edit_menu(screen, file, menu_items)
                        break
-                   if it[1] == "2) Set as wallpaper": 
-                       do_set_wallpaper(screen, file, new_img, num_imgs, rect)
+                   if it[1] == "2) Set as wallpaper":
+                       do_set_wallpaper(screen, file, new_img, rect)
                        paint_screen(screen, gl.BLACK)
                        (menu_items, men_ops) = edit_menu(screen, file, menu_items)
                        break
@@ -87,27 +87,27 @@ def command_edit_menu(screen, file, new_img, num_imgs, rect):
                        preferences(screen)
                        (menu_items, men_ops) = edit_menu(screen, file, menu_items)
                        break
-                   return (new_img, new_img, new_img, file, num_imgs, rect)
+                   return (new_img, new_img, new_img, file, rect)
        gl.NOT_HOVERED = 1
-    return (new_img, new_img, new_img, file, num_imgs, rect)
+    return (new_img, new_img, new_img, file, rect)
 
 
-def do_delete_image(screen, new_img, file, rect, num_imgs):
+def do_delete_image(screen, new_img, file, rect):
     fn = gl.files[file]
     answer = get_confirmation(screen, "Delete %s? [y/n]" % os.path.basename(fn))
     if answer == "yes":
-        (new_img, img, refresh_img, file, num_imgs, rect) = command_delete_img(fn, new_img, screen, file, rect)
-    return (new_img, new_img, new_img, file, num_imgs, rect)
+        (new_img, img, refresh_img, file, rect) = command_delete_img(fn, new_img, screen, file, rect)
+    return (new_img, new_img, new_img, file, rect)
 
 
-def do_set_wallpaper(screen, file, new_img, num_imgs, rect):
+def do_set_wallpaper(screen, file, new_img, rect):
     wait_cursor()
     if platform == 'win32':
         windows_wallpaper(file)
     else:
         unix_wallpaper(file)
     update_edit_screen(screen, file, new_img)
-    
+
 
 def do_external_viewer(screen, file, new_img):
     wait_cursor()
@@ -118,7 +118,7 @@ def do_external_viewer(screen, file, new_img):
     except:
         pass
     update_edit_screen(screen, file, new_img)
-    
+
 
 def do_gamma(screen):
     paint_screen(screen, gl.BLACK)
@@ -127,7 +127,7 @@ def do_gamma(screen):
     gl.CURRENT_GAMMA = new_gamma = ask(screen, "New gamma value")
     return new_gamma
 
-                       
+
 def edit_menu(screen, file, menu_items):
     font = pygame.font.Font(gl.FONT_NAME, 18)
     font.set_bold(1)
@@ -150,8 +150,7 @@ def edit_menu(screen, file, menu_items):
 
 def update_edit_screen(screen, file, new_img):
     rect = get_center(screen, new_img)
-    num_imgs = len(gl.files)
-    my_update_screen(new_img, screen, rect, file, num_imgs)
+    my_update_screen(new_img, screen, rect, file)
 
 
 def hover_fx(screen, menu_items, men_ops, cursor, font):
@@ -185,7 +184,7 @@ def blank_fx(screen, row):
     for i in range(len(l)):
         if i != row:
             show_message(screen, "  ", l[i], 12, ("bold")) # erase effect from non-hovered items
-            
+
 
 def index_fx(screen, it, font, msg):
     gl.NOT_HOVERED = 0
@@ -202,7 +201,7 @@ def preferences(screen):
     font = pygame.font.Font(gl.FONT_NAME, font_size)
     (esc_rect, font) = close_button(screen)
     pref_items = print_preferences(screen)
- 
+
     (transparent_text_crect, transparent_text_ucrect, main_statusbar_crect, main_statusbar_ucrect, four_statusbars_crect, four_statusbars_ucrect, exif_statusbar_crect, exif_statusbar_ucrect, thumb_statusbars_crect, thumb_statusbars_ucrect, image_border_crect, image_border_ucrect, fit_image_rect, dirnum_colors_crect, dirnum_colors_ucrect, screen_bgcolor_rect, lock_zoom_crect, lock_zoom_ucrect, wrap_crect, wrap_ucrect, wrap_slideshow_crect, wrap_slideshow_ucrect, start_fullscreen_crect, start_fullscreen_ucrect, thumb_border_crect, thumb_border_ucrect, show_movies_crect, show_movies_ucrect, font_color_rect, font_bgcolor_rect, img_border_color_rect, thumb_border_color_rect, thumb_bgcolor_rect, four_divcolor_rect, button_bgcolor_rect, button_hover_color_rect, button_textcolor_rect, button_texthovercolor_rect, close_button_color_rect, gamma_rect, winsize_rect, thumbsize_rect, transeffect_rect, startdir_rect, external_editor_rect, fit_slideshow_rect, passwd_rect) = pref_options(screen)
 
     while 1:
@@ -227,22 +226,22 @@ def preferences(screen):
                 paint_screen(screen, gl.BLACK)
                 return
             if transparent_text_ucrect.collidepoint(cursor):
-                gl.TOGGLE_TRANSPARENT ^= 1 
+                gl.TOGGLE_TRANSPARENT ^= 1
                 write_cfg("TRANSPARENT_TEXT")
             if main_statusbar_ucrect.collidepoint(cursor):
-                gl.TOGGLE_STATUS_BAR ^= 1 
+                gl.TOGGLE_STATUS_BAR ^= 1
                 write_cfg("MAIN_STATUS_BAR")
             if four_statusbars_ucrect.collidepoint(cursor):
-                gl.FOUR_STATUS_BARS ^= 1 
+                gl.FOUR_STATUS_BARS ^= 1
                 write_cfg("FOUR_AT_A_TIME_STATUS_BARS")
             if exif_statusbar_ucrect.collidepoint(cursor):
-                gl.ON_FLY_EXIF_STATUS_BAR ^= 1 
+                gl.ON_FLY_EXIF_STATUS_BAR ^= 1
                 write_cfg("ON_THE_FLY_EXIF_STATUS_BAR")
             if thumb_statusbars_ucrect.collidepoint(cursor):
-                gl.THUMB_STATUS_BARS ^= 1 
+                gl.THUMB_STATUS_BARS ^= 1
                 write_cfg("THUMBNAIL_STATUS_BARS")
             if image_border_ucrect.collidepoint(cursor):
-                gl.IMG_BORDER ^= 1 
+                gl.IMG_BORDER ^= 1
                 write_cfg("IMAGE_BORDER")
             if lock_zoom_ucrect.collidepoint(cursor):
                 gl.PERSISTENT_ZOOM_VAL ^= 1
@@ -617,7 +616,7 @@ def pref_options(screen):
     show_message(screen, "Yes:", (yes_wpos, 13), 10, ("transparent"))
     show_message(screen, "No:", (no_wpos, 13), 10, ("transparent"))
     main_statusbar_crect, main_statusbar_ucrect = check_boxes(screen, (15, cbox_wpos1, cbox_wpos2), "main_statusbar")
-    
+
     show_message(screen, "Yes", (yes_wpos, 29), 10, ("transparent"))
     show_message(screen, "No:", (no_wpos, 29), 10, ("transparent"))
     four_statusbars_crect, four_statusbars_ucrect = check_boxes(screen, (31, cbox_wpos1, cbox_wpos2), "four_statusbars")

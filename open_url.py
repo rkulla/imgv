@@ -16,7 +16,7 @@ class CheckIndexHTML(HTMLParser):
     def handle_data(self, data):
         if data == "404 Not Found" or data == "404 Error":
             gl.INDEX_OF = True
-            
+
 
 def check_indexhtml():
     gl.INDEX_OF = False
@@ -33,7 +33,7 @@ def check_indexhtml():
         parser.close()
     except:
         gl.URL_ERROR = True
-        return 
+        return
     if gl.INDEX_OF == True:
         index_of_files()
     else:
@@ -64,7 +64,7 @@ def index_of_files():
     except:
         gl.URL_ERROR = True
         return
-    
+
 
 class TagParse(htmllib.HTMLParser):
     def handle_image(self, source, alt, ismap, align, width, height):
@@ -75,7 +75,7 @@ class TagParse(htmllib.HTMLParser):
                     source = source[1:]
                 if gl.URL.count('/') >= 3:
                     if gl.URL.split('/')[-1].find('.') != -1:
-                        # get rid of any bla.html type endings    
+                        # get rid of any bla.html type endings
                         gl.URL = gl.URL[:gl.URL.index(gl.URL.split('/')[gl.URL.count('/')])]
                 if gl.URL[-1] == '/':
                     gl.URL = gl.URL[:-1]
@@ -120,7 +120,6 @@ def html_file():
 
 def open_url(screen, img):
     gl.ISURL = 1
-    num_imgs = len(gl.files)
     paint_screen(screen, gl.BLACK)
     set_caption("Extract from Web - imgv")
     normal_cursor()
@@ -135,7 +134,7 @@ def open_url(screen, img):
                 gl.files.append(str(''.join(gl.URL)))
                 return (load_img(gl.files[0], screen), 1)
     else:
-        return (img, num_imgs) 
+        return img
     gl.files = []
     check_indexhtml()
     if gl.URL_ERROR:
@@ -144,4 +143,4 @@ def open_url(screen, img):
     if len(gl.files) < 1:
         gl.files.append(gl.ERROR_IMG)
     gl.files = [x.replace(' ', '%20') for x in gl.files] # urls need %20 for spaces
-    return (load_img(gl.files[0], screen), len(gl.files))
+    return (load_img(gl.files[0], screen))

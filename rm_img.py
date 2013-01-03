@@ -24,19 +24,18 @@ def command_remove_img(new_img, screen, file, rect):
             if file > 0:
                 file = file - 1
                 new_img = previous_img(file, new_img, screen)
-        num_imgs = len(gl.files) # re-adjust
         rect = get_center(screen, new_img)
         ns = check_timer(start)
-        my_update_screen(new_img, screen, rect, file, num_imgs, ns)
+        my_update_screen(new_img, screen, rect, file, ns)
     normal_cursor()
-    return (new_img, new_img, new_img, file, num_imgs, rect)
+    return (new_img, new_img, new_img, file, rect)
 
 
 def command_delete_img(fn, new_img, screen, file, rect):
     try:
         unlink(fn)
-        (new_img, new_img, new_img, file, num_imgs, rect) = command_remove_img(new_img, screen, file, rect)
-        return (new_img, new_img, new_img, file, num_imgs, rect)
+        (new_img, new_img, new_img, file, rect) = command_remove_img(new_img, screen, file, rect)
+        return (new_img, new_img, new_img, file, rect)
     except OSError, err_msg:
         error_screen(screen, "Can't delete: %s" % err_msg)
-        return (new_img, new_img, new_img, file, len(gl.files), rect)
+        return (new_img, new_img, new_img, file, rect)

@@ -24,12 +24,11 @@ def command_four(screen, file, new_img, ns):
     set_caption("Four at a time - imgv")
     (file, new_img, start) = four(screen, file, new_img, ns)
     rect = get_center(screen, new_img)
-    num_imgs = len(gl.files)
     if start != orig_ns:
         ns = check_timer(start)
-        my_update_screen(new_img, screen, rect, file, num_imgs, ns)
+        my_update_screen(new_img, screen, rect, file, ns)
     else:
-        my_update_screen(new_img, screen, rect, file, num_imgs)
+        my_update_screen(new_img, screen, rect, file)
     pygame.event.set_blocked(MOUSEMOTION) # without this the hovers don't work right
     gl.MULTI_VIEWING = 0
     return (file, new_img, new_img, new_img, rect)
@@ -97,7 +96,7 @@ def four(screen, file, new_img, ns):
         if show_img_one == None:
             file = old_file
             break
-        if hit_key(event, K_w): 
+        if hit_key(event, K_w):
             if len(gl.files) <= 1: # nothin to slideshow
                 file = old_file
                 break # kick 'em out
@@ -272,7 +271,7 @@ def draw_lines(screen):
     "Draw the lines that split the screen into 4 squares"
     screen_width = screen.get_width()
     screen_height = screen.get_height()
-    line_color = gl.FOUR_DIV_COLOR 
+    line_color = gl.FOUR_DIV_COLOR
     vline = pygame.draw.line(screen, line_color, ((screen_width / 2), screen_height), ((screen_width / 2), 0), 1)
     hline = pygame.draw.line(screen, line_color, (0, (screen_height / 2)), (screen_width, (screen_height / 2)), 1)
     update(vline)
@@ -334,7 +333,7 @@ def adjust_img_size(the_img, screen_width, screen_height):
             new_width = square_width
             new_height = int(new_width / r)
             if new_width > square_width or new_height > square_height: # make sure
-                scale_val = int(new_width / r), int(new_height / r) 
+                scale_val = int(new_width / r), int(new_height / r)
             else:
                 scale_val = new_width, new_height
             # some images are still too large:
@@ -354,10 +353,10 @@ def adjust_img_size(the_img, screen_width, screen_height):
             new_height = square_height
             new_width = int(new_height / r)
             if new_width > square_width or new_height > square_height: # make sure
-                scale_val = int(new_width / r), int(new_height / r) 
+                scale_val = int(new_width / r), int(new_height / r)
             else:
                 scale_val = new_width, new_height
-            if scale_val[0] > square_width or scale_val[1] > square_height: 
+            if scale_val[0] > square_width or scale_val[1] > square_height:
                 if screen_width < 200 and screen_height > 300:
                     scale_val = int(scale_val[0] / 2), int(scale_val[1] / 2)
                 else:
@@ -375,7 +374,7 @@ def adjust_img_size(the_img, screen_width, screen_height):
             else:
                 scale_val = new_width, new_height
             small_img = pygame.transform.scale(the_img, scale_val)
-    return small_img 
+    return small_img
 
 
 def my_fourslideshow(screen, new_img, rect, filename, file, num_imgs, img_one_file, img_two_file, img_three_file, img_four_file, ns):
@@ -410,7 +409,7 @@ def my_fourslideshow(screen, new_img, rect, filename, file, num_imgs, img_one_fi
                     file = 0
                 (file, dont_call, img_one_file, img_two_file, img_three_file, img_four_file) =\
                 show_fourslideshow_imgs(screen, file, speed)
-            pygame.time.delay(5) 
+            pygame.time.delay(5)
     else: # escaped
         file = file + 4
         return (file, img_one_file, img_two_file, img_three_file, img_four_file)
@@ -438,7 +437,7 @@ def show_fourslideshow_imgs(screen, file, speed):
                 pause(screen)
             pygame.time.delay(1000)
     return (file, 0, img_one_file, img_two_file, img_three_file, img_four_file)
-    
+
 
 def hover_fx(screen, img_one_name, img_two_name, img_three_name, img_four_name, img_one_rect, img_two_rect, img_three_rect, img_four_rect, cursor):
     dash = ' - '

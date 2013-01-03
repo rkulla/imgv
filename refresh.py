@@ -7,7 +7,7 @@ from load_img import load_img
 from dir_nav import adjust_files
 
 
-def command_refresh(refresh_img, screen, files, file, num_imgs):
+def command_refresh(refresh_img, screen, files, file):
     "reset image to its original state"
     wait_cursor()
     start = start_timer()
@@ -26,17 +26,15 @@ def command_refresh(refresh_img, screen, files, file, num_imgs):
         rect = get_center(screen, refresh_img)
         ns = check_timer(start)
         adjust_files(gl.SUBDIRS)
-        num_imgs = len(gl.files)
         if cur_filename in gl.files:
             file = gl.files.index(cur_filename) # go back if new images were loaded
-        my_update_screen(refresh_img, screen, rect, file, num_imgs, ns)
+        my_update_screen(refresh_img, screen, rect, file, ns)
         normal_cursor()
         return (refresh_img, new_img, rect, file)
     adjust_files(gl.SUBDIRS)
-    num_imgs = len(gl.files)
     if cur_filename in gl.files and len(gl.files) > 1:
         file = gl.files.index(cur_filename) # go back if new images were loaded
     ns = check_timer(start)
-    my_update_screen(refresh_img, screen, rect, file, num_imgs, ns)
+    my_update_screen(refresh_img, screen, rect, file, ns)
     normal_cursor()
     return (new_img, new_img, get_center(screen, new_img), file)

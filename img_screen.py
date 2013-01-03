@@ -35,7 +35,7 @@ def init_screen():
     pygame.display.set_icon(load(gl.DATA_DIR + "imgv-icon.png"))
 
 
-def my_update_screen(new_img, screen, rect, file, num_imgs, *ns):
+def my_update_screen(new_img, screen, rect, file, *ns):
     screen.fill(gl.IMGV_COLOR)
     screen.blit(new_img, rect)
     update()
@@ -49,11 +49,11 @@ def my_update_screen(new_img, screen, rect, file, num_imgs, *ns):
     try:
         if gl.IMG_BORDER:
             img_border(screen, new_img.get_width(), new_img.get_height(), rect[0], rect[1])
-        img_info(screen, gl.files[file], file, num_imgs, new_img, ns[0])
+        img_info(screen, gl.files[file], file, new_img, ns[0])
     except:
         pass
 
-        
+
 def get_center(screen, new_img):
     "find out where the center of the screen is"
     screen_center = screen.get_rect().center

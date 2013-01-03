@@ -55,11 +55,11 @@ class Imgv(object):
         self.gfx['new_img'] = self.gfx['img']
         self.gfx['rect'] = get_center(self.gfx['screen'], self.gfx['new_img'])
         self.ns = check_timer(start)
-        my_update_screen(self.gfx['new_img'], self.gfx['screen'], self.gfx['rect'], self.gfx['file'], len(gl.files), self.ns)
+        my_update_screen(self.gfx['new_img'], self.gfx['screen'], self.gfx['rect'], self.gfx['file'], self.ns)
         normal_cursor()
         if gl.START_FULLSCREEN:
-            command_fullscreen(self.gfx['screen'], self.gfx['new_img'], self.gfx['file'], len(gl.files), self.gfx['rect'])
-            my_update_screen(self.gfx['new_img'], self.gfx['screen'], self.gfx['rect'], self.gfx['file'], len(gl.files), self.ns)
+            command_fullscreen(self.gfx['screen'], self.gfx['new_img'], self.gfx['file'], self.gfx['rect'])
+            my_update_screen(self.gfx['new_img'], self.gfx['screen'], self.gfx['rect'], self.gfx['file'], self.ns)
         self.screen_width = self.gfx['screen'].get_width()
         self.screen_height = self.gfx['screen'].get_height()
         self.new_img_width = self.gfx['new_img'].get_width()
@@ -103,25 +103,23 @@ class Imgv(object):
                     update(self.gfx['rect'].union(last_rect))
                 if event.type == MOUSEBUTTONUP:  # released mouse button, redisplay status bars:
                     drag_hand_cursor()
-                    my_update_screen(self.gfx['new_img'], self.gfx['screen'], self.gfx['rect'],
-                                     self.gfx['file'], len(gl.files), self.ns)
+                    my_update_screen(self.gfx['new_img'], self.gfx['screen'], self.gfx['rect'], self.gfx['file'], self.ns)
                     gl.DO_DRAG = 0
 
             if event.type == VIDEORESIZE:
                 self.gfx['screen'] = pygame.display.set_mode(event.dict['size'], RESIZABLE)
                 self.gfx['rect'] = get_center(self.gfx['screen'], self.gfx['new_img'])
-                my_update_screen(self.gfx['new_img'], self.gfx['screen'], self.gfx['rect'], self.gfx['file'],
-                                 len(gl.files), self.ns)
+                my_update_screen(self.gfx['new_img'], self.gfx['screen'], self.gfx['rect'], self.gfx['file'], self.ns)
             if event.type == KEYDOWN:
                 gl.HAND_TOOL = 0
                 if event.key not in (K_DOWN, K_UP, K_RIGHT, K_LEFT):
                     normal_cursor()  # stop displaying hand tool
                 (self.gfx['screen'], self.gfx['rect'], self.gfx['new_img'], self.gfx['img'],
-                 self.gfx['refresh_img'], self.gfx['file'], num_imgs,\
+                 self.gfx['refresh_img'], self.gfx['file'],\
                 self.screen_width, self.screen_height, self.new_img_width,
                  self.new_img_height, last_rect) =\
                 handle_keyboard(event, self.gfx['screen'], self.gfx['rect'], self.gfx['new_img'], self.gfx['img'],
-                                self.gfx['refresh_img'], self.gfx['file'], len(gl.files),\
+                                self.gfx['refresh_img'], self.gfx['file'],\
                 self.screen_width, self.screen_height, self.new_img_width, self.new_img_height, last_rect, self.ns)
             if event.type == KEYUP:
                 stop_auto_repeat()
@@ -142,44 +140,44 @@ class Imgv(object):
                                         self.gfx['new_img'], self.gfx['file'])
                 self.gfx = command_main_menu(gfx, self.ns)
 
-            start_auto_repeat(self.gfx['rect'], last_rect, self.gfx['new_img'], self.gfx['screen'], self.gfx['file'], len(gl.files), self.screen_width, self.screen_height, event)
+            start_auto_repeat(self.gfx['rect'], last_rect, self.gfx['new_img'], self.gfx['screen'], self.gfx['file'], self.screen_width, self.screen_height, event)
 
 
-def start_auto_repeat(rect, last_rect, new_img, screen, file, num_imgs, screen_width, screen_height, event):
+def start_auto_repeat(rect, last_rect, new_img, screen, file, screen_width, screen_height, event):
     if gl.MY_KEYDOWN:
         if rect.bottom > screen_height:
-            command_up(rect, last_rect, new_img, screen, file, num_imgs, screen_height)
+            command_up(rect, last_rect, new_img, screen, file, screen_height)
             if gl.IMG_BORDER:
                 border_fix(screen)
                 img_border(screen, new_img.get_width(), new_img.get_height(), rect[0], rect[1])
     if gl.MY_KEYUP:
         if rect.top < 0:
-            command_down(rect, last_rect, new_img, screen, file, num_imgs)
+            command_down(rect, last_rect, new_img, screen, file)
             if gl.IMG_BORDER:
                 border_fix(screen)
                 img_border(screen, new_img.get_width(), new_img.get_height(), rect[0], rect[1])
     if gl.MY_KEYRIGHT:
         if rect.right > screen_width:
-            command_left(rect, last_rect, new_img, screen, file, num_imgs, screen_width)
+            command_left(rect, last_rect, new_img, screen, file, screen_width)
             if gl.IMG_BORDER:
                 border_fix(screen)
                 img_border(screen, new_img.get_width(), new_img.get_height(), rect[0], rect[1])
     if gl.MY_KEYLEFT:
         if rect.left < 0:
-            command_right(rect, last_rect, new_img, screen, file, num_imgs)
+            command_right(rect, last_rect, new_img, screen, file)
             if gl.IMG_BORDER:
                 border_fix(screen)
                 img_border(screen, new_img.get_width(), new_img.get_height(), rect[0], rect[1])
     if event.type == MOUSEBUTTONDOWN:
         if event.dict['button'] == 4:  # mouse wheel up
             if rect.top < 0:
-                command_down(rect, last_rect, new_img, screen, file, num_imgs)
+                command_down(rect, last_rect, new_img, screen, file)
                 if gl.IMG_BORDER:
                     border_fix(screen)
                     img_border(screen, new_img.get_width(), new_img.get_height(), rect[0], rect[1])
         if event.dict['button'] == 5:  # mouse wheel down
             if rect.bottom > screen_height:
-                command_up(rect, last_rect, new_img, screen, file, num_imgs, screen_height)
+                command_up(rect, last_rect, new_img, screen, file, screen_height)
                 if gl.IMG_BORDER:
                     border_fix(screen)
                     img_border(screen, new_img.get_width(), new_img.get_height(), rect[0], rect[1])
