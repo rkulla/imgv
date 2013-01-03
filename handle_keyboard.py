@@ -34,7 +34,9 @@ import pygame.key
 from pygame.locals import *
 
 
-def handle_keyboard(event, screen, rect, new_img, img, refresh_img, file, screen_width, screen_height, new_img_width, new_img_height, last_rect, ns):
+def handle_keyboard(event, screen, rect, new_img, img, refresh_img, file, last_rect, ns):
+    new_img_width = new_img.get_width()
+    new_img_height = new_img.get_height()
     if hit_key(event, K_d):
         gl.USING_SCROLL_MENU = 1
         # save current things in case the user ESCAPES out of show_dirs()
@@ -416,5 +418,5 @@ def handle_keyboard(event, screen, rect, new_img, img, refresh_img, file, screen
         if hit_key(event, K_a):
             save_remote_img(screen, file)
 
-    return (screen, rect, new_img, img, refresh_img, file, screen_width, screen_height, new_img_width, new_img_height, last_rect)
+    return (screen, rect, new_img, img, refresh_img, file, last_rect)
 

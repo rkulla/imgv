@@ -116,11 +116,9 @@ class Imgv(object):
                     normal_cursor()  # stop displaying hand tool
                 (self.gfx['screen'], self.gfx['rect'], self.gfx['new_img'], self.gfx['img'],
                  self.gfx['refresh_img'], self.gfx['file'],\
-                self.screen_width, self.screen_height, self.new_img_width,
-                 self.new_img_height, last_rect) =\
+                self.new_img_width, self.new_img_height, last_rect) =\
                 handle_keyboard(event, self.gfx['screen'], self.gfx['rect'], self.gfx['new_img'], self.gfx['img'],
-                                self.gfx['refresh_img'], self.gfx['file'],\
-                self.screen_width, self.screen_height, self.new_img_width, self.new_img_height, last_rect, self.ns)
+                                self.gfx['refresh_img'], self.gfx['file'], last_rect, self.ns)
             if event.type == KEYUP:
                 stop_auto_repeat()
             check_quit(event)

@@ -90,10 +90,8 @@ def command_main_menu(gfx, ns):
                     normal_cursor()
                 return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img, file))
 
-            (screen, rect, new_img, img, refresh_img, file,\
-            screen_width, screen_height, new_img_width, new_img_height, last_rect) =\
-            handle_keyboard(event, screen, rect, new_img, img, refresh_img, file,\
-            screen_width, screen_height, new_img_width, new_img_height, last_rect, ns)
+            (screen, rect, new_img, img, refresh_img, file, last_rect) =\
+            handle_keyboard(event, screen, rect, new_img, img, refresh_img, file, last_rect, ns)
             break
         hover_cursor(cursor2, [x[0] for x in menu_items])
         if left_click(event):
