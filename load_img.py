@@ -8,16 +8,16 @@ try:
 except:
     print "imgv running in python2.4 doesn't support MPEG MOVIES on your platform currently"
 from screensaver import disable_screensaver, enable_screensaver
-from pygame.display import set_mode#
-from pygame.locals import RESIZABLE#
+from pygame.display import set_mode, get_surface
+from pygame.locals import RESIZABLE
 from pygame.image import load
 from pygame.transform import scale
 from pygame import error
 
 
-def insensitive_find(haystack, needle): 
+def insensitive_find(haystack, needle):
     return haystack.lower().find(needle.lower())
-    
+
 
 def load_img(img_file, screen, allow_zoom=True):
     "load images and movies"
@@ -28,11 +28,11 @@ def load_img(img_file, screen, allow_zoom=True):
     else:
         gl.CUR_PATH = getcwd() + sep + img_file
     try:
-        gl.CUR_PATH = gl.CUR_PATH[gl.CUR_PATH.rindex(getcwd()):] # only show path once
+        gl.CUR_PATH = gl.CUR_PATH[gl.CUR_PATH.rindex(getcwd()):]  # only show path once
     except:
         print "Couldn't load image"
     try:
-        if img_file[:5] == "http:": # load url
+        if img_file[:5] == "http:":  # load url
             try:
                 gl.REMOTE = 1
                 pic = urlopen(img_file).read()
@@ -66,7 +66,7 @@ def load_img(img_file, screen, allow_zoom=True):
             img = load(img_file).convert()
             gl.REAL_WIDTH, gl.REAL_HEIGHT = img.get_width(), img.get_height()
             if (gl.FIT_IMAGE_VAL == 3 or (gl.SLIDE_SHOW_RUNNING and gl.FIT_IMAGE_SLIDESHOW_VAL == 3)) and allow_zoom is True:
-                screen = fit_window(screen, img)
+                screen = fit_window(img)
             if gl.PERSISTENT_ZOOM_VAL and allow_zoom is True:
                 img = zoom_adjust(img)
     except error:
@@ -75,15 +75,15 @@ def load_img(img_file, screen, allow_zoom=True):
     if gl.SLIDE_SHOW_RUNNING and gl.FIT_IMAGE_SLIDESHOW_VAL and not gl.SKIP_FIT:
         if gl.FIT_IMAGE_SLIDESHOW_VAL == 1:
             if (gl.REAL_WIDTH > screen.get_rect().right or gl.REAL_HEIGHT > screen.get_rect().bottom) or gl.SCALE_UP:
-                img = fit_image(img, screen)
+                img = fit_image(img)
         if gl.FIT_IMAGE_SLIDESHOW_VAL == 2:
-            img = fit_image(img, screen)
+            img = fit_image(img)
     if gl.FIT_IMAGE_VAL and not gl.SKIP_FIT and not gl.SLIDE_SHOW_RUNNING:
         if gl.FIT_IMAGE_VAL == 1:
             if (gl.REAL_WIDTH > screen.get_rect().right or gl.REAL_HEIGHT > screen.get_rect().bottom) or gl.SCALE_UP:
-                img = fit_image(img, screen)
+                img = fit_image(img)
         if gl.FIT_IMAGE_VAL == 2 and allow_zoom is True:
-            img = fit_image(img, screen)
+            img = fit_image(img)
     gl.SKIP_FIT = 0
     return img
 
@@ -112,15 +112,15 @@ def zoom_adjust(img):
     return img
 
 
-def fit_window(screen, img):
+def fit_window(img):
     "resize window to fit the image"
     gl.IMGV_RESOLUTION = img.get_size()
     return set_mode(gl.IMGV_RESOLUTION, RESIZABLE)
 
 
-def fit_image(img, screen):
+def fit_image(img):
     "resize the image to fit the imgv window"
-    rect = screen.get_rect()
+    screen = get_surface()
     gl.SCALE_UP = 0
     if gl.REAL_WIDTH > gl.REAL_HEIGHT:
         r = float(gl.REAL_WIDTH) / float(gl.REAL_HEIGHT)
@@ -152,4 +152,3 @@ def fit_image(img, screen):
         scale_val = new_width, new_height
         img = scale(img, scale_val)
     return img
-
