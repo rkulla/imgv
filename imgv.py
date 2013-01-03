@@ -62,6 +62,7 @@ class Imgv(object):
             my_update_screen(self.gfx['new_img'], self.gfx['rect'], self.gfx['file'], self.ns)
         self.minus1 = 0
         self.minus2 = 0
+        self.last_rect = Rect(self.gfx['rect'])
 
     def main(self):
         # start with menu open
@@ -72,13 +73,13 @@ class Imgv(object):
             event = pygame.event.poll()
             pygame.time.wait(1)  # so pygame doesn't use 100% CPU
             cursor = pygame.mouse.get_pos()
-            last_rect = Rect(self.gfx['rect'])
+            self.last_rect = Rect(self.gfx['rect'])
 
             # drag image code:
             if gl.HAND_TOOL:
                 if left_click(event):  # calculate drag coordinates:
                     if gl.IMG_BORDER:
-                        border_fix()  # erase the current border
+                        self.border_fix()  # erase the current border
                     grab_hand_cursor()
                     self.minus1 = cursor[0] - self.gfx['rect'][0]
                     self.minus2 = cursor[1] - self.gfx['rect'][1]
@@ -87,9 +88,9 @@ class Imgv(object):
                     grab_hand_cursor()
                     self.gfx['rect'][0] = cursor[0] - self.minus1
                     self.gfx['rect'][1] = cursor[1] - self.minus2
-                    self.gfx['screen'].fill(gl.IMGV_COLOR, last_rect)
+                    self.gfx['screen'].fill(gl.IMGV_COLOR, self.last_rect)
                     self.gfx['screen'].blit(self.gfx['new_img'], self.gfx['rect'])
-                    update(self.gfx['rect'].union(last_rect))
+                    update(self.gfx['rect'].union(self.last_rect))
                 if event.type == MOUSEBUTTONUP:  # released mouse button, redisplay status bars:
                     drag_hand_cursor()
                     my_update_screen(self.gfx['new_img'], self.gfx['rect'], self.gfx['file'], self.ns)
@@ -104,10 +105,10 @@ class Imgv(object):
                 if event.key not in (K_DOWN, K_UP, K_RIGHT, K_LEFT):
                     normal_cursor()  # stop displaying hand tool
                 (self.gfx['screen'], self.gfx['rect'], self.gfx['new_img'], self.gfx['img'],
-                 self.gfx['refresh_img'], self.gfx['file'], last_rect) =\
-                handle_keyboard(event, self.gfx, last_rect, self.ns)
+                 self.gfx['refresh_img'], self.gfx['file'], self.last_rect) =\
+                handle_keyboard(event, self.gfx, self.last_rect, self.ns)
             if event.type == KEYUP:
-                stop_auto_repeat()
+                self.stop_auto_repeat()
             check_quit(event)
 
             if event.type == MOUSEBUTTONDOWN:  # open main menu:
@@ -121,64 +122,63 @@ class Imgv(object):
                 gl.JUST_RESIZED = 0
                 self.gfx = command_main_menu(self.gfx, self.ns)
 
-            start_auto_repeat(self.gfx, last_rect, event)
+            self.start_auto_repeat(event)
 
-
-def start_auto_repeat(gfx, last_rect, event):
-    screen = gfx['screen']
-    rect = gfx['rect']
-    new_img = gfx['new_img']
-    file = gfx['file']
-    if gl.MY_KEYDOWN:
-        if rect.bottom > screen.get_height():
-            command_up(rect, last_rect, new_img, file)
-            if gl.IMG_BORDER:
-                border_fix()
-                img_border(new_img, rect)
-    if gl.MY_KEYUP:
-        if rect.top < 0:
-            command_down(rect, last_rect, new_img, file)
-            if gl.IMG_BORDER:
-                border_fix()
-                img_border(new_img, rect)
-    if gl.MY_KEYRIGHT:
-        if rect.right > screen.get_width():
-            command_left(rect, last_rect, new_img, file)
-            if gl.IMG_BORDER:
-                border_fix()
-                img_border(new_img, rect)
-    if gl.MY_KEYLEFT:
-        if rect.left < 0:
-            command_right(rect, last_rect, new_img, file)
-            if gl.IMG_BORDER:
-                border_fix()
-                img_border(new_img, rect)
-    if event.type == MOUSEBUTTONDOWN:
-        if event.dict['button'] == 4:  # mouse wheel up
-            if rect.top < 0:
-                command_down(rect, last_rect, new_img, file)
-                if gl.IMG_BORDER:
-                    border_fix()
-                    img_border(new_img, rect)
-        if event.dict['button'] == 5:  # mouse wheel down
+    def start_auto_repeat(self, event):
+        screen = self.gfx['screen']
+        rect = self.gfx['rect']
+        new_img = self.gfx['new_img']
+        file = self.gfx['file']
+        if gl.MY_KEYDOWN:
             if rect.bottom > screen.get_height():
-                command_up(rect, last_rect, new_img, file)
+                command_up(rect, self.last_rect, new_img, file)
                 if gl.IMG_BORDER:
-                    border_fix()
+                    self.border_fix()
                     img_border(new_img, rect)
+        if gl.MY_KEYUP:
+            if rect.top < 0:
+                command_down(rect, self.last_rect, new_img, file)
+                if gl.IMG_BORDER:
+                    self.border_fix()
+                    img_border(new_img, rect)
+        if gl.MY_KEYRIGHT:
+            if rect.right > screen.get_width():
+                command_left(rect, self.last_rect, new_img, file)
+                if gl.IMG_BORDER:
+                    self.border_fix()
+                    img_border(new_img, rect)
+        if gl.MY_KEYLEFT:
+            if rect.left < 0:
+                command_right(rect, self.last_rect, new_img, file)
+                if gl.IMG_BORDER:
+                    self.border_fix()
+                    img_border(new_img, rect)
+        if event.type == MOUSEBUTTONDOWN:
+            if event.dict['button'] == 4:  # mouse wheel up
+                if rect.top < 0:
+                    command_down(rect, self.last_rect, new_img, file)
+                    if gl.IMG_BORDER:
+                        self.border_fix()
+                        img_border(new_img, rect)
+            if event.dict['button'] == 5:  # mouse wheel down
+                if rect.bottom > screen.get_height():
+                    command_up(rect, self.last_rect, new_img, file)
+                    if gl.IMG_BORDER:
+                        self.border_fix()
+                        img_border(new_img, rect)
 
 
-def border_fix():
-    "draw over the last placed border with the background color to make it disappear"
-    if gl.LRECT or gl.RRECT or gl.TRECT or gl.BRECT:
-        paint_screen(gl.IMGV_COLOR, gl.LRECT)
-        paint_screen(gl.IMGV_COLOR, gl.RRECT)
-        paint_screen(gl.IMGV_COLOR, gl.TRECT)
-        paint_screen(gl.IMGV_COLOR, gl.BRECT)
+    def border_fix(self):
+        "draw over the last placed border with the background color to make it disappear"
+        if gl.LRECT or gl.RRECT or gl.TRECT or gl.BRECT:
+            paint_screen(gl.IMGV_COLOR, gl.LRECT)
+            paint_screen(gl.IMGV_COLOR, gl.RRECT)
+            paint_screen(gl.IMGV_COLOR, gl.TRECT)
+            paint_screen(gl.IMGV_COLOR, gl.BRECT)
 
 
-def stop_auto_repeat():
-    gl.MY_KEYDOWN = gl.MY_KEYUP = gl.MY_KEYRIGHT = gl.MY_KEYLEFT = 0
+    def stop_auto_repeat(self):
+        gl.MY_KEYDOWN = gl.MY_KEYUP = gl.MY_KEYRIGHT = gl.MY_KEYLEFT = 0
 
 
 if __name__ == '__main__':
