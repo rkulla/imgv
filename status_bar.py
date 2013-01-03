@@ -6,7 +6,7 @@ from stat import ST_MTIME
 from os import getcwd, stat
 from os.path import basename, getsize
 import pygame
-from pygame.display import update, set_caption, get_caption
+from pygame.display import update, set_caption, get_caption, get_surface
 from show_message import show_message, truncate_name
 from buttons import imgv_button
 import exif
@@ -104,7 +104,8 @@ def exif_data(screen, filename):
         pass
 
 
-def img_info(screen, filename, file, new_img, ns):
+def img_info(filename, file, new_img, ns):
+    screen = get_surface()
     num_imgs = len(gl.files)
     if screen.get_width() < 800:
         font_size = 9

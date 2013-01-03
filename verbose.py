@@ -371,7 +371,7 @@ def command_verbose_info(screen, new_img, rect, file):
         verbose_info(screen, new_img, file)
     screen = restore_screen(screen, before_winsize, not_accepted, new_img, file, rect)
     rect = get_center(screen, new_img)
-    my_update_screen(new_img, screen, rect, file)
+    my_update_screen(new_img, rect, file)
 
 
 def verbose_info(screen, new_img, file):

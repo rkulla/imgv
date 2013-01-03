@@ -150,7 +150,7 @@ def edit_menu(screen, file, menu_items):
 
 def update_edit_screen(screen, file, new_img):
     rect = get_center(screen, new_img)
-    my_update_screen(new_img, screen, rect, file)
+    my_update_screen(new_img, rect, file)
 
 
 def hover_fx(screen, menu_items, men_ops, cursor, font):

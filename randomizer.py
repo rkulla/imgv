@@ -15,7 +15,7 @@ def command_shuffle(new_img, img, screen, rect, file):
     new_img = load_img(gl.files[file], screen)
     rect = get_center(screen, new_img)
     ns = check_timer(start)
-    my_update_screen(new_img, screen, rect, file, ns)
+    my_update_screen(new_img, rect, file, ns)
     normal_cursor()
     return (new_img, new_img, new_img, rect)
 
@@ -30,6 +30,6 @@ def command_unshuffle(new_img, img, screen, rect, file):
     new_img = load_img(gl.files[file], screen)
     rect = get_center(screen, new_img)
     ns = check_timer(start)
-    my_update_screen(new_img, screen, rect, file, ns)
+    my_update_screen(new_img, rect, file, ns)
     normal_cursor()
     return (new_img, new_img, new_img, rect, file)

@@ -55,11 +55,11 @@ class Imgv(object):
         self.gfx['new_img'] = self.gfx['img']
         self.gfx['rect'] = get_center(self.gfx['screen'], self.gfx['new_img'])
         self.ns = check_timer(start)
-        my_update_screen(self.gfx['new_img'], self.gfx['screen'], self.gfx['rect'], self.gfx['file'], self.ns)
+        my_update_screen(self.gfx['new_img'], self.gfx['rect'], self.gfx['file'], self.ns)
         normal_cursor()
         if gl.START_FULLSCREEN:
             command_fullscreen(self.gfx['screen'], self.gfx['new_img'], self.gfx['file'], self.gfx['rect'])
-            my_update_screen(self.gfx['new_img'], self.gfx['screen'], self.gfx['rect'], self.gfx['file'], self.ns)
+            my_update_screen(self.gfx['new_img'], self.gfx['rect'], self.gfx['file'], self.ns)
         self.screen_width = self.gfx['screen'].get_width()
         self.screen_height = self.gfx['screen'].get_height()
         self.new_img_width = self.gfx['new_img'].get_width()
@@ -103,13 +103,13 @@ class Imgv(object):
                     update(self.gfx['rect'].union(last_rect))
                 if event.type == MOUSEBUTTONUP:  # released mouse button, redisplay status bars:
                     drag_hand_cursor()
-                    my_update_screen(self.gfx['new_img'], self.gfx['screen'], self.gfx['rect'], self.gfx['file'], self.ns)
+                    my_update_screen(self.gfx['new_img'], self.gfx['rect'], self.gfx['file'], self.ns)
                     gl.DO_DRAG = 0
 
             if event.type == VIDEORESIZE:
                 self.gfx['screen'] = pygame.display.set_mode(event.dict['size'], RESIZABLE)
                 self.gfx['rect'] = get_center(self.gfx['screen'], self.gfx['new_img'])
-                my_update_screen(self.gfx['new_img'], self.gfx['screen'], self.gfx['rect'], self.gfx['file'], self.ns)
+                my_update_screen(self.gfx['new_img'], self.gfx['rect'], self.gfx['file'], self.ns)
             if event.type == KEYDOWN:
                 gl.HAND_TOOL = 0
                 if event.key not in (K_DOWN, K_UP, K_RIGHT, K_LEFT):

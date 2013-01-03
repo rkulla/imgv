@@ -11,7 +11,7 @@ def command_rotate_left(new_img, screen, file, rect):
     start = start_timer()
     new_img = rotate(new_img, 90)
     rect = get_center(screen, new_img)
-    my_update_screen(new_img, screen, rect, file, check_timer(start))
+    my_update_screen(new_img, rect, file, check_timer(start))
     normal_cursor()
     return (new_img, new_img, rect)
 
@@ -22,7 +22,7 @@ def command_rotate_right(new_img, screen, file, rect):
     start = start_timer()
     new_img = rotate(new_img, -90)
     rect = get_center(screen, new_img)
-    my_update_screen(new_img, screen, rect, file, check_timer(start))
+    my_update_screen(new_img, rect, file, check_timer(start))
     normal_cursor()
     return (new_img, new_img, rect)
 
@@ -32,7 +32,7 @@ def command_horiz(new_img, screen, file, rect):
     wait_cursor()
     start = start_timer()
     new_img = flip(new_img, 90, 0)
-    my_update_screen(new_img, screen, rect, file, check_timer(start))
+    my_update_screen(new_img, rect, file, check_timer(start))
     normal_cursor()
     return (new_img, new_img, rect)
 
@@ -42,6 +42,6 @@ def command_vert(new_img, screen, file, rect):
     wait_cursor()
     start = start_timer()
     new_img = flip(new_img, 90, 90)
-    my_update_screen(new_img, screen, rect, file, check_timer(start))
+    my_update_screen(new_img, rect, file, check_timer(start))
     normal_cursor()
     return (new_img, new_img, rect)

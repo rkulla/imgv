@@ -9,9 +9,13 @@ from img_screen import paint_screen, get_center, my_update_screen
 from img_surf import next_img
 from usr_event import check_quit, hit_key, left_click
 from screensaver import disable_screensaver, enable_screensaver
-import pygame.event, pygame.mouse, pygame.time, pygame.font, pygame.key
+import pygame.event
+import pygame.mouse
+import pygame.time
+import pygame.font
+import pygame.key
 from pygame.display import update, set_caption, set_mode
-from pygame.locals import K_LALT, K_RALT, K_LCTRL, K_RCTRL, K_p, K_TAB, K_SPACE, K_BACKSPACE, K_RETURN, K_KP_ENTER, KEYDOWN, MOUSEMOTION, MOUSEBUTTONDOWN, K_ESCAPE, K_PAUSE, K_DELETE, K_KP_PERIOD, RESIZABLE
+from pygame.locals import K_LALT, K_RALT, K_LCTRL, K_RCTRL, K_p, K_TAB, K_SPACE, K_BACKSPACE, K_RETURN, K_KP_ENTER, KEYDOWN, MOUSEMOTION, K_ESCAPE, K_PAUSE, K_DELETE, K_KP_PERIOD, RESIZABLE
 
 
 def stopped_msg(screen):
@@ -51,12 +55,12 @@ def my_slideshow(new_img, img, screen, file, rect):
             check_quit(event)
             if event.type == KEYDOWN and event.key not in (K_LALT, K_RALT, K_LCTRL, K_RCTRL, K_p, K_PAUSE, K_TAB, K_SPACE, K_BACKSPACE):
                 stopped_msg(screen)
-                my_update_screen(new_img, screen, rect, file)
+                my_update_screen(new_img, rect, file)
                 file = file - 1
                 break
             if hit_key(event, K_p) or hit_key(event, K_PAUSE):
                 pause(screen)
-                my_update_screen(new_img, screen, rect, file)
+                my_update_screen(new_img, rect, file)
             if dont_call == 1:
                 break
             if not gl.WRAP_SLIDESHOW:
@@ -78,7 +82,7 @@ def show_slideshow_img(screen, new_img, file, speed):
     new_img = next_img(file, new_img, screen)
     rect = get_center(screen, new_img)
     ns = check_timer(start)
-    my_update_screen(new_img, screen, rect, file, ns)
+    my_update_screen(new_img, rect, file, ns)
     normal_cursor()
     if speed > 0:
         for i in range(speed):
@@ -88,11 +92,11 @@ def show_slideshow_img(screen, new_img, file, speed):
             if event.type == KEYDOWN and event.key not in (K_LALT, K_RALT, K_LCTRL, K_RCTRL,\
                 K_p, K_PAUSE, K_TAB, K_SPACE, K_BACKSPACE):
                 stopped_msg(screen)
-                my_update_screen(new_img, screen, rect, file)
+                my_update_screen(new_img, rect, file)
                 return (new_img, file, rect, 1)
             if hit_key(event, K_p) or hit_key(event, K_PAUSE):
                 pause(screen)
-                my_update_screen(new_img, screen, rect, file)
+                my_update_screen(new_img, rect, file)
             if hit_key(event, K_SPACE):
                 # skip forward an image immediately
                 file = file + 1
@@ -161,12 +165,12 @@ def get_speed(screen, new_img, rect, filename, file):
         if left_click(event):
             if esc_rect.collidepoint(cursor):
                 wait_cursor()
-                my_update_screen(new_img, screen, rect, file)
+                my_update_screen(new_img, rect, file)
                 normal_cursor()
                 return -1
         if hit_key(event, K_ESCAPE):
             wait_cursor()
-            my_update_screen(new_img, screen, rect, file)
+            my_update_screen(new_img, rect, file)
             normal_cursor()
             return -1
         if hit_key(event, K_BACKSPACE) or hit_key(event, K_DELETE) or hit_key(event, K_KP_PERIOD):

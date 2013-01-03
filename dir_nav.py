@@ -65,9 +65,9 @@ def command_show_dirs(new_img, img, screen, rect, file):
     rect = get_center(screen, new_img)
     if gl.ESCAPED != 1:
         ns = check_timer(start)
-        my_update_screen(new_img, screen, rect, file, ns)
+        my_update_screen(new_img, rect, file, ns)
     else:
-        my_update_screen(new_img, screen, rect, file)
+        my_update_screen(new_img, rect, file)
     normal_cursor()
     return (new_img, new_img, new_img, file, rect)
 

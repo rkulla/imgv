@@ -64,7 +64,7 @@ def command_640x480(new_img, file, rect):
     resolution = 640, 480
     screen = set_mode(resolution, RESIZABLE)
     rect = get_center(screen, new_img)
-    my_update_screen(new_img, screen, rect, file)
+    my_update_screen(new_img, rect, file)
     if gl.TOGGLE_FULLSCREEN_SET:
         my_toggle_fullscreen()
     return rect
@@ -77,7 +77,7 @@ def command_800x600(new_img, file, rect):
     resolution = 800, 600
     screen = set_mode(resolution, RESIZABLE)
     rect = get_center(screen, new_img)
-    my_update_screen(new_img, screen, rect, file)
+    my_update_screen(new_img, rect, file)
     if gl.TOGGLE_FULLSCREEN_SET:
         my_toggle_fullscreen()
     return rect
@@ -90,7 +90,7 @@ def command_1024x768(new_img, file, rect):
     resolution = 1024, 768
     screen = set_mode(resolution, RESIZABLE)
     rect = get_center(screen, new_img)
-    my_update_screen(new_img, screen, rect, file)
+    my_update_screen(new_img, rect, file)
     if gl.TOGGLE_FULLSCREEN_SET:
         my_toggle_fullscreen()
     return rect
@@ -103,7 +103,7 @@ def command_1280x1024(new_img, file, rect):
     resolution = 1280, 1024
     screen = set_mode(resolution, RESIZABLE)
     rect = get_center(screen, new_img)
-    my_update_screen(new_img, screen, rect, file)
+    my_update_screen(new_img, rect, file)
     if gl.TOGGLE_FULLSCREEN_SET:
         my_toggle_fullscreen()
     return rect
@@ -114,7 +114,7 @@ def command_custom_res(screen, new_img, file, rect, resolution):
     wait_cursor()
     screen = set_mode(resolution, RESIZABLE)
     rect = get_center(screen, new_img)
-    my_update_screen(new_img, screen, rect, file)
+    my_update_screen(new_img, rect, file)
     if gl.TOGGLE_FULLSCREEN_SET:
         my_toggle_fullscreen()
     return rect
@@ -224,7 +224,7 @@ def command_show_res_modes(screen, new_img, file, rect):
            if hit_key(event, K_F6):
                screen = command_fullscreen(screen, new_img, file, rect)
                rect = get_center(screen, new_img)
-               my_update_screen(new_img, screen, rect, file)
+               my_update_screen(new_img, rect, file)
            if hit_key(event, K_c):
                rect = do_custom(screen, new_img, file, rect)
            return rect
@@ -248,7 +248,7 @@ def command_show_res_modes(screen, new_img, file, rect):
                    elif it[1] == "F6) Fullscreen":
                        screen = command_fullscreen(screen, new_img, file, rect)
                        rect = get_center(screen, new_img)
-                       my_update_screen(new_img, screen, rect, file)
+                       my_update_screen(new_img, rect, file)
                    elif it[1] == "C) Custom":
                        rect = do_custom(screen, new_img, file, rect)
                    return rect
@@ -325,7 +325,7 @@ def index_fx(screen, it, font, msg):
 
 def update_res_screen(screen, file, new_img):
     rect = get_center(screen, new_img)
-    my_update_screen(new_img, screen, rect, file)
+    my_update_screen(new_img, rect, file)
 
 
 def do_custom(screen, new_img, file, rect):

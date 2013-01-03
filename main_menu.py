@@ -66,7 +66,7 @@ def command_main_menu(gfx, ns):
             gfx['screen'] = pygame.display.set_mode(
                 event.dict['size'], RESIZABLE)
             rect = get_center(gfx['screen'], gfx['new_img'])
-            my_update_screen(gfx['new_img'], gfx['screen'], gfx['rect'], gfx['file'])
+            my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'])
             return (gl.build_gfx_dict(gfx['screen'], gfx['img'], gfx['rect'], gfx['refresh_img'], gfx['new_img'], gfx['file']))
         if gl.REMOTE and not gl.ALREADY_DOWNLOADED:
             hover_button(download_rect, cursor2, gfx['screen'],
@@ -80,7 +80,7 @@ def command_main_menu(gfx, ns):
                     drag_hand_cursor()
                 # close the menu
                 gl.MENU_POS = -1
-                my_update_screen(gfx['new_img'], gfx['screen'], gfx['rect'], gfx['file'])
+                my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'])
                 if event.key == K_c:
                     normal_cursor()
                 return (gl.build_gfx_dict(gfx['screen'], gfx['img'], gfx['rect'], gfx['refresh_img'], gfx['new_img'], gfx['file']))
@@ -118,7 +118,7 @@ def command_main_menu(gfx, ns):
                             chdir(gl.LAST_DIR)
                             gl.files = last_files
                             gl.USING_SCROLL_MENU = 0
-                            my_update_screen(gfx['new_img'], gfx['screen'], gfx['rect'], gfx['file'])
+                            my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'])
                         else:
                             gl.REFRESH_IMG_COUNT = 0
                         gl.ESCAPED = 0
@@ -136,7 +136,7 @@ def command_main_menu(gfx, ns):
                             gl.REAL_WIDTH = real_width
                         gl.ESCAPED = 0
                         gl.THUMBING = 0
-                        my_update_screen(gfx['new_img'], gfx['screen'], gfx['rect'], gfx['file'])
+                        my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'])
                     elif it[1] == " Image Properties ":
                         transparency = 0
                         if not gl.TOGGLE_TRANSPARENT:
@@ -146,7 +146,7 @@ def command_main_menu(gfx, ns):
                                              gfx['rect'], gfx['file'])
                         if transparency:
                             gl.TOGGLE_TRANSPARENT = 0
-                        my_update_screen(gfx['new_img'], gfx['screen'], gfx['rect'], gfx['file'])
+                        my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'])
                     elif it[1] == " Zoom Out ":
                         if int(gl.N_MILLISECONDS) < gl.MAX_ZOOM_MAX_MS and gl.CURRENT_ZOOM_PERCENT < gl.ZOOM_PERCENT_MAX:
                             try:
@@ -161,13 +161,12 @@ def command_main_menu(gfx, ns):
                             gl.ZOOM_EXP = 0
                             start = start_timer()
                             wait_cursor()
-                            gfx['new_img'] = load_img(
-                                gl.files[file], gfx['screen'])
+                            gfx['new_img'] = load_img(gl.files[gfx['file']], gfx['screen'])
                             gfx['img'] = gfx['refresh_img'] = gfx['new_img']
                             gfx['rect'] = get_center(
                                 gfx['screen'], gfx['new_img'])
                             ns = check_timer(start)
-                            my_update_screen(gfx['new_img'], gfx['screen'], gfx['rect'], gfx['file'], ns)
+                            my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'], ns)
                             normal_cursor()
                             gl.N_MILLISECONDS = "0"
                     elif it[1] == " Zoom In ":
@@ -194,7 +193,7 @@ def command_main_menu(gfx, ns):
                         gfx['img'] = gfx['refresh_img'] = gfx['new_img']
                         gfx['rect'] = get_center(gfx['screen'], gfx['new_img'])
                         ns = check_timer(start)
-                        my_update_screen(gfx['new_img'], gfx['screen'], gfx['rect'], gfx['file'], ns)
+                        my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'], ns)
                         if gl.RESET_FIT == 1:
                             gl.FIT_IMAGE_VAL = 0
                         normal_cursor()
@@ -202,18 +201,18 @@ def command_main_menu(gfx, ns):
                         gl.PERSISTENT_ZOOM_VAL ^= 1
                         if not gl.PERSISTENT_ZOOM_VAL:
                             gl.ZOOM_EXP = 0
-                        my_update_screen(gfx['new_img'], gfx['screen'], gfx['rect'], gfx['file'], ns)
+                        my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'], ns)
                     elif it[1] == " Actual Size ":
                         gl.SKIP_FIT = 1
                         gl.ZOOM_EXP = 0
                         start = start_timer()
                         wait_cursor()
                         gfx['new_img'] = load_img(
-                            gl.files[file], gfx['screen'])
+                            gl.files[gfx['file']], gfx['screen'])
                         gfx['img'] = gfx['refresh_img'] = gfx['new_img']
                         gfx['rect'] = get_center(gfx['screen'], gfx['new_img'])
                         ns = check_timer(start)
-                        my_update_screen(gfx['new_img'], gfx['screen'], gfx['rect'], gfx['file'], ns)
+                        my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'], ns)
                         normal_cursor()
                     elif it[1] == " Close Image ":
                         (gfx['new_img'], gfx['img'], gfx['refresh_img'], gfx['file'], gfx['rect']) = command_remove_img(gfx['new_img'], gfx['screen'], gfx['file'], gfx['rect'])
@@ -238,7 +237,7 @@ def command_main_menu(gfx, ns):
                             gl.CURRENT_ZOOM_PERCENT = zoom_percent
                             gl.REAL_WIDTH = real_width
                         gl.ESCAPED = 0
-                        my_update_screen(gfx['new_img'], gfx['screen'], gfx['rect'], gfx['file'])
+                        my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'])
                         normal_cursor()
                     elif it[1] == " Refresh ":
                         (gfx['new_img'], gfx['img'], gfx['rect'], gfx['file']) = command_refresh(gfx['refresh_img'], gfx['screen'], gl.files, gfx['file'])
@@ -256,21 +255,21 @@ def command_main_menu(gfx, ns):
                         (gfx['new_img'], gfx['img'], gfx['rect']) = command_vert(gfx['new_img'], gfx['screen'], gfx['file'], gfx['rect'])
                     elif it[1] == " Slideshow ":
                         (gfx['new_img'], gfx['img'], gfx['refresh_img'], gfx['file'], gfx['rect']) = my_slideshow(gfx['new_img'], gfx['img'], gfx['screen'], gfx['file'], gfx['rect'])
-                        my_update_screen(gfx['new_img'], gfx['screen'], gfx['rect'], gfx['file'])
+                        my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'])
                     elif it[1] == " Playlists ":
                         (gfx['new_img'], gfx['new_img'], gfx['new_img'], gfx['file'], gfx['rect']) = command_play_list_options(gfx['screen'], gfx['file'])
                         gl.SORT_HIT = 0
                     elif it[1] == " Add to Playlist ":
-                        command_add_to_play_list(gfx['screen'], gl.files[file])
+                        command_add_to_play_list(gfx['screen'], gl.files[gfx['file']])
                         gl.SORT_HIT = 0
-                        my_update_screen(gfx['new_img'], gfx['screen'], gfx['rect'], gfx['file'])
+                        my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'])
                     elif it[1] == " Edit ":
                         (gfx['screen'], before_winsize,
                          not_accepted) = adjust_screen(gfx['screen'])
                         gl.USING_SCROLL_MENU = 1
                         (gfx['new_img'], gfx['img'], gfx['refresh_img'], gfx['file'], gfx['rect']) = command_edit_menu(gfx['screen'], gfx['file'], gfx['new_img'], gfx['rect'])
                         gfx['screen'] = restore_screen(gfx['screen'], before_winsize, not_accepted, gfx['new_img'], gfx['file'], gfx['rect'])
-                        my_update_screen(gfx['new_img'], gfx['screen'], gfx['rect'], gfx['file'])
+                        my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'])
                         gl.USING_SCROLL_MENU = 0
                     elif it[1] == " Hide Image ":
                         command_hide(gfx['screen'],
@@ -284,7 +283,7 @@ def command_main_menu(gfx, ns):
                         gfx['img'] = gfx['refresh_img'] = gfx['new_img']
                         gfx['screen'] = restore_screen(gfx['screen'], before_winsize, not_accepted, gfx['new_img'], gfx['file'], gfx['rect'])
                         gfx['rect'] = get_center(gfx['screen'], gfx['new_img'])
-                        my_update_screen(gfx['new_img'], gfx['screen'], gfx['rect'], gfx['file'])
+                        my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'])
                         normal_cursor()
                     elif it[1] == " Help ":
                         gl.CALC_ZOOM = 0
@@ -302,7 +301,7 @@ def command_main_menu(gfx, ns):
                             gl.HAND_TOOL = 1
                             drag_hand_cursor()
                         gl.MENU_POS = -1
-                        my_update_screen(gfx['new_img'], gfx['screen'], gfx['rect'], gfx['file'])
+                        my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'])
                         normal_cursor()
                         return (gl.build_gfx_dict(gfx['screen'], gfx['img'], gfx['rect'], gfx['refresh_img'], gfx['new_img'], gfx['file']))
                     elif it[1] == " Exit ":
@@ -314,13 +313,13 @@ def command_main_menu(gfx, ns):
         if middle_click(event):
             "close the menu upon middle click"
             gl.MENU_POS = -1
-            my_update_screen(gfx['new_img'], gfx['screen'], gfx['rect'], gfx['file'])
+            my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'])
             normal_cursor()
             return (gl.build_gfx_dict(gfx['screen'], gfx['img'], gfx['rect'], gfx['refresh_img'], gfx['new_img'], gfx['file']))
         if right_click(event):
             wait_cursor()
             gl.MENU_POS = -1
-            my_update_screen(gfx['new_img'], gfx['screen'], gfx['rect'], gfx['file'])
+            my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'])
             gfx = gl.build_gfx_dict(gfx['screen'], gfx['img'], gfx['rect'], gfx['refresh_img'], gfx['new_img'], gfx['file'])
             gfx = command_main_menu(gfx, ns)
             return (gl.build_gfx_dict(gfx['screen'], gfx['img'], gfx['rect'], gfx['refresh_img'], gfx['new_img'], gfx['file']))
@@ -333,7 +332,7 @@ def command_main_menu(gfx, ns):
                 drag_hand_cursor()
                 # close menu:
                 gl.MENU_POS = -1
-                my_update_screen(gfx['new_img'], gfx['screen'], gfx['rect'], gfx['file'])
+                my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'])
                 return (gl.build_gfx_dict(gfx['screen'], gfx['img'], gfx['rect'], gfx['refresh_img'], gfx['new_img'], gfx['file']))
     if gl.KEEP_MENU_OPEN == "1":
         # this code purposely closes the main menu by breaking the recursion to free up RAM memory

@@ -41,9 +41,9 @@ def command_thumbs(screen, new_img, file, ns):
     rect = get_center(screen, new_img)
     if start != orig_ns:
         ns = check_timer(start)
-        my_update_screen(new_img, screen, rect, file, ns)
+        my_update_screen(new_img, rect, file, ns)
     else:
-        my_update_screen(new_img, screen, rect, file)
+        my_update_screen(new_img, rect, file)
     normal_cursor()
     gl.THUMBING = 0
     return (new_img, new_img, new_img, file, rect)

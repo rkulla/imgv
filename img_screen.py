@@ -1,7 +1,7 @@
 # imgv screen functions by Ryan Kulla, rkulla@gmail.com
 import gl
 from pygame.image import load
-from pygame.display import update
+from pygame.display import update, get_surface
 from pygame.draw import line
 from status_bar import img_info
 from pygame.locals import Rect
@@ -35,7 +35,8 @@ def init_screen():
     pygame.display.set_icon(load(gl.DATA_DIR + "imgv-icon.png"))
 
 
-def my_update_screen(new_img, screen, rect, file, *ns):
+def my_update_screen(new_img, rect, file, *ns):
+    screen = get_surface()
     screen.fill(gl.IMGV_COLOR)
     screen.blit(new_img, rect)
     update()
@@ -47,22 +48,24 @@ def my_update_screen(new_img, screen, rect, file, *ns):
         gl.NS_GLOBAL = ns
     try:
         if gl.IMG_BORDER:
-            img_border(screen, new_img.get_width(), new_img.get_height(), rect[0], rect[1])
-        img_info(screen, gl.files[file], file, new_img, ns[0])
+            img_border(new_img.get_width(), new_img.get_height(), rect[0], rect[1])
+        img_info(gl.files[file], file, new_img, ns[0])
     except:
         pass
 
 
 def get_center(screen, new_img):
     "find out where the center of the screen is"
+    screen = get_surface()
     screen_center = screen.get_rect().center
     rect = new_img.get_rect()
     rect.center = screen_center
     return rect
 
 
-def img_border(screen, img_width, img_height, wpos, downpos):
+def img_border(img_width, img_height, wpos, downpos):
     "draw a border around the image"
+    screen = get_surface()
     ll = line(screen, gl.IMG_BORDER_COLOR, (wpos, downpos), (wpos, img_height + downpos + 2))  # left side of border
     rl = line(screen, gl.IMG_BORDER_COLOR, (wpos + img_width, downpos), (wpos + img_width, img_height + downpos + 2))  # right side
     tl = line(screen, gl.IMG_BORDER_COLOR, (wpos, downpos), ((wpos + img_width), downpos))  # top of border

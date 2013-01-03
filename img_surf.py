@@ -15,7 +15,7 @@ def command_first_img(new_img, screen, file, rect):
     new_img = load_img(gl.files[file], screen)
     rect = get_center(screen, new_img)
     ns = check_timer(start)
-    my_update_screen(new_img, screen, rect, file, ns)
+    my_update_screen(new_img, rect, file, ns)
     normal_cursor()
     return (new_img, new_img, new_img, file, rect)
 
@@ -30,7 +30,7 @@ def command_last_img(new_img, screen, file, rect):
     new_img = load_img(gl.files[file], screen)
     rect = get_center(screen, new_img)
     ns = check_timer(start)
-    my_update_screen(new_img, screen, rect, file, ns)
+    my_update_screen(new_img, rect, file, ns)
     normal_cursor()
     return (new_img, new_img, new_img, file, rect)
 
@@ -46,7 +46,7 @@ def command_next_img(new_img, screen, file, rect):
             new_img = next_img(file, new_img, screen)
             rect = get_center(screen, new_img)
             ns = check_timer(start)
-            my_update_screen(new_img, screen, rect, file, ns)
+            my_update_screen(new_img, rect, file, ns)
     else:
         file = file + 1
         if file > (num_imgs - 1):
@@ -55,7 +55,7 @@ def command_next_img(new_img, screen, file, rect):
             new_img = next_img(file, new_img, screen)
             rect = get_center(screen, new_img)
             ns = check_timer(start)
-            my_update_screen(new_img, screen, rect, file, ns)
+            my_update_screen(new_img, rect, file, ns)
     normal_cursor()
     return (new_img, new_img, new_img, file, rect)
 
@@ -69,7 +69,7 @@ def command_prev_img(new_img, screen, file, rect):
         new_img = previous_img(file, new_img, screen)
         rect = get_center(screen, new_img)
         ns = check_timer(start)
-        my_update_screen(new_img, screen, rect, file, ns)
+        my_update_screen(new_img, rect, file, ns)
     normal_cursor()
     return (new_img, new_img, new_img, file, rect)
 

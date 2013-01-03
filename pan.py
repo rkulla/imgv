@@ -12,12 +12,12 @@ def command_down(rect, last_rect, new_img, screen, file):
         rect.top = 0
         screen.blit(new_img, rect)
         update(rect.union(last_rect))
-        img_info(screen, gl.files[file], file, new_img, gl.NS_GLOBAL[0])
+        img_info(gl.files[file], file, new_img, gl.NS_GLOBAL[0])
     elif (rect.top + gl.MOVE) < 0:
         rect.top += gl.MOVE
         screen.blit(new_img, rect)
         update(rect.union(last_rect))
-        img_info(screen, gl.files[file], file, new_img, gl.NS_GLOBAL[0])
+        img_info(gl.files[file], file, new_img, gl.NS_GLOBAL[0])
     drag_hand_cursor()
     return rect
 
@@ -29,7 +29,7 @@ def command_full_down(rect, last_rect, new_img, screen, file):
         rect.top = 0
         screen.blit(new_img, rect)
         update(rect.union(last_rect))
-        img_info(screen, gl.files[file], file, new_img, gl.NS_GLOBAL[0])
+        img_info(gl.files[file], file, new_img, gl.NS_GLOBAL[0])
     drag_hand_cursor()
     return rect
 
@@ -41,12 +41,12 @@ def command_up(rect, last_rect, new_img, screen, file, screen_height):
         rect.bottom = screen_height # snap
         screen.blit(new_img, rect)
         update(rect.union(last_rect))
-        img_info(screen, gl.files[file], file, new_img, gl.NS_GLOBAL[0])
+        img_info(gl.files[file], file, new_img, gl.NS_GLOBAL[0])
     elif (rect.bottom - gl.MOVE) > screen_height:
         rect.bottom -= gl.MOVE
         screen.blit(new_img, rect)
         update(rect.union(last_rect))
-        img_info(screen, gl.files[file], file, new_img, gl.NS_GLOBAL[0])
+        img_info(gl.files[file], file, new_img, gl.NS_GLOBAL[0])
     drag_hand_cursor()
     return rect
 
@@ -58,7 +58,7 @@ def command_full_up(rect, last_rect, new_img, screen, file, screen_height):
         rect.bottom = screen_height
         screen.blit(new_img, rect)
         update(rect.union(last_rect))
-        img_info(screen, gl.files[file], file, new_img, gl.NS_GLOBAL[0])
+        img_info(gl.files[file], file, new_img, gl.NS_GLOBAL[0])
     drag_hand_cursor()
     return rect
 
@@ -69,12 +69,12 @@ def command_right(rect, last_rect, new_img, screen, file):
         rect.left = 0 # snap
         screen.blit(new_img, rect)
         update(rect.union(last_rect))
-        img_info(screen, gl.files[file], file, new_img, gl.NS_GLOBAL[0])
+        img_info(gl.files[file], file, new_img, gl.NS_GLOBAL[0])
     elif (rect.left + gl.MOVE) < 0:
         rect.left += gl.MOVE
         screen.blit(new_img, rect)
         update(rect.union(last_rect))
-        img_info(screen, gl.files[file], file, new_img, gl.NS_GLOBAL[0])
+        img_info(gl.files[file], file, new_img, gl.NS_GLOBAL[0])
     drag_hand_cursor()
     return rect
 
@@ -86,7 +86,7 @@ def command_full_right(rect, last_rect, new_img, screen, file):
         rect.left = 0
         screen.blit(new_img, rect)
         update(rect.union(last_rect))
-        img_info(screen, gl.files[file], file, new_img, gl.NS_GLOBAL[0])
+        img_info(gl.files[file], file, new_img, gl.NS_GLOBAL[0])
     drag_hand_cursor()
     return rect
 
@@ -97,12 +97,12 @@ def command_left(rect, last_rect, new_img, screen, file, screen_width):
         rect.right = screen_width # snap
         screen.blit(new_img, rect)
         update(rect.union(last_rect))
-        img_info(screen, gl.files[file], file, new_img, gl.NS_GLOBAL[0])
+        img_info(gl.files[file], file, new_img, gl.NS_GLOBAL[0])
     elif (rect.right - gl.MOVE) > screen_width:
         rect.right -= gl.MOVE
         screen.blit(new_img, rect)
         update(rect.union(last_rect))
-        img_info(screen, gl.files[file], file, new_img, gl.NS_GLOBAL[0])
+        img_info(gl.files[file], file, new_img, gl.NS_GLOBAL[0])
     drag_hand_cursor()
     return rect
 
@@ -114,7 +114,7 @@ def command_full_left(rect, last_rect, new_img, screen, file, screen_width):
         rect.right = screen_width
         screen.blit(new_img, rect)
         update(rect.union(last_rect))
-        img_info(screen, gl.files[file], file, new_img, gl.NS_GLOBAL[0])
+        img_info(gl.files[file], file, new_img, gl.NS_GLOBAL[0])
     drag_hand_cursor()
     return rect
 

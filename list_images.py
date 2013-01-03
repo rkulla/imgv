@@ -1,7 +1,7 @@
 # image name list dialog code by Ryan Kulla, rkulla@gmail.com
 import gl
 from file_master import command_file_master
-from img_screen import my_update_screen, get_center, paint_screen, junk_rect
+from img_screen import my_update_screen, get_center, paint_screen
 from load_timers import start_timer, check_timer
 from load_img import load_img
 from cursor import normal_cursor, wait_cursor
@@ -25,9 +25,9 @@ def command_img_names(screen, new_img, img, file, rect):
         new_img = load_img(gl.files[file], screen)
         rect = get_center(screen, new_img)
         ns = check_timer(start)
-        my_update_screen(new_img, screen, rect, file, ns)
+        my_update_screen(new_img, rect, file, ns)
     normal_cursor()
     rect = get_center(screen, new_img)
-    my_update_screen(new_img, screen, rect, file)
+    my_update_screen(new_img, rect, file)
     return (new_img, new_img, new_img, file, rect)
 

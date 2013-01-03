@@ -61,7 +61,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
             chdir(gl.LAST_DIR)
             gl.files = last_files
             gl.USING_SCROLL_MENU = 0
-            my_update_screen(new_img, screen, rect, file)
+            my_update_screen(new_img, rect, file)
         else:
             gl.REFRESH_IMG_COUNT = 0
         gl.ESCAPED = 0
@@ -93,14 +93,14 @@ def handle_keyboard(event, gfx, last_rect, ns):
     if hit_key(event, K_F6):
         screen = command_fullscreen(screen, new_img, file, rect)
         rect = get_center(screen, new_img)
-        my_update_screen(new_img, screen, rect, file)
+        my_update_screen(new_img, rect, file)
         normal_cursor()
     if event.type == KEYDOWN:  # alt+enter code
         mods = pygame.key.get_mods()
         if ((event.key == K_RETURN and mods & KMOD_ALT)):
             screen = command_fullscreen(screen, new_img, file, rect)
             rect = get_center(screen, new_img)
-            my_update_screen(new_img, screen, rect, file)
+            my_update_screen(new_img, rect, file)
     if hit_key(event, K_F7):
         gl.USING_SCROLL_MENU = 1
         gl.CALC_ZOOM = 0
@@ -110,7 +110,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
         gl.CURRENT_ZOOM_PERCENT = zoom_percent
         gl.REAL_WIDTH = real_width
         gl.USING_SCROLL_MENU = 0
-        my_update_screen(new_img, screen, rect, file)
+        my_update_screen(new_img, rect, file)
         normal_cursor()
     if hit_key(event, K_s):
         (new_img, img, refresh_img, rect) = command_shuffle(
@@ -141,7 +141,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
         if event.key == K_p and mods & KMOD_CTRL == 0:
             command_add_to_play_list(screen, gl.files[file])
             gl.SORT_HIT = 0
-            my_update_screen(new_img, screen, rect, file)
+            my_update_screen(new_img, rect, file)
     if event.type == KEYDOWN:
         mods = pygame.key.get_mods()
         if event.key == K_p and mods & KMOD_CTRL:
@@ -158,7 +158,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
             if get_config_val("ON_THE_FLY_EXIF_STATUS_BAR") == 1:
                 gl.ON_FLY_EXIF_STATUS_BAR ^= 1
             gl.TOGGLE_STATUS_BAR ^= 1
-            my_update_screen(new_img, screen, rect, file)
+            my_update_screen(new_img, rect, file)
             normal_cursor()
     if event.type == KEYDOWN:
         mods = pygame.key.get_mods()
@@ -180,7 +180,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
                 img = refresh_img = new_img
                 rect = get_center(screen, new_img)
                 ns = check_timer(start)
-                my_update_screen(new_img, screen, rect, file, ns)
+                my_update_screen(new_img, rect, file, ns)
                 normal_cursor()
                 gl.N_MILLISECONDS = "0"
     if event.type == KEYDOWN:
@@ -287,7 +287,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
         mods = pygame.key.get_mods()
         if event.key == K_b and mods & KMOD_CTRL:
             gl.IMG_BORDER ^= 1
-            my_update_screen(new_img, screen, rect, file)
+            my_update_screen(new_img, rect, file)
             normal_cursor()
     if hit_key(event, K_o):
         (screen, before_winsize, not_accepted) = adjust_screen(screen)
@@ -298,12 +298,12 @@ def handle_keyboard(event, gfx, last_rect, ns):
         screen = restore_screen(
             screen, before_winsize, not_accepted, new_img, file, rect)
         rect = get_center(screen, new_img)
-        my_update_screen(new_img, screen, rect, file)
+        my_update_screen(new_img, rect, file)
         normal_cursor()
     if hit_key(event, K_ESCAPE):
         (new_img, img, rect, file) = command_refresh(refresh_img,
                                                      screen, gl.files, file)
-        my_update_screen(new_img, screen, rect, file)
+        my_update_screen(new_img, rect, file)
     if event.type == KEYDOWN:  # Ctrl+0 (Fit to Window) code
         mods = pygame.key.get_mods()
         if event.key == K_0 and mods & KMOD_CTRL:
@@ -320,7 +320,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
             img = refresh_img = new_img
             rect = get_center(screen, new_img)
             ns = check_timer(start)
-            my_update_screen(new_img, screen, rect, file, ns)
+            my_update_screen(new_img, rect, file, ns)
             if gl.RESET_FIT == 1:
                 gl.FIT_IMAGE_VAL = 0
             normal_cursor()
@@ -335,7 +335,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
             img = refresh_img = new_img
             rect = get_center(screen, new_img)
             ns = check_timer(start)
-            my_update_screen(new_img, screen, rect, file, ns)
+            my_update_screen(new_img, rect, file, ns)
             normal_cursor()
     if hit_key(event, K_1) or hit_key(event, K_KP1):
         #gl.SCALE_UP = 1
@@ -354,7 +354,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
             rect = get_center(screen, new_img)
         if gl.RESET_FIT:
             gl.FIT_IMAGE_VAL = 0
-        my_update_screen(new_img, screen, rect, file, check_timer(start))
+        my_update_screen(new_img, rect, file, check_timer(start))
         normal_cursor()
     if hit_key(event, K_f):
         (new_img, img, refresh_img, file,
@@ -370,7 +370,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
             gl.PERSISTENT_ZOOM_VAL ^= 1
             if not gl.PERSISTENT_ZOOM_VAL:
                 gl.ZOOM_EXP = 0
-            my_update_screen(new_img, screen, rect, file, ns)
+            my_update_screen(new_img, rect, file, ns)
     if event.type == KEYDOWN:
         mods = pygame.key.get_mods()
         if (event.key == K_DELETE and mods & KMOD_CTRL == 0) or\
@@ -388,13 +388,13 @@ def handle_keyboard(event, gfx, last_rect, ns):
             if answer == "yes":
                 (new_img, img, refresh_img, file, rect) = command_delete_img(
                     fn, new_img, screen, file, rect)
-            my_update_screen(new_img, screen, rect, file)
+            my_update_screen(new_img, rect, file)
     if event.type == KEYDOWN:
         mods = pygame.key.get_mods()
         if (event.key == K_w and mods & KMOD_CTRL == 0) and hit_key(event, K_w):
             (new_img, img, refresh_img, file,
              rect) = my_slideshow(new_img, img, screen, file, rect)
-            my_update_screen(new_img, screen, rect, file)
+            my_update_screen(new_img, rect, file)
     if hit_key(event, K_e):
         (screen, before_winsize, not_accepted) = adjust_screen(screen)
         gl.USING_SCROLL_MENU = 1
@@ -407,7 +407,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
             gl.REAL_WIDTH = real_width
         screen = restore_screen(
             screen, before_winsize, not_accepted, new_img, file, rect)
-        my_update_screen(new_img, screen, rect, file)
+        my_update_screen(new_img, rect, file)
         gl.ESCAPED = 0
         gl.USING_SCROLL_MENU = 0
     if hit_key(event, K_z):
@@ -418,7 +418,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
         command_verbose_info(screen, new_img, rect, file)
         if transparency:
             gl.TOGGLE_TRANSPARENT = 0
-        my_update_screen(new_img, screen, rect, file)
+        my_update_screen(new_img, rect, file)
     if hit_key(event, K_4):
         gl.CALC_ZOOM = 0
         zoom_percent = gl.CURRENT_ZOOM_PERCENT
@@ -429,13 +429,13 @@ def handle_keyboard(event, gfx, last_rect, ns):
             gl.CURRENT_ZOOM_PERCENT = zoom_percent
             gl.REAL_WIDTH = real_width
         gl.ESCAPED = 0
-        my_update_screen(new_img, screen, rect, file)
+        my_update_screen(new_img, rect, file)
         normal_cursor()
     if event.type == KEYDOWN:
         mods = pygame.key.get_mods()
         if (event.key == K_t and mods & KMOD_CTRL):
             gl.TOGGLE_TRANSPARENT ^= 1
-            my_update_screen(new_img, screen, rect, file)
+            my_update_screen(new_img, rect, file)
     if event.type == KEYDOWN:
         mods = pygame.key.get_mods()
         if (event.key == K_t and mods & KMOD_CTRL == 0) and hit_key(event, K_t):
@@ -450,7 +450,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
                 gl.REAL_WIDTH = real_width
             gl.ESCAPED = 0
             gl.THUMBING = 0
-            my_update_screen(new_img, screen, rect, file)
+            my_update_screen(new_img, rect, file)
     if hit_key(event, K_h):
         pygame.event.set_allowed(MOUSEMOTION)
         gl.HAND_TOOL = 1

@@ -26,7 +26,7 @@ def command_remove_img(new_img, screen, file, rect):
                 new_img = previous_img(file, new_img, screen)
         rect = get_center(screen, new_img)
         ns = check_timer(start)
-        my_update_screen(new_img, screen, rect, file, ns)
+        my_update_screen(new_img, rect, file, ns)
     normal_cursor()
     return (new_img, new_img, new_img, file, rect)
 

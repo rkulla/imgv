@@ -28,13 +28,13 @@ def command_refresh(refresh_img, screen, files, file):
         adjust_files(gl.SUBDIRS)
         if cur_filename in gl.files:
             file = gl.files.index(cur_filename) # go back if new images were loaded
-        my_update_screen(refresh_img, screen, rect, file, ns)
+        my_update_screen(refresh_img, rect, file, ns)
         normal_cursor()
         return (refresh_img, new_img, rect, file)
     adjust_files(gl.SUBDIRS)
     if cur_filename in gl.files and len(gl.files) > 1:
         file = gl.files.index(cur_filename) # go back if new images were loaded
     ns = check_timer(start)
-    my_update_screen(refresh_img, screen, rect, file, ns)
+    my_update_screen(refresh_img, rect, file, ns)
     normal_cursor()
     return (new_img, new_img, get_center(screen, new_img), file)

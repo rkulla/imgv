@@ -26,9 +26,9 @@ def command_four(screen, file, new_img, ns):
     rect = get_center(screen, new_img)
     if start != orig_ns:
         ns = check_timer(start)
-        my_update_screen(new_img, screen, rect, file, ns)
+        my_update_screen(new_img, rect, file, ns)
     else:
-        my_update_screen(new_img, screen, rect, file)
+        my_update_screen(new_img, rect, file)
     pygame.event.set_blocked(MOUSEMOTION) # without this the hovers don't work right
     gl.MULTI_VIEWING = 0
     return (file, new_img, new_img, new_img, rect)
