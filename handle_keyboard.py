@@ -244,30 +244,27 @@ def handle_keyboard(event, gfx, last_rect, ns):
         gl.HAND_TOOL = 1
     if hit_key(event, K_HOME):
         pygame.event.set_allowed(MOUSEMOTION)
-        command_full_right(rect, last_rect, new_img, screen, file)
+        command_full_right(rect, last_rect, new_img, file)
         if gl.IMG_BORDER:
             img_border(screen, new_img.get_width(
             ), new_img.get_height(), rect[0], rect[1])
     if hit_key(event, K_END):
         pygame.event.set_allowed(MOUSEMOTION)
-        command_full_left(
-            rect, last_rect, new_img, screen, file, screen.get_width())
+        command_full_left(rect, last_rect, new_img, file)
         if gl.IMG_BORDER:
             img_border(screen, new_img.get_width(
             ), new_img.get_height(), rect[0], rect[1])
     if hit_key(event, K_PAGEDOWN):
         pygame.event.set_allowed(MOUSEMOTION)
-        command_full_up(
-            rect, last_rect, new_img, screen, file, screen.get_height())
+        command_full_up(rect, last_rect, new_img, file)
         if gl.IMG_BORDER:
             img_border(screen, new_img.get_width(
             ), new_img.get_height(), rect[0], rect[1])
     if hit_key(event, K_PAGEUP):
         pygame.event.set_allowed(MOUSEMOTION)
-        command_full_down(rect, last_rect, new_img, screen, file)
+        command_full_down(rect, last_rect, new_img, file)
         if gl.IMG_BORDER:
-            img_border(screen, new_img.get_width(
-            ), new_img.get_height(), rect[0], rect[1])
+            img_border(screen, new_img.get_width(), new_img.get_height(), rect[0], rect[1])
     if hit_key(event, K_m):
         (new_img, img, rect) = command_horiz(new_img, screen, file, rect)
     if hit_key(event, K_v):
