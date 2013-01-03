@@ -117,8 +117,7 @@ class Imgv(object):
                 (self.gfx['screen'], self.gfx['rect'], self.gfx['new_img'], self.gfx['img'],
                  self.gfx['refresh_img'], self.gfx['file'],\
                 self.new_img_width, self.new_img_height, last_rect) =\
-                handle_keyboard(event, self.gfx['screen'], self.gfx['rect'], self.gfx['new_img'], self.gfx['img'],
-                                self.gfx['refresh_img'], self.gfx['file'], last_rect, self.ns)
+                handle_keyboard(event, self.gfx, last_rect, self.ns)
             if event.type == KEYUP:
                 stop_auto_repeat()
             check_quit(event)

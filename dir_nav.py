@@ -214,7 +214,7 @@ def show_dirs(screen, file):
         cursor = pygame.mouse.get_pos()
         (esc_rect, close_font) = close_button(screen)
         hover_fx(screen, curdir, menu_items, cursor)
-        if platform == 'win32':#
+        if platform == 'win32':
             hover_cursor(cursor, [ren_load_rect, ren_load_subdirs_rect, ren_drive_rect, dirpl_rect, untag_all_rect, view_tagged_rect, filter_rect, esc_rect] + [x[0] for x in menu_items])
         hover_button(ren_load_rect, cursor, screen, " (L)oad ", 0, 18, "topleft")
         hover_button(ren_load_subdirs_rect, cursor, screen, " Subdirs (T)oo ", 62, 18, "topleft")
