@@ -58,7 +58,7 @@ class Imgv(object):
         my_update_screen(self.gfx['new_img'], self.gfx['rect'], self.gfx['file'], self.ns)
         normal_cursor()
         if gl.START_FULLSCREEN:
-            command_fullscreen(self.gfx['new_img'], self.gfx['file'], self.gfx['rect'])
+            command_fullscreen()
             my_update_screen(self.gfx['new_img'], self.gfx['rect'], self.gfx['file'], self.ns)
         self.minus1 = 0
         self.minus2 = 0

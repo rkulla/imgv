@@ -123,9 +123,9 @@ def command_custom_res(screen, new_img, file, rect, resolution):
     return rect
 
 
-def command_fullscreen(new_img, file, rect):
+def command_fullscreen():
     "Toggle between full screen and last screen resolution"
-    screen = get_surface
+    screen = get_surface()
     wait_cursor()
     if not toggle_fullscreen():
         try:

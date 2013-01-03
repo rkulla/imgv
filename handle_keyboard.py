@@ -91,14 +91,14 @@ def handle_keyboard(event, gfx, last_rect, ns):
         rect = command_1280x1024(new_img, file, rect)
         normal_cursor()
     if hit_key(event, K_F6):
-        screen = command_fullscreen(new_img, file, rect)
+        screen = command_fullscreen()
         rect = get_center(screen, new_img)
         my_update_screen(new_img, rect, file)
         normal_cursor()
     if event.type == KEYDOWN:  # alt+enter code
         mods = pygame.key.get_mods()
         if ((event.key == K_RETURN and mods & KMOD_ALT)):
-            screen = command_fullscreen(new_img, file, rect)
+            screen = command_fullscreen()
             rect = get_center(screen, new_img)
             my_update_screen(new_img, rect, file)
     if hit_key(event, K_F7):
