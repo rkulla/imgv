@@ -109,10 +109,8 @@ class Imgv(object):
                 self.stop_auto_repeat()
             check_quit(self.event)
 
-            # open main menu
             if self.event.type == MOUSEBUTTONDOWN and right_click(self.event):
-                gl.HAND_TOOL = 0
-                self.gfx = command_main_menu(self.gfx, self.ns)
+                self.open_main_menu()
 
             # Re-open the purposely closed window that frees up RAM
             if (gl.KEEP_MENU_OPEN == "1" and gl.COUNT_CLICKS == 1) or gl.JUST_RESIZED:
@@ -121,6 +119,10 @@ class Imgv(object):
                 self.gfx = command_main_menu(self.gfx, self.ns)
 
             self.start_auto_repeat()
+
+    def open_main_menu(self):
+        gl.HAND_TOOL = 0
+        self.gfx = command_main_menu(self.gfx, self.ns)
 
     def start_auto_repeat(self):
         screen = self.gfx['screen']
@@ -165,7 +167,6 @@ class Imgv(object):
                         self.border_fix()
                         img_border(new_img, rect)
 
-
     def border_fix(self):
         "draw over the last placed border with the background color to make it disappear"
         if gl.LRECT or gl.RRECT or gl.TRECT or gl.BRECT:
@@ -173,7 +174,6 @@ class Imgv(object):
             paint_screen(gl.IMGV_COLOR, gl.RRECT)
             paint_screen(gl.IMGV_COLOR, gl.TRECT)
             paint_screen(gl.IMGV_COLOR, gl.BRECT)
-
 
     def stop_auto_repeat(self):
         gl.MY_KEYDOWN = gl.MY_KEYUP = gl.MY_KEYRIGHT = gl.MY_KEYLEFT = 0
