@@ -337,4 +337,5 @@ PREF_LIST = [
 
 
 def build_gfx_dict(screen, img, rect, refresh_img, new_img):
-    return {'screen': screen, 'img': img, 'rect': rect, 'refresh_img': refresh_img, 'new_img': new_img}
+    return {'screen': screen, 'img': img, 'rect': rect, 'refresh_img':
+            refresh_img, 'new_img': new_img}

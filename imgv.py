@@ -36,7 +36,6 @@ class Imgv(object):
     def __init__(self):
         pygame.time.delay(5)  # to make start_timer() work initially
         start = start_timer()
-        self.num_imgs = len(gl.files)
         pygame.init()  # needed for Mac OSX?
         init_screen()
         wait_cursor()
@@ -46,9 +45,8 @@ class Imgv(object):
         if gl.REMOTE == 1:
             show_message(self.gfx['screen'], "Loading image. Please wait..", 34, 42)
         self.file = 0
-        if self.num_imgs < 1:
+        if len(gl.files) < 1:
             gl.files = [gl.IMGV_LOGO]
-            self.num_imgs = 1
             self.gfx['img'] = load_img(gl.files[self.file], self.gfx['screen'])
         else:
             self.gfx['img'] = load_img(gl.files[self.file], self.gfx['screen'])
@@ -57,11 +55,11 @@ class Imgv(object):
         self.gfx['new_img'] = self.gfx['img']
         self.gfx['rect'] = get_center(self.gfx['screen'], self.gfx['new_img'])
         self.ns = check_timer(start)
-        my_update_screen(self.gfx['new_img'], self.gfx['screen'], self.gfx['rect'], self.file, self.num_imgs, self.ns)
+        my_update_screen(self.gfx['new_img'], self.gfx['screen'], self.gfx['rect'], self.file, len(gl.files), self.ns)
         normal_cursor()
         if gl.START_FULLSCREEN:
-            command_fullscreen(self.gfx['screen'], self.gfx['new_img'], self.file, self.num_imgs, self.gfx['rect'])
-            my_update_screen(self.gfx['new_img'], self.gfx['screen'], self.gfx['rect'], self.file, self.num_imgs, self.ns)
+            command_fullscreen(self.gfx['screen'], self.gfx['new_img'], self.file, len(gl.files), self.gfx['rect'])
+            my_update_screen(self.gfx['new_img'], self.gfx['screen'], self.gfx['rect'], self.file, len(gl.files), self.ns)
         self.screen_width = self.gfx['screen'].get_width()
         self.screen_height = self.gfx['screen'].get_height()
         self.new_img_width = self.gfx['new_img'].get_width()
@@ -73,7 +71,7 @@ class Imgv(object):
     def main(self):
         # start with menu open
         gfx = gl.build_gfx_dict(self.gfx['screen'], self.gfx['img'], self.gfx['rect'], self.gfx['refresh_img'], self.gfx['new_img'])
-        (self.gfx, self.file, self.num_imgs) = command_main_menu(gfx, self.file, len(gl.files), self.ns)
+        (self.gfx, self.file) = command_main_menu(gfx, self.file, self.ns)
 
         # main loop
         while 1:
@@ -105,20 +103,20 @@ class Imgv(object):
                 if event.type == MOUSEBUTTONUP:  # released mouse button, redisplay status bars:
                     drag_hand_cursor()
                     my_update_screen(self.gfx['new_img'], self.gfx['screen'], self.gfx['rect'],
-                                     self.file, self.num_imgs, self.ns)
+                                     self.file, len(gl.files), self.ns)
                     gl.DO_DRAG = 0
 
             if event.type == VIDEORESIZE:
                 self.gfx['screen'] = pygame.display.set_mode(event.dict['size'], RESIZABLE)
                 self.gfx['rect'] = get_center(self.gfx['screen'], self.gfx['new_img'])
                 my_update_screen(self.gfx['new_img'], self.gfx['screen'], self.gfx['rect'], self.file,
-                                 self.num_imgs, self.ns)
+                                 len(gl.files), self.ns)
             if event.type == KEYDOWN:
                 gl.HAND_TOOL = 0
                 if event.key not in (K_DOWN, K_UP, K_RIGHT, K_LEFT):
                     normal_cursor()  # stop displaying hand tool
                 (self.gfx['screen'], self.gfx['rect'], self.gfx['new_img'], self.gfx['img'],
-                 self.gfx['refresh_img'], self.file, self.num_imgs,\
+                 self.gfx['refresh_img'], self.file, num_imgs,\
                 self.screen_width, self.screen_height, self.new_img_width,
                  self.new_img_height, last_rect) =\
                 handle_keyboard(event, self.gfx['screen'], self.gfx['rect'], self.gfx['new_img'], self.gfx['img'],
@@ -132,14 +130,14 @@ class Imgv(object):
                 if right_click(event):
                     gl.HAND_TOOL = 0
                     gfx = gl.build_gfx_dict(self.gfx['screen'], self.gfx['img'], self.gfx['rect'], self.gfx['refresh_img'], self.gfx['new_img'])
-                    (self.gfx, self.file, self.num_imgs) = command_main_menu(gfx, self.file, len(gl.files), self.ns)
+                    (self.gfx, self.file) = command_main_menu(gfx, self.file, self.ns)
 
             # Re-open the purposely closed window that frees up RAM
             if (gl.KEEP_MENU_OPEN == "1" and gl.COUNT_CLICKS == 1) or gl.JUST_RESIZED:
                 gl.COUNT_CLICKS = 0
                 gl.JUST_RESIZED = 0
                 gfx = gl.build_gfx_dict(self.gfx['screen'], self.gfx['img'], self.gfx['rect'], self.gfx['refresh_img'], self.gfx['new_img'])
-                (self.gfx, self.file, self.num_imgs) = command_main_menu(gfx, self.file, len(gl.files), self.ns)
+                (self.gfx, self.file) = command_main_menu(gfx, self.file, self.ns)
 
             start_auto_repeat(self.gfx['rect'], last_rect, self.gfx['new_img'], self.gfx['screen'], self.file, len(gl.files), self.screen_width, self.screen_height, event)
 
