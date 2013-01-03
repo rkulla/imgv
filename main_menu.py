@@ -82,9 +82,7 @@ def command_main_menu(gfx, ns):
                 if event.key == K_c:
                     normal_cursor()
                 return gfx
-
-            (gfx['screen'], gfx['rect'], gfx['new_img'], gfx['img'], gfx['refresh_img'], gfx['file'], gfx['last_rect']) =\
-                handle_keyboard(event, gfx, last_rect, ns)
+            (gfx, last_rect) = handle_keyboard(event, gfx, last_rect, ns)
             break
         hover_cursor(cursor2, [x[0] for x in menu_items])
         if left_click(event):
@@ -107,8 +105,7 @@ def command_main_menu(gfx, ns):
                         gl.LAST_DIR = getcwd()
                         last_files = gl.files
                         (last_new_img, last_img, last_refresh_img, last_file, last_rect) =\
-                        (gfx['new_img'], gfx[
-                         'img'], gfx['refresh_img'], gfx['file'], gfx['rect'])
+                        (gfx['new_img'], gfx['img'], gfx['refresh_img'], gfx['file'], gfx['rect'])
                         (gfx['new_img'], gfx['img'], gfx['refresh_img'], gfx['file'], gfx['rect']) = command_show_dirs(gfx['new_img'], gfx['img'], gfx['screen'], gfx['rect'], gfx['file'])
                         # user ESCAPED from show_dirs, reset last values
                         if gl.ESCAPED:

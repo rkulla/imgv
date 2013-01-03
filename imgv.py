@@ -102,9 +102,7 @@ class Imgv(object):
                 gl.HAND_TOOL = 0
                 if self.event.key not in (K_DOWN, K_UP, K_RIGHT, K_LEFT):
                     normal_cursor()  # stop displaying hand tool
-                (self.gfx['screen'], self.gfx['rect'], self.gfx['new_img'], self.gfx['img'],
-                 self.gfx['refresh_img'], self.gfx['file'], self.last_rect) =\
-                handle_keyboard(self.event, self.gfx, self.last_rect, self.ns)
+                (gfx, self.last_rect) = handle_keyboard(self.event, self.gfx, self.last_rect, self.ns)
             if self.event.type == KEYUP:
                 self.stop_auto_repeat()
             check_quit(self.event)

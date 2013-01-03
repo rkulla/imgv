@@ -434,4 +434,5 @@ def handle_keyboard(event, gfx, last_rect, ns):
         if hit_key(event, K_a):
             save_remote_img(screen, file)
 
-    return (screen, rect, new_img, img, refresh_img, file, last_rect)
+    gfx = {'screen': screen, 'rect': rect, 'new_img': new_img, 'img': img, 'refresh_img': refresh_img, 'file': file}
+    return (gfx, last_rect)
