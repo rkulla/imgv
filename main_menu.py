@@ -14,7 +14,7 @@ from hide import command_hide
 from rm_img import command_remove_img
 from rotate import command_horiz, command_vert, command_rotate_left, command_rotate_right
 from randomizer import command_shuffle, command_unshuffle
-from res import command_show_res_modes, adjust_screen, restore_screen
+from res import adjust_screen, restore_screen
 from edit import command_edit_menu
 from zoom import command_zoom_in, command_zoom_out
 from img_screen import my_update_screen, get_center, clean_screen
@@ -33,12 +33,13 @@ from load_img import load_img
 from load_timers import start_timer, check_timer
 
 
-def command_main_menu(gfx, file, ns):
+def command_main_menu(gfx, ns):
     screen = gfx['screen']
     img = gfx['img']
     new_img = gfx['new_img']
     refresh_img = gfx['refresh_img']
     rect = gfx['rect']
+    file = gfx['file']
     menu_items = []
     i = 23
     cursor = pygame.mouse.get_pos()
@@ -72,7 +73,7 @@ def command_main_menu(gfx, file, ns):
             screen = pygame.display.set_mode(event.dict['size'], RESIZABLE)
             rect = get_center(screen, new_img)
             my_update_screen(new_img, screen, rect, file, len(gl.files))
-            return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img), file)
+            return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img, file))
         if gl.REMOTE and not gl.ALREADY_DOWNLOADED:
             hover_button(download_rect, cursor2, screen, " Downlo(a)d Image ", None, None, "topright")
 
@@ -87,7 +88,7 @@ def command_main_menu(gfx, file, ns):
                 my_update_screen(new_img, screen, rect, file, len(gl.files))
                 if event.key == K_c:
                     normal_cursor()
-                return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img), file)
+                return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img, file))
 
             (screen, rect, new_img, img, refresh_img, file, num_imgs,\
             screen_width, screen_height, new_img_width, new_img_height, last_rect) =\
@@ -112,14 +113,14 @@ def command_main_menu(gfx, file, ns):
                         # save current things in case the user ESCAPES out of show_dirs()
                         gl.LAST_DIR = getcwd()
                         last_files = gl.files
-                        (last_new_img, last_img, last_num_imgs, last_file, last_rect) =\
+                        (last_new_img, last_img, last_refresh_img, last_file, last_rect) =\
                         (new_img, img, refresh_img, file, rect)
                         (new_img, img, refresh_img, num_imgs, file, rect) = command_show_dirs(new_img, img, screen, rect,\
                         file, len(gl.files))
                         # user ESCAPED from show_dirs, reset last values
                         if gl.ESCAPED:
                             (new_img, img, refresh_img, file, rect) =\
-                            (last_new_img, last_img, last_file, last_rect)
+                            (last_new_img, last_img, last_refresh_img, last_file, last_rect)
                             chdir(gl.LAST_DIR)
                             gl.files = last_files
                             gl.USING_SCROLL_MENU = 0
@@ -175,14 +176,8 @@ def command_main_menu(gfx, file, ns):
                     elif it[1] == " Zoom In ":
                         if int(gl.N_MILLISECONDS) < gl.MAX_ZOOM_MAX_MS and gl.CURRENT_ZOOM_PERCENT < gl.ZOOM_PERCENT_MAX:
                             try:  # triple zoom crash protection
-                                (new_img, img, rect) = command_zoom_in(new_img,
-                                                                       new_img_width,
-                                                                       new_img_height,
-                                                                       img,
-                                                                       screen,
-                                                                       gl.files,
-                                                                       file,
-                                                                       len(gl.files), rect, "normal")
+                                (new_img, img, rect) = command_zoom_in(new_img, new_img_width, new_img_height, img, screen, gl.files,
+                                                                       file, len(gl.files), rect, "normal")
                             except:
                                 print 'Zoom max reached.'
                         else:
@@ -306,26 +301,26 @@ def command_main_menu(gfx, file, ns):
                         gl.MENU_POS = -1
                         my_update_screen(new_img, screen, rect, file, len(gl.files))
                         normal_cursor()
-                        return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img), file)
+                        return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img, file))
                     elif it[1] == " Exit ":
                         clean_screen()
                         raise SystemExit
             break
         if event.type == KEYDOWN and event.key not in (K_LALT, K_RALT, K_LCTRL, K_RCTRL, K_TAB):
-            return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img), file)
+            return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img, file))
         if middle_click(event):
             "close the menu upon middle click"
             gl.MENU_POS = -1
             my_update_screen(new_img, screen, rect, file, len(gl.files))
             normal_cursor()
-            return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img), file)
+            return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img, file))
         if right_click(event):
             wait_cursor()
             gl.MENU_POS = -1
             my_update_screen(new_img, screen, rect, file, len(gl.files))
-            gfx = gl.build_gfx_dict(screen, img, rect, refresh_img, new_img)
-            (gfx, file) = command_main_menu(gfx, file, ns)
-            return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img), file)
+            gfx = gl.build_gfx_dict(screen, img, rect, refresh_img, new_img, file)
+            gfx = command_main_menu(gfx, ns)
+            return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img, file))
 
         if event.type == MOUSEBUTTONDOWN:  # this needs to be down here to work
             if event.dict['button'] in (4, 5):  # scroll wheel activated
@@ -336,16 +331,16 @@ def command_main_menu(gfx, file, ns):
                 # close menu:
                 gl.MENU_POS = -1
                 my_update_screen(new_img, screen, rect, file, len(gl.files))
-                return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img), file)
+                return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img, file))
     if gl.KEEP_MENU_OPEN == "1":
         # this code purposely closes the main menu by breaking the recursion to free up RAM memory
         gl.COUNT_CLICKS += 1
         if gl.COUNT_CLICKS == 1:  # free up ram every click
-            return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img), file)
-        gfx = gl.build_gfx_dict(screen, img, rect, refresh_img, new_img)
-        (gfx, file) = command_main_menu(gfx, file, ns)
+            return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img, file))
+        gfx = gl.build_gfx_dict(screen, img, rect, refresh_img, new_img, file)
+        gfx = command_main_menu(gfx, ns)
     normal_cursor()
-    return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img), file)
+    return (gl.build_gfx_dict(screen, img, rect, refresh_img, new_img, file))
 
 
 def main_menu_fg(screen, font, i, menu_items):
