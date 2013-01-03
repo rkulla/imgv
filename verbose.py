@@ -11,9 +11,19 @@ from cursor import wait_cursor, normal_cursor, hover_cursor
 from load_img import load_img
 from usr_event import check_quit
 if platform == 'win32':
-    import BmpImagePlugin, JpegImagePlugin, PngImagePlugin, SgiImagePlugin, SunImagePlugin, TgaImagePlugin, TiffImagePlugin, PcxImagePlugin, PpmImagePlugin, XpmImagePlugin # for py2exe to work with PIL
-import Image # PIL
-import pygame.font, pygame.event
+    import BmpImagePlugin
+    import JpegImagePlugin
+    import PngImagePlugin
+    import SgiImagePlugin
+    import SunImagePlugin
+    import TgaImagePlugin
+    import TiffImagePlugin
+    import PcxImagePlugin
+    import PpmImagePlugin
+    import XpmImagePlugin  # for py2exe to work with PIL
+import Image  # PIL
+import pygame.font
+import pygame.event
 from pygame.transform import scale
 from pygame.display import update, flip, set_caption
 from pygame.locals import KEYDOWN, K_LALT, K_RALT, K_LCTRL, K_RCTRL, K_TAB, MOUSEBUTTONDOWN
@@ -31,11 +41,13 @@ class verbose:
         else:
             self.font_size = 12
         self.font = pygame.font.Font(gl.FONT_NAME, self.font_size)
-        gl.ROW_SEP = self.font.get_linesize() # recommended line separation size
+        gl.ROW_SEP = self.font.get_linesize(
+        )  # recommended line separation size
         self.start_width = 230
         self.show_exif = 1
         self.row = 11
-        show_message("Image Properties", self.row, self.font_size, ("bold", "underline", "transparent"))
+        show_message("Image Properties", self.row, self.font_size,
+                     ("bold", "underline", "transparent"))
         self.row += gl.ROW_SEP
         self.prev_pic_row = self.row + gl.ROW_SEP + 5
         self.screen = screen
@@ -46,10 +58,12 @@ class verbose:
         except:
             self.pil_info = 0
             self.show_exif = 0
+
     def file_and_dir_name(self, file):
         sw = self.screen.get_width()
         file_msg = "File name: "
-        file_msg = check_truncate(sw, file_msg + os.path.basename(gl.files[file]))
+        file_msg = check_truncate(
+            sw, file_msg + os.path.basename(gl.files[file]))
         self.print_info(file_msg, 10)
 
         dir_msg = "Directory: "
@@ -60,16 +74,20 @@ class verbose:
         fpmsg = check_truncate(sw, fpmsg + gl.files[file])
         self.print_info(fpmsg, 10)
 
-        self.print_info("Current index: %s / %s" % (comma_it(str(file + 1)), comma_it(str(len(gl.files)))), 14)
+        self.print_info("Current index: %s / %s" % (
+            comma_it(str(file + 1)), comma_it(str(len(gl.files)))), 14)
+
     def bits_per_pixel(self):
         if self.bitsperpixel:
             self.print_info("BPP (Bits Per Pixel): %s" % self.bitsperpixel, 21)
+
     def filesize(self, file, new_img):
         fsize = os.path.getsize(gl.files[file])
         if fsize <= 1024:
             filesize_details = "Size on disk: %s Bytes" % comma_it(fsize)
         elif fsize >= 1024 and fsize <= (1024 * 1024):
-            filesize_details = "Size on disk: %s Kilobytes (%s Bytes)" % (comma_it((fsize / 1024.0)), comma_it(fsize))
+            filesize_details = "Size on disk: %s Kilobytes (%s Bytes)" % (
+                comma_it((fsize / 1024.0)), comma_it(fsize))
         elif fsize >= 1024 and fsize <= (1024 * 1024 * 1024):
             filesize_details = "Size on disk: %.2f Megabytes (%s Kilobytes) (%s Bytes)" % ((fsize / (1024.0 * 1024.0), comma_it((fsize / 1024.0)), comma_it(fsize)))
         else:
@@ -82,9 +100,11 @@ class verbose:
             origmsg_start = "Memory size:"
         try:
             # display current memory size of image
-            origmembytesize = ((gl.REAL_WIDTH * gl.REAL_HEIGHT) * self.bitsperpixel) / 8
+            origmembytesize = (
+                (gl.REAL_WIDTH * gl.REAL_HEIGHT) * self.bitsperpixel) / 8
             if origmembytesize <= 1024:
-                memsizemsg = "%s %s Bytes" % (origmsg_start, comma_it(origmembytesize))
+                memsizemsg = "%s %s Bytes" % (
+                    origmsg_start, comma_it(origmembytesize))
             elif origmembytesize >= 1024 and origmembytesize <= (1024 * 1024):
                 memsizemsg = "%s %s Kilobytes (%s Bytes)" % (origmsg_start, comma_it(origmembytesize / 1024.0), comma_it(origmembytesize))
             elif origmembytesize >= 1024 and origmembytesize <= (1024 * 1024 * 1024):
@@ -96,9 +116,11 @@ class verbose:
         if gl.CURRENT_ZOOM_PERCENT != 100:
             try:
                 # display current memory size of image
-                curmembytesize = ((new_img.get_width() * new_img.get_height()) * self.bitsperpixel) / 8
+                curmembytesize = ((new_img.get_width(
+                ) * new_img.get_height()) * self.bitsperpixel) / 8
                 if curmembytesize <= 1024:
-                    memsizemsg = "Current memory size: %s Bytes" % comma_it(curmembytesize)
+                    memsizemsg = "Current memory size: %s Bytes" % comma_it(
+                        curmembytesize)
                 elif curmembytesize >= 1024 and curmembytesize <= (1024 * 1024):
                     memsizemsg = "Current memory size: %s Kilobytes (%s Bytes)" % (comma_it(curmembytesize / 1024.0), comma_it(curmembytesize))
                 elif curmembytesize >= 1024 and curmembytesize <= (1024 * 1024 * 1024):
@@ -107,26 +129,28 @@ class verbose:
             except:
                 print "Can't display current memory size of image"
                 #pass
+
     def img_type(self, file):
         self.img_type = imghdr.what(gl.files[file])
         if self.img_type is not None:
             self.img_type = self.img_type.upper()
         if self.pil_info:
             if "progression" in self.im.info:
-                if type(self.img_type) != NoneType:
+                if type(self.img_type) is not NoneType:
                     self.img_type += " (Progressive)"
         if self.img_type is not None:
             self.print_info("File type: %s" % self.img_type, 10)
+
     def compression(self):
         img_format = " "
         if self.pil_info:
             if "compression" in self.im.info:
                 if self.img_type == "TIF" or self.img_type == "TIFF":
-                    self.show_exif = 0 # compressed tiff's seem to break exif code
+                    self.show_exif = 0  # compressed tiff's seem to break exif code
                 compression = "Compression:  %s" % self.im.info['compression']
             else:
                 compression = " "
-            if "version" in self.im.info: # gif
+            if "version" in self.im.info:  # gif
                 if self.im.info['version'] in ('GIF87a', 'GIF89a'):
                     img_format = "Format: %s. Compression: LZW " % self.im.info['version']
                 else:
@@ -138,14 +162,18 @@ class verbose:
                 compression = "Compression: PNG - ZIP"
             if img_format != " ":
                 self.print_info(img_format + compression, 7)
+
     def aspect_ratio(self):
         if self.pil_info and "jfif_unit" in self.im.info:
             if "jfif_density" in self.im.info:
-                aspect_ratio = str(self.im.info['jfif_density'][0]) + ' x ' + str(self.im.info['jfif_density'][1])
+                aspect_ratio = str(self.im.info['jfif_density'][0]) + ' x ' + \
+                    str(self.im.info['jfif_density'][1])
             if self.im.info['jfif_unit'] == 0:
                 self.print_info("Aspect Ratio: %s" % aspect_ratio, 13)
             if self.im.info['jfif_unit'] == 2:
-                self.print_info("Aspect Ratio: %s (Dots Per Centimeter)" % aspect_ratio, 13)
+                self.print_info("Aspect Ratio: %s (Dots Per Centimeter)" %
+                                aspect_ratio, 13)
+
     def bit_depth(self):
         if self.pil_info:
             if self.im.mode == "RGB" or self.im.mode == "YCbCr":
@@ -156,6 +184,7 @@ class verbose:
                 self.bitsperpixel = 1
             elif self.im.mode == "RGBA" or self.im.mode == "CMYK" or self.im.mode == "I" or self.im.mode == "F":
                 self.bitsperpixel = 32
+
     def get_pixel_format(self):
         if self.pil_info:
             if self.bitsperpixel == 1:
@@ -167,6 +196,7 @@ class verbose:
             else:
                 self.pixel_format = self.im.mode
             self.print_info("Pixel format: %s" % self.pixel_format, 13)
+
     def colors(self):
         uniquecolors_rect = junk_rect()
         total_colors = ""
@@ -178,9 +208,10 @@ class verbose:
             else:
                 total_colors = "Total colors: %s." % (2 ** self.bitsperpixel)
             self.print_info(total_colors, 13)
-            if gl.UNIQUE_COLORS == None and gl.SHOW_EXIFBUTTON and total_colors != "":
+            if gl.UNIQUE_COLORS is None and gl.SHOW_EXIFBUTTON and total_colors != "":
                 uniquecolors_rect = imgv_button(self.screen, " Unique colors ", (self.font.size(total_colors)[0] + 230), self.row, None)
         return (uniquecolors_rect, total_colors, self.row, self.font, imret)
+
     def resolution(self):
         if self.pil_info:
             if "dpi" in self.im.info:
@@ -196,31 +227,39 @@ class verbose:
             except:
                 print "Couldn't display PPI"
                 #pass
+
     def gamma(self):
         if self.pil_info:
             if "gamma" in self.im.info:
                 self.print_info("Gamma:  %s" % self.im.info['gamma'], 6)
+
     def transparency(self):
         if self.pil_info:
             if "transparency" in self.im.info:
-                self.print_info("Transparency:  %s" % self.im.info['transparency'], 13)
+                self.print_info(
+                    "Transparency:  %s" % self.im.info['transparency'], 13)
+
     def software(self):
         if self.pil_info:
             if "Software" in self.im.info:
                 self.print_info("Software: %s" % self.im.info['Software'], 9)
+
     def original_size(self):
         if gl.CURRENT_ZOOM_PERCENT != 100:
             origsizemsg_start = "Original size:"
         else:
             origsizemsg_start = "Size:"
         self.print_info("%s Width: %s Pixels. Height: %s Pixels" % (origsizemsg_start, comma_it(gl.REAL_WIDTH), comma_it(gl.REAL_HEIGHT)), len(origsizemsg_start))
+
     def current_size(self, new_img):
-        dimensions = "Width: %s Pixels. Height: %s Pixels" % (comma_it(new_img.get_width()), comma_it(new_img.get_height()))
+        dimensions = "Width: %s Pixels. Height: %s Pixels" % (
+            comma_it(new_img.get_width()), comma_it(new_img.get_height()))
         self.print_info("Current size: %s %s" % (dimensions, ('', '(Zoomed to: ' + comma_it(gl.CURRENT_ZOOM_PERCENT) + '%)')[gl.CURRENT_ZOOM_PERCENT != 100]), 13)
+
     def picture_taken(self, filen):
         filename = gl.files[filen]
         try:
-           file = open(filename, 'rb')
+            file = open(filename, 'rb')
         except:
             return
         data = exif.process_file(file)
@@ -233,10 +272,14 @@ class verbose:
                 continue
             try:
                 if i == "EXIF DateTimeOriginal":
-                    date_str = strftime('%a %b %d %H:%M:%S %Y', strptime(data[i].printable, '%Y:%m:%d %H:%M:%S'))
-                    self.print_info("Created with digital camera: %s" % convert_times(date_str, 1), 28)
+                    date_str = strftime('%a %b %d %H:%M:%S %Y', strptime(
+                        data[i].printable, '%Y:%m:%d %H:%M:%S'))
+                    self.print_info("Created with digital camera: %s" %
+                                    convert_times(date_str, 1), 28)
             except:
-                self.print_info("Created with digital camera: %s" % data[i].printable, 28)
+                self.print_info(
+                    "Created with digital camera: %s" % data[i].printable, 28)
+
     def file_times(self, file):
         fname = gl.files[file]
         # created time:
@@ -248,17 +291,21 @@ class verbose:
         # accessed time:
         accessed_msg = convert_times(str(ctime(os.stat(fname)[ST_ATIME])), 1)
         self.print_info("Last Accessed: %s" % accessed_msg, 14)
+
     def show_current_image(self, file):
         self.current = load_img(gl.files[file], False)
-        (self.current, img_width, img_height) = preview_img(self.screen, self.current)
+        (self.current, img_width, img_height) = preview_img(
+            self.screen, self.current)
         current_rect = self.current.get_rect()
         current_rect[0] = 15
         current_rect[1] = self.prev_pic_row
         self.screen.blit(self.current, current_rect)
         update(current_rect)
         img_border(self.current, 15, self.prev_pic_row - 2)
+
     def loaded_time(self):
         self.print_info("Loaded in: %s milliseconds %s" % (comma_it(gl.N_MILLISECONDS), ('', '(From Zoom)')[gl.CURRENT_ZOOM_PERCENT != 100]), 10)
+
     def exif_data(self, filen):
         paint_screen(gl.BLACK)
         close_button(self.screen)
@@ -292,10 +339,11 @@ class verbose:
                 exif_info.append('error', i, '"', data[i], '"')
         gl.SHOW_EXIFBUTTON = 0
         pos = 25
-        show_message("Exif Information", "top", 13, ("underline", "bold", "transparent"))
+        show_message("Exif Information", "top", 13, ("underline",
+                     "bold", "transparent"))
         try:
             for line in exif_info:
-                if type(line) is StringType and len(line) <= 250: # parachutes on long lines without this
+                if type(line) is StringType and len(line) <= 250:  # parachutes on long lines without this
                     exif_font = pygame.font.Font(gl.FONT_NAME, 9)
                     ren = exif_font.render(line, 1, gl.MENU_COLOR)
                     ren_rect = ren.get_rect()
@@ -307,6 +355,7 @@ class verbose:
             print "Couldn't exif"
             #pass
         flip()
+
     def histogram(self):
         if not self.pil_info:
             return
@@ -321,32 +370,50 @@ class verbose:
         vlen = 175
         if self.pixel_format == "Grayscale":
             for i, v in enumerate(hist):
-                if v > vlen: v -= vlen # don't go outside of border on long histograms
-                pygame.draw.line(self.screen, gl.SILVER, ((i / wdiv) + wpos, h), ((i / wdiv) + wpos, (h - (v / vdiv))), 1)
+                if v > vlen:
+                    v -= vlen  # don't go outside of border on long histograms
+                pygame.draw.line(self.screen, gl.SILVER, ((i / wdiv) + wpos,
+                                 h), ((i / wdiv) + wpos, (h - (v / vdiv))), 1)
         else:
             for i, v in enumerate(redlist):
-                if v > vlen: v -= vlen
-                pygame.draw.line(self.screen, gl.RED, ((i / wdiv) + wpos, h), ((i / wdiv) + wpos, (h - (v / vdiv))), 1)
+                if v > vlen:
+                    v -= vlen
+                pygame.draw.line(self.screen, gl.RED, ((i / wdiv) + wpos,
+                                 h), ((i / wdiv) + wpos, (h - (v / vdiv))), 1)
             for i, v in enumerate(greenlist):
-                if v > vlen: v -= vlen
-                pygame.draw.line(self.screen, gl.GREEN, ((i / wdiv) + wpos, h), ((i / wdiv) + wpos, (h - (v / vdiv))), 1)
+                if v > vlen:
+                    v -= vlen
+                pygame.draw.line(self.screen, gl.GREEN, ((i / wdiv) + wpos,
+                                 h), ((i / wdiv) + wpos, (h - (v / vdiv))), 1)
             for i, v in enumerate(bluelist):
-                if v > vlen: v -= vlen
-                pygame.draw.line(self.screen, gl.BLUE, ((i / wdiv) + wpos, h), ((i / wdiv) + wpos, (h - (v / vdiv))), 1)
+                if v > vlen:
+                    v -= vlen
+                pygame.draw.line(self.screen, gl.BLUE, ((i / wdiv) + wpos,
+                                 h), ((i / wdiv) + wpos, (h - (v / vdiv))), 1)
         show_message("Histogram", (wpos + 1, h - 174), 11, ("transparent"))
-        pygame.draw.line(self.screen, gl.MSG_COLOR, (wpos - 2, h + 2), (wpos - 2, h - vlen)) # left side of border
-        pygame.draw.line(self.screen, gl.MSG_COLOR, ((i / wdiv) + wpos, h - vlen), ((i / wdiv) + wpos, h + 2)) # right side
-        pygame.draw.line(self.screen, gl.MSG_COLOR, (wpos - 2, h - vlen), ((i / wdiv) + wpos, h - vlen)) # top
-        pygame.draw.line(self.screen, gl.MSG_COLOR, (wpos - 2, h + 2), ((i / wdiv) + wpos, h + 2)) # bottom
+        pygame.draw.line(self.screen, gl.MSG_COLOR, (
+            wpos - 2, h + 2), (wpos - 2, h - vlen))  # left side of border
+        pygame.draw.line(self.screen, gl.MSG_COLOR, ((i / wdiv) + wpos,
+                         h - vlen), ((i / wdiv) + wpos, h + 2))  # right side
+        pygame.draw.line(self.screen, gl.MSG_COLOR, (
+            wpos - 2, h - vlen), ((i / wdiv) + wpos, h - vlen))  # top
+        pygame.draw.line(self.screen, gl.MSG_COLOR, (
+            wpos - 2, h + 2), ((i / wdiv) + wpos, h + 2))  # bottom
+
     def system_info(self):
         info = pygame.display.Info()
         self.row += gl.ROW_SEP * 2
-        show_message("Display Properties", self.row, self.font_size, ("bold", "underline", "transparent"))
+        show_message("Display Properties", self.row,
+                     self.font_size, ("bold", "underline", "transparent"))
         self.row += gl.ROW_SEP
-        self.print_info('Using video driver: %s' % pygame.display.get_driver(), 20)
-        self.print_info('Video mode is accelerated: %s' % ('No', 'Yes')[info.hw], 27)
-        self.print_info('Display depth (Bits Per Pixel): %d' % info.bitsize, 31)
+        self.print_info(
+            'Using video driver: %s' % pygame.display.get_driver(), 20)
+        self.print_info(
+            'Video mode is accelerated: %s' % ('No', 'Yes')[info.hw], 27)
+        self.print_info(
+            'Display depth (Bits Per Pixel): %d' % info.bitsize, 31)
         self.print_info('Screen size of imgv: %s' % gl.ORIG_WINSIZE, 21)
+
     def print_info(self, msg, emphasize_length):
         if msg == " ":
             return
@@ -356,7 +423,8 @@ class verbose:
             gl.MSG_COLOR = (142, 142, 142)
         else:
             gl.MSG_COLOR = gl.SILVER
-        show_message(msg, (self.start_width, self.row), self.font_size, (""), (emphasize_length, before_color))
+        show_message(msg, (self.start_width, self.row),
+                     self.font_size, (""), (emphasize_length, before_color))
         gl.MSG_COLOR = before_color
 
 
@@ -368,7 +436,8 @@ def command_verbose_info(screen, new_img, rect, file):
         remote_img_details(screen, new_img, rect, file)
     else:
         verbose_info(screen, new_img, file)
-    screen = restore_screen(screen, before_winsize, not_accepted, new_img, file, rect)
+    screen = restore_screen(
+        screen, before_winsize, not_accepted, new_img, file, rect)
     rect = get_center(screen, new_img)
     my_update_screen(new_img, rect, file)
 
@@ -378,20 +447,21 @@ def verbose_info(screen, new_img, file):
     wait_cursor()
     paint_screen(gl.BLACK)
     try:
-        (uniquecolors_rect, total_colors, row, font, im, verb) = print_verbose_info(screen, new_img, file)
+        (uniquecolors_rect, total_colors, row, font, im,
+         verb) = print_verbose_info(screen, new_img, file)
     except:
         print 'print verbose'
         #(uniquecolors_rect, total_colors, row, font, im, verb) = junk_rect()#
        # uniquecolors_rect = junk_rect()#
        # total_colors = ""#
-        verb = verbose(screen, file)#
+        verb = verbose(screen, file)
         (uniquecolors_rect, total_colors, row, font, im) = verb.colors()
         #return
     if gl.SHOW_EXIFBUTTON:
-        exif_rect = imgv_button(screen, " Exif Data ", 5, gl.ROW_SEP + 435, None)
+        exif_rect = imgv_button(
+            screen, " Exif Data ", 5, gl.ROW_SEP + 435, None)
     (esc_rect, close_font) = close_button(screen)
     normal_cursor()
-    transparency = 0
     while 1:
         event = pygame.event.poll()
         pygame.time.wait(1)
@@ -399,9 +469,11 @@ def verbose_info(screen, new_img, file):
         cursor = pygame.mouse.get_pos()
         hover_cursor(cursor, (esc_rect, exif_rect, uniquecolors_rect))
         if gl.SHOW_EXIFBUTTON:
-            hover_button(exif_rect, cursor, screen, " Exif Data ", 5, gl.ROW_SEP + 435, None)
-        if gl.UNIQUE_COLORS == None and gl.SHOW_EXIFBUTTON and total_colors != "":
-            hover_button(uniquecolors_rect, cursor, screen, " Unique colors ", (font.size(total_colors)[0] + 230), row, None)
+            hover_button(exif_rect, cursor, screen,
+                         " Exif Data ", 5, gl.ROW_SEP + 435, None)
+        if gl.UNIQUE_COLORS is None and gl.SHOW_EXIFBUTTON and total_colors != "":
+            hover_button(uniquecolors_rect, cursor, screen, " Unique colors ",
+                         (font.size(total_colors)[0] + 230), row, None)
 
         show_message(convert_times(ctime(), 0), "bottom", 15, ("transparent"))
 
@@ -409,7 +481,8 @@ def verbose_info(screen, new_img, file):
             if uniquecolors_rect != junk_rect():
                 if uniquecolors_rect.collidepoint(cursor):
                     wait_cursor()
-                    gl.UNIQUE_COLORS = comma_it(len(dict.fromkeys(im.getdata()))) # determine unique colors
+                    gl.UNIQUE_COLORS = comma_it(len(dict.fromkeys(
+                        im.getdata())))  # determine unique colors
                     before_color = gl.MSG_COLOR
                     if gl.MSG_COLOR == gl.SILVER:
                         gl.MSG_COLOR = (142, 142, 142)
@@ -460,7 +533,7 @@ def print_verbose_info(screen, new_img, file):
     verb.file_times(file)
     try:
         verb.histogram()
-    except: # a few rare images cause a ZeroDivisionError from histogram()
+    except:  # a few rare images cause a ZeroDivisionError from histogram()
         print "Couldn't display histogram"
     verb.loaded_time()
     try:
@@ -564,29 +637,29 @@ def comma_it(n):
         nstr, remainder = nstr.split('.')
     nstr = ' '.join(nstr).split()
     nstr_len = len(nstr)
-    if nstr_len == 4: # thousands
+    if nstr_len == 4:  # thousands
         nstr.insert(1, comma)
-    if nstr_len == 5: # 10 thousands
+    if nstr_len == 5:  # 10 thousands
         nstr.insert(2, comma)
-    if nstr_len == 6: # hundred thousands
+    if nstr_len == 6:  # hundred thousands
         nstr.insert(3, comma)
-    if nstr_len == 7: # millions
+    if nstr_len == 7:  # millions
         nstr.insert(1, comma), nstr.insert(5, comma)
-    if nstr_len == 8: # 10 millions
+    if nstr_len == 8:  # 10 millions
         nstr.insert(2, comma), nstr.insert(6, comma)
-    if nstr_len == 9: # 100 millions
+    if nstr_len == 9:  # 100 millions
         nstr.insert(3, comma), nstr.insert(7, comma)
-    if nstr_len == 10: # billions
+    if nstr_len == 10:  # billions
         nstr.insert(1, comma), nstr.insert(5, comma)
         nstr.insert(9, comma),
-    if nstr_len == 11: # 10 billions
+    if nstr_len == 11:  # 10 billions
         nstr.insert(2, comma), nstr.insert(6, comma), nstr.insert(10, comma)
-    if nstr_len == 12: # 100 billions
+    if nstr_len == 12:  # 100 billions
         nstr.insert(3, comma), nstr.insert(7, comma), nstr.insert(11, comma)
-    if nstr_len == 13: # 1 trillions
-        nstr.insert(1, comma), nstr.insert(5, comma), nstr.insert(9, comma), nstr.insert(13, comma)
+    if nstr_len == 13:  # 1 trillions
+        nstr.insert(1, comma), nstr.insert(
+            5, comma), nstr.insert(9, comma), nstr.insert(13, comma)
     nstr = ''.join(nstr)
     if isfloat:
         nstr += '.' + remainder[:2]
     return nstr
-
