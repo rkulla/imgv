@@ -165,9 +165,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
         if (event.key == K_MINUS or event.key == K_KP_MINUS) and mods & KMOD_CTRL == 0:
             if int(gl.N_MILLISECONDS) < gl.MAX_ZOOM_MAX_MS and gl.CURRENT_ZOOM_PERCENT < gl.ZOOM_PERCENT_MAX:
                 try:
-                    (
-                        new_img, img, rect) = command_zoom_out(new_img, new_img_width, new_img_height,
-                                                               img, screen, file, rect, "normal")
+                    (new_img, img, rect) = command_zoom_out(new_img, img, file, rect, "normal")
                 except:
                     print 'Out of memory.'
             else:
@@ -187,9 +185,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
         mods = pygame.key.get_mods()
         if (event.key == K_MINUS or event.key == K_KP_MINUS) and mods & KMOD_CTRL:
             try:
-                (
-                    new_img, img, rect) = command_zoom_out(new_img, new_img_width, new_img_height,
-                                                           img, screen, file, rect, "double")
+                (new_img, img, rect) = command_zoom_out(new_img, img, file, rect, "double")
             except:
                 print 'Out of memory.'
     if event.type == KEYDOWN:
@@ -198,9 +194,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
             # Zoom in only if there seems to be enough memory
             if int(gl.N_MILLISECONDS) < gl.MAX_ZOOM_MAX_MS and gl.CURRENT_ZOOM_PERCENT < gl.ZOOM_PERCENT_MAX:
                 try:  # triple zoom crash protection
-                    (
-                        new_img, img, rect) = command_zoom_in(new_img, new_img_width, new_img_height, img,
-                                                              screen, gl.files, file, rect, "normal")
+                    (new_img, img, rect) = command_zoom_in(new_img, img, file, rect, "normal")
                 except:
                     print 'Zoom max reached.'
             else:
@@ -210,9 +204,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
         if (event.key == K_EQUALS or event.key == K_KP_PLUS) and (mods & KMOD_CTRL and mods & KMOD_ALT == 0):
             if int(gl.N_MILLISECONDS) < gl.DBL_ZOOM_MAX_MS and gl.CURRENT_ZOOM_PERCENT < gl.ZOOM_PERCENT_MAX:
                 try:
-                    (
-                        new_img, img, rect) = command_zoom_in(new_img, new_img_width, new_img_height, img,
-                                                              screen, gl.files, file, rect, "double")
+                    (new_img, img, rect) = command_zoom_in(new_img, img, file, rect, "double")
                 except:
                     print 'Zoom max reached.'
             else:
@@ -222,8 +214,7 @@ def handle_keyboard(event, gfx, last_rect, ns):
         if (event.key == K_EQUALS or event.key == K_KP_PLUS) and (mods & KMOD_CTRL and mods & KMOD_ALT):
             try:
                 (
-                    new_img, img, rect) = command_zoom_in(new_img, new_img_width, new_img_height, new_img,
-                                                          screen, gl.files, file, rect, "scale2x")
+                    new_img, img, rect) = command_zoom_in(new_img, new_img, file, rect, "scale2x")
             except:
                 print 'Zoom max. Out of memory.'
     if hit_key(event, K_DOWN):

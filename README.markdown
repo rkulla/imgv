@@ -2,12 +2,26 @@ Imgv - cross-platform image viewer.
 
 Latest Version: 3.1.7
 
+About
+=====
+Imgv is a image viewer with an opinionated interface - meaning that certain
+features were add or missing intentionally. It's main opinion is that screen
+real-estate is very important and so the interface tries to stay out of your
+way. It also has very flexible viewing options, such as the ability to view 4
+images at a time, and view/download from URLs.
+
+The viewer also cares about privacy and so it doesn't cache your images and it
+even has the ability to temporarily 'hide' what you're viewing.
+
+
 Requirements
 ============
 - python 2.2 or higher
 - pygame
 - python-imaging (PIL)
 
+The operating system doesn't matter as long as you have the above requirements.
+Thus it should work on Linux, Mac OS X, Windows, etc.
 
 Environment
 -----------

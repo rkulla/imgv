@@ -50,8 +50,6 @@ def command_main_menu(gfx, ns):
     main_menu_fg(gfx['screen'], font, i, menu_items)
     normal_cursor()
     last_rect = Rect(gfx['rect'])
-    new_img_width = gfx['new_img'].get_width()
-    new_img_height = gfx['new_img'].get_height()
     if gl.REMOTE and not gl.ALREADY_DOWNLOADED:
         download_rect = imgv_button(
             gfx['screen'], " Downlo(a)d Image ", None, None, "topright")
@@ -65,7 +63,7 @@ def command_main_menu(gfx, ns):
             gl.JUST_RESIZED = 1
             gfx['screen'] = pygame.display.set_mode(
                 event.dict['size'], RESIZABLE)
-            rect = get_center(gfx['screen'], gfx['new_img'])
+            gfx['rect'] = get_center(gfx['screen'], gfx['new_img'])
             my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'])
             return gfx
         if gl.REMOTE and not gl.ALREADY_DOWNLOADED:
@@ -152,9 +150,7 @@ def command_main_menu(gfx, ns):
                     elif it[1] == " Zoom Out ":
                         if int(gl.N_MILLISECONDS) < gl.MAX_ZOOM_MAX_MS and gl.CURRENT_ZOOM_PERCENT < gl.ZOOM_PERCENT_MAX:
                             try:
-                                (
-                                    gfx['new_img'], gfx['img'], gfx['rect']) = command_zoom_out(gfx['new_img'], new_img_width,
-                                                                                                new_img_height, gfx['img'], gfx['screen'], gfx['file'], gfx['rect'], "normal")
+                                (gfx['new_img'], gfx['img'], gfx['rect']) = command_zoom_out(gfx['new_img'], gfx['img'], gfx['file'], gfx['rect'], "normal")
                             except:
                                 print 'Out of memory.'
                         else:
@@ -174,9 +170,7 @@ def command_main_menu(gfx, ns):
                     elif it[1] == " Zoom In ":
                         if int(gl.N_MILLISECONDS) < gl.MAX_ZOOM_MAX_MS and gl.CURRENT_ZOOM_PERCENT < gl.ZOOM_PERCENT_MAX:
                             try:  # triple zoom crash protection
-                                (
-                                    gfx['new_img'], gfx['img'], gfx['rect']) = command_zoom_in(gfx['new_img'], new_img_width, new_img_height, gfx['img'], gfx['screen'], gl.files,
-                                                                                               file, rect, "normal")
+                                (gfx['new_img'], gfx['img'], gfx['rect']) = command_zoom_in(gfx['new_img'], gfx['img'], gfx['file'], gfx['rect'], "normal")
                             except:
                                 print 'Zoom max reached.'
                         else:
