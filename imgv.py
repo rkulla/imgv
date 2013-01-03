@@ -134,38 +134,38 @@ def start_auto_repeat(gfx, last_rect, event):
             command_up(rect, last_rect, new_img, file)
             if gl.IMG_BORDER:
                 border_fix()
-                img_border(new_img, rect[0], rect[1])
+                img_border(new_img, rect)
     if gl.MY_KEYUP:
         if rect.top < 0:
             command_down(rect, last_rect, new_img, file)
             if gl.IMG_BORDER:
                 border_fix()
-                img_border(new_img, rect[0], rect[1])
+                img_border(new_img, rect)
     if gl.MY_KEYRIGHT:
         if rect.right > screen.get_width():
             command_left(rect, last_rect, new_img, file)
             if gl.IMG_BORDER:
                 border_fix()
-                img_border(new_img, rect[0], rect[1])
+                img_border(new_img, rect)
     if gl.MY_KEYLEFT:
         if rect.left < 0:
             command_right(rect, last_rect, new_img, file)
             if gl.IMG_BORDER:
                 border_fix()
-                img_border(new_img, rect[0], rect[1])
+                img_border(new_img, rect)
     if event.type == MOUSEBUTTONDOWN:
         if event.dict['button'] == 4:  # mouse wheel up
             if rect.top < 0:
                 command_down(rect, last_rect, new_img, file)
                 if gl.IMG_BORDER:
                     border_fix()
-                    img_border(new_img, rect[0], rect[1])
+                    img_border(new_img, rect)
         if event.dict['button'] == 5:  # mouse wheel down
             if rect.bottom > screen.get_height():
                 command_up(rect, last_rect, new_img, file)
                 if gl.IMG_BORDER:
                     border_fix()
-                    img_border(new_img, rect[0], rect[1])
+                    img_border(new_img, rect)
 
 
 def border_fix():

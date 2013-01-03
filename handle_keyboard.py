@@ -230,22 +230,22 @@ def handle_keyboard(event, gfx, last_rect, ns):
         pygame.event.set_allowed(MOUSEMOTION)
         command_full_right(rect, last_rect, new_img, file)
         if gl.IMG_BORDER:
-            img_border(new_img, rect[0], rect[1])
+            img_border(new_img, rect)
     if hit_key(event, K_END):
         pygame.event.set_allowed(MOUSEMOTION)
         command_full_left(rect, last_rect, new_img, file)
         if gl.IMG_BORDER:
-            img_border(new_img, rect[0], rect[1])
+            img_border(new_img, rect)
     if hit_key(event, K_PAGEDOWN):
         pygame.event.set_allowed(MOUSEMOTION)
         command_full_up(rect, last_rect, new_img, file)
         if gl.IMG_BORDER:
-            img_border(new_img, rect[0], rect[1])
+            img_border(new_img, rect)
     if hit_key(event, K_PAGEUP):
         pygame.event.set_allowed(MOUSEMOTION)
         command_full_down(rect, last_rect, new_img, file)
         if gl.IMG_BORDER:
-            img_border(new_img, rect[0], rect[1])
+            img_border(new_img, rect)
     if hit_key(event, K_m):
         (new_img, img, rect) = command_horiz(new_img, screen, file, rect)
     if hit_key(event, K_v):

@@ -49,7 +49,7 @@ def my_update_screen(new_img, rect, file, *ns):
         gl.NS_GLOBAL = ns
     try:
         if gl.IMG_BORDER:
-            img_border(new_img.get_width(), new_img.get_height(), rect[0], rect[1])
+            img_border(new_img.get_width(), new_img.get_height(), rect)
         img_info(gl.files[file], file, new_img, ns[0])
     except:
         pass
@@ -69,6 +69,8 @@ def img_border(new_img, wpos, downpos):
     screen = get_surface()
     img_width = new_img.get_width()
     img_height = new_img.get_height()
+    wpos = rect[0]
+    downpos = rect[1]
     ll = line(screen, gl.IMG_BORDER_COLOR, (wpos, downpos), (wpos, img_height + downpos + 2))  # left side of border
     rl = line(screen, gl.IMG_BORDER_COLOR, (wpos + img_width, downpos), (wpos + img_width, img_height + downpos + 2))  # right side
     tl = line(screen, gl.IMG_BORDER_COLOR, (wpos, downpos), ((wpos + img_width), downpos))  # top of border
