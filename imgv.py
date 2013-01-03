@@ -140,10 +140,16 @@ class Imgv(object):
                                         self.gfx['new_img'], self.gfx['file'])
                 self.gfx = command_main_menu(gfx, self.ns)
 
-            start_auto_repeat(self.gfx['rect'], last_rect, self.gfx['new_img'], self.gfx['screen'], self.gfx['file'], self.screen_width, self.screen_height, event)
+            start_auto_repeat(self.gfx, last_rect, event)
 
 
-def start_auto_repeat(rect, last_rect, new_img, screen, file, screen_width, screen_height, event):
+def start_auto_repeat(gfx, last_rect, event):
+    screen = gfx['screen']
+    rect = gfx['rect']
+    new_img = gfx['new_img']
+    file = gfx['file']
+    screen_width = screen.get_width()
+    screen_height = screen.get_height()
     if gl.MY_KEYDOWN:
         if rect.bottom > screen_height:
             command_up(rect, last_rect, new_img, screen, file, screen_height)
