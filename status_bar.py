@@ -8,7 +8,6 @@ from os.path import basename, getsize
 import pygame
 from pygame.display import update, set_caption, get_caption, get_surface
 from show_message import show_message, truncate_name
-from buttons import imgv_button
 import exif
 if platform == 'win32':
     import BmpImagePlugin, JpegImagePlugin, PngImagePlugin, SgiImagePlugin, SunImagePlugin, TgaImagePlugin, TiffImagePlugin, PcxImagePlugin, PpmImagePlugin, XpmImagePlugin # for py2exe to work with PIL
@@ -104,7 +103,7 @@ def exif_data(screen, filename):
         pass
 
 
-def img_info(filename, file, new_img, ns):
+def img_info(filename, file, new_img):
     screen = get_surface()
     num_imgs = len(gl.files)
     if screen.get_width() < 800:
@@ -123,16 +122,12 @@ def img_info(filename, file, new_img, ns):
     try:
         im = Image.open(filename)
         if im.mode == "RGB" or im.mode == "YCbCr":
-            bitsperpixel = 24
             bitsperpixelmsg = "x24 BPP"
         elif im.mode == "P" or im.mode == "L":
-            bitsperpixel = 8
             bitsperpixelmsg = "x8 BPP"
         elif im.mode ==  1:
-            bitsperpixel = 1
             bitsperpixelmsg = "x1 BPP"
         elif im.mode == "RGBA" or im.mode == "CMYK" or im.mode == "I" or im.mode == "F":
-            bitsperpixel = 32
             bitsperpixelmsg = "x32 BPP"
     except:
         pass
@@ -175,21 +170,16 @@ def img_info(filename, file, new_img, ns):
             zoom_percent = gl.CURRENT_ZOOM_PERCENT
         gl.CALC_ZOOM = 1
 
-        msmsg = calc_ms(str(ns))
-        if msmsg == "":
-            msmsg = "0"
-        gl.N_MILLISECONDS = msmsg
-
         if zoom_percent == 100:
-            img_status = " %s  [%s/%s]  %sx%s%s  %d%%  %.1fs  -  %s, %s" % (filename, current_img, str(num_imgs), img_width, img_height, bitsperpixelmsg, zoom_percent, ns, str(file_size), file_mtime)
+            img_status = " %s  [%s/%s]  %sx%s%s  %d%%  -  %s, %s" % (filename, current_img, str(num_imgs), img_width, img_height, bitsperpixelmsg, zoom_percent, str(file_size), file_mtime)
         else:
-            img_status = " %s  [%s/%s]  %sx%s%s  %d%%  [Zoom: %sx%s]  %.1fs  -  %s, %s" % (filename, current_img, str(num_imgs), gl.REAL_WIDTH, gl.REAL_HEIGHT, bitsperpixelmsg, zoom_percent, img_width, img_height, ns, str(file_size), file_mtime)
+            img_status = " %s  [%s/%s]  %sx%s%s  %d%%  [Zoom: %sx%s]  -  %s, %s" % (filename, current_img, str(num_imgs), gl.REAL_WIDTH, gl.REAL_HEIGHT, bitsperpixelmsg, zoom_percent, img_width, img_height, str(file_size), file_mtime)
 
         filename = check_truncate(screen.get_width(), filename, font.size('  '.join(img_status.split()[1:]))[0])
         if zoom_percent == 100:
-            img_status = " %s  [%s/%s]  %sx%s%s  %d%%  %.1fs  -  %s, %s" % (filename, current_img, str(num_imgs), img_width, img_height, bitsperpixelmsg, zoom_percent, ns, str(file_size), file_mtime)
+            img_status = " %s  [%s/%s]  %sx%s%s  %d%%  -  %s, %s" % (filename, current_img, str(num_imgs), img_width, img_height, bitsperpixelmsg, zoom_percent, str(file_size), file_mtime)
         else:
-            img_status = " %s  [%s/%s]  %sx%s%s  %d%%  [Zoom: %sx%s]  %.1fs  -  %s, %s" % (filename, current_img, str(num_imgs), gl.REAL_WIDTH, gl.REAL_HEIGHT, bitsperpixelmsg, zoom_percent, img_width, img_height, ns, str(file_size), file_mtime)
+            img_status = " %s  [%s/%s]  %sx%s%s  %d%%  [Zoom: %sx%s]  -  %s, %s" % (filename, current_img, str(num_imgs), gl.REAL_WIDTH, gl.REAL_HEIGHT, bitsperpixelmsg, zoom_percent, img_width, img_height, str(file_size), file_mtime)
 
         if not gl.TOGGLE_TRANSPARENT:
             # draw transparent 'tinted' bar to be the background for the image status message to appear on
@@ -210,25 +200,7 @@ def img_info(filename, file, new_img, ns):
         print "Can't display exif"
 
 
-def calc_ms(ms):
-    # calculate milliseconds
-    left, right = ms.split('.')
-    l = len(right)
-    if l == 2: # pad with a 0 when it only does 2 decimal places
-        l = right[1:] + "0"
-    else:
-        l = right
-    if ms[0] == "0":
-        msmsg = l
-    else:
-        msmsg = left + right
-        if len(right) == 2:
-            msmsg = msmsg + "0"
-    return msmsg.lstrip("0")
-
-
 def check_truncate(screen_width, name, rest_size):
     allow = (screen_width - rest_size) / 6 - 15 # 6 = hardcoded value of how many pixels wide a char is font.size'd
     name = truncate_name(name, allow)
     return name
-

@@ -4,7 +4,6 @@ from string import digits
 from show_message import show_message
 from buttons import close_button
 from cursor import normal_cursor, wait_cursor, hover_cursor
-from load_timers import check_timer, start_timer
 from img_screen import paint_screen, get_center, my_update_screen
 from img_surf import next_img
 from usr_event import check_quit, hit_key, left_click
@@ -77,12 +76,10 @@ def my_slideshow(new_img, img, screen, file, rect):
 
 
 def show_slideshow_img(screen, new_img, file, speed):
-    start = start_timer()
     wait_cursor()
     new_img = next_img(file, new_img, screen)
     rect = get_center(screen, new_img)
-    ns = check_timer(start)
-    my_update_screen(new_img, rect, file, ns)
+    my_update_screen(new_img, rect, file)
     normal_cursor()
     if speed > 0:
         for i in range(speed):

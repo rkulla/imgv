@@ -1,6 +1,5 @@
 # image removal (closing, not deleting) code by Ryan Kulla, rkulla@gmail.com
 import gl
-from load_timers import check_timer, start_timer
 from cursor import wait_cursor, normal_cursor
 from img_surf import next_img, previous_img
 from img_screen import get_center, my_update_screen
@@ -11,7 +10,6 @@ from os import unlink
 def command_remove_img(new_img, screen, file, rect):
     "Don't display the image anymore during the session"
     wait_cursor()
-    start = start_timer()
     num_imgs = len(gl.files)
     # only remove file if its not the only one:
     if not num_imgs < 2:
@@ -25,8 +23,7 @@ def command_remove_img(new_img, screen, file, rect):
                 file = file - 1
                 new_img = previous_img(file, new_img, screen)
         rect = get_center(screen, new_img)
-        ns = check_timer(start)
-        my_update_screen(new_img, rect, file, ns)
+        my_update_screen(new_img, rect, file)
     normal_cursor()
     return (new_img, new_img, new_img, file, rect)
 

@@ -1,9 +1,7 @@
 # View four images on the screen at a time code by Ryan Kulla, rkulla@gmail.com
 import gl
 import os
-from sys import platform
-from img_screen import get_center, my_update_screen, paint_screen, junk_rect
-from load_timers import start_timer, check_timer
+from img_screen import get_center, my_update_screen, paint_screen
 from screensaver import disable_screensaver
 from slideshow import get_speed, stopped_msg, pause
 from show_message import show_message, truncate_name
@@ -13,28 +11,23 @@ from usr_event import hit_key, left_click, right_click, middle_click, check_quit
 from cursor import wait_cursor, normal_cursor, hover_cursor
 import pygame.event, pygame.mouse, pygame.draw, pygame.transform, pygame.time
 from pygame.display import update, set_caption, set_mode, get_caption
-from pygame.locals import MOUSEMOTION, MOUSEBUTTONDOWN, KEYDOWN, K_ESCAPE, K_SPACE, K_BACKSPACE, K_4,\
+from pygame.locals import MOUSEMOTION, KEYDOWN, K_ESCAPE, K_SPACE, K_BACKSPACE, K_4,\
 K_LALT, K_RALT, K_LCTRL, K_RCTRL, K_p, K_PAUSE, K_w, K_TAB, K_n, K_b, VIDEOEXPOSE, VIDEORESIZE, RESIZABLE
 
 
-def command_four(screen, file, new_img, ns):
+def command_four(screen, file, new_img):
     gl.MULTI_VIEWING = 1
-    orig_ns = ns
     paint_screen(gl.IMGV_COLOR)
     set_caption("Four at a time - imgv")
-    (file, new_img, start) = four(screen, file, new_img, ns)
+    (file, new_img) = four(screen, file, new_img)
     rect = get_center(screen, new_img)
-    if start != orig_ns:
-        ns = check_timer(start)
-        my_update_screen(new_img, rect, file, ns)
-    else:
-        my_update_screen(new_img, rect, file)
+    my_update_screen(new_img, rect, file)
     pygame.event.set_blocked(MOUSEMOTION) # without this the hovers don't work right
     gl.MULTI_VIEWING = 0
     return (file, new_img, new_img, new_img, rect)
 
 
-def four(screen, file, new_img, ns):
+def four(screen, file, new_img):
     paint_screen(gl.IMGV_COLOR) # so transparent status bars don't mess up on VIDEOEXPOSE repaints
     old_file = file
     (img_one_rect, img_two_rect, img_three_rect, img_four_rect) = (0, 0, 0, 0)
@@ -48,7 +41,6 @@ def four(screen, file, new_img, ns):
     (file, img_four_rect, img_four_name, img_four_file) = square_four(screen, file)
 
     (esc_rect, close_font) = close_button(screen)
-    start = ns
     while 1:
         flag = 0
         event = pygame.event.poll()
@@ -60,7 +52,7 @@ def four(screen, file, new_img, ns):
             screen = pygame.display.set_mode(event.dict['size'], RESIZABLE)
             file = file - 4
             pygame.event.set_allowed(VIDEOEXPOSE)
-            (file, new_img, start) = four(screen, file, new_img, ns)
+            (file, new_img) = four(screen, file, new_img)
             flag = 1
             break
 
@@ -102,41 +94,39 @@ def four(screen, file, new_img, ns):
                 break # kick 'em out
             (file, img_one_file, img_two_file, img_three_file, img_four_file) =\
             my_fourslideshow(screen, new_img, rect, gl.files[file], file - 4,\
-            len(gl.files), img_one_file, img_two_file, img_three_file, img_four_file, ns)
+            len(gl.files), img_one_file, img_two_file, img_three_file, img_four_file)
             paint_screen(gl.IMGV_COLOR)
-            (file, new_img, start) = four(screen, file - 4, new_img, ns)
+            (file, new_img) = four(screen, file - 4, new_img)
             flag = 1
             break
         if left_click(event):
-            start = start_timer()
             if img_one_rect.collidepoint(cursor):
                 wait_cursor()
                 new_img = load_img(gl.files[img_one_file])
-                return (img_one_file, new_img, start)
+                return (img_one_file, new_img)
             if img_two_rect.collidepoint(cursor):
                 wait_cursor()
                 new_img = load_img(gl.files[img_two_file])
-                return (img_two_file, new_img, start)
+                return (img_two_file, new_img)
             if img_three_rect.collidepoint(cursor):
                 wait_cursor()
                 new_img = load_img(gl.files[img_three_file])
-                return (img_three_file, new_img, start)
+                return (img_three_file, new_img)
             if img_four_rect.collidepoint(cursor):
                 wait_cursor()
                 new_img = load_img(gl.files[img_four_file])
-                return (img_four_file, new_img, start)
+                return (img_four_file, new_img)
             if esc_rect.collidepoint(cursor):
                 file = old_file
                 gl.ESCAPED = 1
                 break
         if event.type == VIDEOEXPOSE:
-       # if event.type == VIDEOEXPOSE and not pygame.mouse.get_focused():#
             # repaint the screen in case other windows painted over it:
             file = file - 4
-            (file, new_img, start) = four(screen, file, new_img, ns)
+            (file, new_img) = four(screen, file, new_img)
             flag = 1
             break
-    return (file, new_img, start)
+    return (file, new_img)
 
 
 def square_one(screen, file):
@@ -282,7 +272,6 @@ def hover_square(screen, show_img_one, show_img_two, show_img_three, show_img_fo
 img_one_rect, img_two_rect, img_three_rect, img_four_rect, img_one_name, img_two_name,\
 img_three_name, img_four_name, img_one_file, img_two_file, img_three_file, img_four_file, rect, event):
     "display image name in title bar or on the screen on a mouse over"
-    num_imgs = len(gl.files)
     cursor = pygame.mouse.get_pos()
     (esc_rect, font) = close_button(screen)
     hover_cursor(cursor, (esc_rect, img_one_rect, img_two_rect, img_three_rect, img_four_rect))
@@ -377,7 +366,7 @@ def adjust_img_size(the_img, screen_width, screen_height):
     return small_img
 
 
-def my_fourslideshow(screen, new_img, rect, filename, file, num_imgs, img_one_file, img_two_file, img_three_file, img_four_file, ns):
+def my_fourslideshow(screen, new_img, rect, filename, file, num_imgs, img_one_file, img_two_file, img_three_file, img_four_file):
     if not gl.TOGGLE_FULLSCREEN_SET:
         screen = set_mode(screen.get_size())
     set_caption("Slideshow Options - imgv")
@@ -394,7 +383,7 @@ def my_fourslideshow(screen, new_img, rect, filename, file, num_imgs, img_one_fi
                 K_p, K_PAUSE, K_TAB, K_SPACE, K_BACKSPACE):
                 stopped_msg(screen)
                 file = file - 1
-                (file, new_img, start) = four(screen, file, new_img, ns) # needed to repaint
+                (file, new_img) = four(screen, file, new_img) # needed to repaint
                 break
             if hit_key(event, K_p) or hit_key(event, K_PAUSE):
                 pause(screen)

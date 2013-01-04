@@ -30,10 +30,9 @@ from handle_keyboard import handle_keyboard
 from buttons import imgv_button, hover_button
 from downloader import save_remote_img
 from load_img import load_img
-from load_timers import start_timer, check_timer
 
 
-def command_main_menu(gfx, ns):
+def command_main_menu(gfx):
     menu_items = []
     i = 23
     cursor = pygame.mouse.get_pos()
@@ -82,7 +81,7 @@ def command_main_menu(gfx, ns):
                 if event.key == K_c:
                     normal_cursor()
                 return gfx
-            (gfx, last_rect) = handle_keyboard(event, gfx, last_rect, ns)
+            (gfx, last_rect) = handle_keyboard(event, gfx, last_rect)
             break
         hover_cursor(cursor2, [x[0] for x in menu_items])
         if left_click(event):
@@ -95,7 +94,7 @@ def command_main_menu(gfx, ns):
                 if it[0].collidepoint(cursor2):
                     if it[1] == " Next Image ":
                         (gfx['new_img'], gfx['img'], gfx['refresh_img'], gfx['file'], gfx['rect']) =\
-                             command_next_img(gfx['new_img'], gfx['screen'], gfx['file'], gfx['rect'])
+                        command_next_img(gfx['new_img'], gfx['screen'], gfx['file'], gfx['rect'])
                     elif it[1] == " Previous Image ":
                         (gfx['new_img'], gfx['img'], gfx['refresh_img'], gfx['file'], gfx['rect']) =\
                              command_prev_img(gfx['new_img'], gfx['screen'], gfx['file'], gfx['rect'])
@@ -127,7 +126,7 @@ def command_main_menu(gfx, ns):
                         gl.CALC_ZOOM = 0
                         zoom_percent = gl.CURRENT_ZOOM_PERCENT
                         real_width = gl.REAL_WIDTH
-                        (gfx['new_img'], gfx['img'], gfx['refresh_img'], gfx['file'], gfx['rect']) = command_thumbs(gfx['screen'], gfx['new_img'], gfx['file'], ns)
+                        (gfx['new_img'], gfx['img'], gfx['refresh_img'], gfx['file'], gfx['rect']) = command_thumbs(gfx['screen'], gfx['new_img'], gfx['file'])
                         if gl.ESCAPED:
                             gl.CURRENT_ZOOM_PERCENT = zoom_percent
                             gl.REAL_WIDTH = real_width
@@ -139,13 +138,12 @@ def command_main_menu(gfx, ns):
                         if not gl.TOGGLE_TRANSPARENT:
                             gl.TOGGLE_TRANSPARENT = 1
                             transparency = 1
-                        command_verbose_info(gfx['screen'], gfx['new_img'],
-                                             gfx['rect'], gfx['file'])
+                        command_verbose_info(gfx['screen'], gfx['new_img'], gfx['rect'], gfx['file'])
                         if transparency:
                             gl.TOGGLE_TRANSPARENT = 0
                         my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'])
                     elif it[1] == " Zoom Out ":
-                        if int(gl.N_MILLISECONDS) < gl.MAX_ZOOM_MAX_MS and gl.CURRENT_ZOOM_PERCENT < gl.ZOOM_PERCENT_MAX:
+                        if gl.CURRENT_ZOOM_PERCENT < gl.ZOOM_PERCENT_MAX:
                             try:
                                 (gfx['new_img'], gfx['img'], gfx['rect']) = command_zoom_out(gfx['new_img'], gfx['img'], gfx['file'], gfx['rect'], "normal")
                             except:
@@ -154,18 +152,15 @@ def command_main_menu(gfx, ns):
                             print "Can't zoom out. Out of memory. Resetting the image."
                             gl.SKIP_FIT = 1
                             gl.ZOOM_EXP = 0
-                            start = start_timer()
                             wait_cursor()
                             gfx['new_img'] = load_img(gl.files[gfx['file']])
                             gfx['img'] = gfx['refresh_img'] = gfx['new_img']
                             gfx['rect'] = get_center(
                                 gfx['screen'], gfx['new_img'])
-                            ns = check_timer(start)
-                            my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'], ns)
+                            my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'])
                             normal_cursor()
-                            gl.N_MILLISECONDS = "0"
                     elif it[1] == " Zoom In ":
-                        if int(gl.N_MILLISECONDS) < gl.MAX_ZOOM_MAX_MS and gl.CURRENT_ZOOM_PERCENT < gl.ZOOM_PERCENT_MAX:
+                        if gl.CURRENT_ZOOM_PERCENT < gl.ZOOM_PERCENT_MAX:
                             try:  # triple zoom crash protection
                                 (gfx['new_img'], gfx['img'], gfx['rect']) = command_zoom_in(gfx['new_img'], gfx['img'], gfx['file'], gfx['rect'], "normal")
                             except:
@@ -180,13 +175,11 @@ def command_main_menu(gfx, ns):
                         else:
                             gl.RESET_FIT = 1
                             gl.FIT_IMAGE_VAL = 1
-                        start = start_timer()
                         wait_cursor()
                         gfx['new_img'] = load_img(gl.files[gfx['file']])
                         gfx['img'] = gfx['refresh_img'] = gfx['new_img']
                         gfx['rect'] = get_center(gfx['screen'], gfx['new_img'])
-                        ns = check_timer(start)
-                        my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'], ns)
+                        my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'])
                         if gl.RESET_FIT == 1:
                             gl.FIT_IMAGE_VAL = 0
                         normal_cursor()
@@ -194,28 +187,26 @@ def command_main_menu(gfx, ns):
                         gl.PERSISTENT_ZOOM_VAL ^= 1
                         if not gl.PERSISTENT_ZOOM_VAL:
                             gl.ZOOM_EXP = 0
-                        my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'], ns)
+                        my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'])
                     elif it[1] == " Actual Size ":
                         gl.SKIP_FIT = 1
                         gl.ZOOM_EXP = 0
-                        start = start_timer()
                         wait_cursor()
                         gfx['new_img'] = load_img(gl.files[gfx['file']])
                         gfx['img'] = gfx['refresh_img'] = gfx['new_img']
                         gfx['rect'] = get_center(gfx['screen'], gfx['new_img'])
-                        ns = check_timer(start)
-                        my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'], ns)
+                        my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'])
                         normal_cursor()
                     elif it[1] == " Close Image ":
                         (gfx['new_img'], gfx['img'], gfx['refresh_img'], gfx['file'], gfx['rect']) = command_remove_img(gfx['new_img'], gfx['screen'], gfx['file'], gfx['rect'])
                     elif it[1] == " Rotate Right ":
-                        if int(gl.N_MILLISECONDS) < gl.MAX_ZOOM_MAX_MS and gl.CURRENT_ZOOM_PERCENT < gl.ZOOM_PERCENT_MAX:
+                        if gl.CURRENT_ZOOM_PERCENT < gl.ZOOM_PERCENT_MAX:
                             gl.CALC_ZOOM = 0
                             (gfx['new_img'], gfx['img'], gfx['rect']) = command_rotate_right(gfx['new_img'], gfx['screen'], gfx['file'], gfx['rect'])
                         else:
                             print "Can't rotate. Out of memory."
                     elif it[1] == " Rotate Left ":
-                        if int(gl.N_MILLISECONDS) < gl.MAX_ZOOM_MAX_MS and gl.CURRENT_ZOOM_PERCENT < gl.ZOOM_PERCENT_MAX:
+                        if gl.CURRENT_ZOOM_PERCENT < gl.ZOOM_PERCENT_MAX:
                             gl.CALC_ZOOM = 0
                             (gfx['new_img'], gfx['img'], gfx['rect']) = command_rotate_left(gfx['new_img'], gfx['screen'], gfx['file'], gfx['rect'])
                         else:
@@ -224,7 +215,7 @@ def command_main_menu(gfx, ns):
                         gl.CALC_ZOOM = 0
                         zoom_percent = gl.CURRENT_ZOOM_PERCENT
                         real_width = gl.REAL_WIDTH
-                        (gfx['file'], gfx['new_img'], gfx['img'], gfx['refresh_img'], gfx['rect']) = command_four(gfx['screen'], gfx['file'], gfx['new_img'], ns)
+                        (gfx['file'], gfx['new_img'], gfx['img'], gfx['refresh_img'], gfx['rect']) = command_four(gfx['screen'], gfx['file'], gfx['new_img'])
                         if gl.ESCAPED:
                             gl.CURRENT_ZOOM_PERCENT = zoom_percent
                             gl.REAL_WIDTH = real_width
@@ -312,7 +303,7 @@ def command_main_menu(gfx, ns):
             wait_cursor()
             gl.MENU_POS = -1
             my_update_screen(gfx['new_img'], gfx['rect'], gfx['file'])
-            gfx = command_main_menu(gfx, ns)
+            gfx = command_main_menu(gfx)
             return gfx
 
         if event.type == MOUSEBUTTONDOWN:  # this needs to be down here to work
@@ -330,7 +321,7 @@ def command_main_menu(gfx, ns):
         gl.COUNT_CLICKS += 1
         if gl.COUNT_CLICKS == 1:  # free up ram every click
             return gfx
-        gfx = command_main_menu(gfx, ns)
+        gfx = command_main_menu(gfx)
     normal_cursor()
     return gfx
 

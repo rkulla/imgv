@@ -4,7 +4,6 @@ from img_screen import paint_screen, get_center, my_update_screen
 from buttons import close_button
 from usr_event import check_quit, hit_key, left_click, right_click, middle_click
 from cursor import normal_cursor, wait_cursor, hover_cursor
-from load_timers import start_timer, check_timer
 from load_img import load_img
 from show_message import show_message, truncate_name
 from pygame.draw import line
@@ -14,7 +13,7 @@ from pygame.locals import K_ESCAPE, K_SPACE, K_BACKSPACE, MOUSEMOTION, K_t, K_b,
 from os.path import basename
 
 
-def command_thumbs(screen, new_img, file, ns):
+def command_thumbs(screen, new_img, file):
     normal_cursor()
     gl.THUMBING = 1
 
@@ -34,26 +33,21 @@ def command_thumbs(screen, new_img, file, ns):
         screen = set_mode(screen.get_size()) # take away resize priviledges
     paint_screen(gl.IMGV_COLOR)
     set_caption("imgv")
-    orig_ns = ns
-    (new_img, new_img, new_img, file, start) = thumbs_engine(screen, new_img, file, ns)
+    (new_img, new_img, new_img, file) = thumbs_engine(screen, new_img, file)
     if not gl.TOGGLE_FULLSCREEN_SET:
         screen = set_mode(screen.get_size(), RESIZABLE) # restore resize priviledges
     rect = get_center(screen, new_img)
-    if start != orig_ns:
-        ns = check_timer(start)
-        my_update_screen(new_img, rect, file, ns)
-    else:
-        my_update_screen(new_img, rect, file)
+    my_update_screen(new_img, rect, file)
     normal_cursor()
     gl.THUMBING = 0
     return (new_img, new_img, new_img, file, rect)
 
 
-def thumbs_engine(screen, new_img, file, ns):
+def thumbs_engine(screen, new_img, file):
     screen_pause = 0
     SPACER = 5
     x = []
-    place = file # start thumbing from current image position
+    place = file  # start thumbing from current image position
     marker = 0
     (i, j) = (SPACER, SPACER)
     (esc_rect, close_font) = close_button(screen)
@@ -69,7 +63,7 @@ def thumbs_engine(screen, new_img, file, ns):
         gl.PAUSED = 0 # critical
         if hit_key(event, K_ESCAPE):
             gl.ESCAPED = 1
-            return (new_img, new_img, new_img, file, ns)
+            return (new_img, new_img, new_img, file)
         if left_click(event):
             if esc_rect.collidepoint(cursor):
                 gl.ESCAPED = 1
@@ -97,18 +91,17 @@ def thumbs_engine(screen, new_img, file, ns):
                 if left_click(event):
                     if esc_rect.collidepoint(cursor):
                         gl.ESCAPED = 1
-                        return (new_img, new_img, new_img, file, ns)
-                    start = start_timer()
-                    for item in x: # load clicked image:
+                        return (new_img, new_img, new_img, file)
+                    for item in x:  # load clicked image:
                         if item[0].collidepoint(cursor):
                             wait_cursor()
                             new_img = load_img(item[1])
                             file = gl.files.index(item[1])
-                            return (new_img, new_img, new_img, file, start)
+                            return (new_img, new_img, new_img, file)
                 check_quit(event)
                 if hit_key(event, K_SPACE) or hit_key(event, K_t) or hit_key(event, K_n) or hit_key(event, K_p) or hit_key(event, K_PAUSE) or right_click(event):
                     if not place >= len(gl.files):
-                        if not gl.PAUSED: # go to next thumb page:
+                        if not gl.PAUSED:  # go to next thumb page:
                             paint_screen(gl.IMGV_COLOR)
                             close_button(screen)
                             set_caption("Thumbnails [Paused]")
@@ -135,12 +128,12 @@ def thumbs_engine(screen, new_img, file, ns):
                         break
                 if hit_key(event, K_ESCAPE):
                     gl.ESCAPED = 1
-                    return (new_img, new_img, new_img, file, ns)
+                    return (new_img, new_img, new_img, file)
         else:
             set_caption("Loading Thumbnails [%d] - imgv" % marker)
             (x, i, j, place, screen_pause, marker) = show_thumbs(screen, SPACER, x, i, j, place, marker, font, font_size)
         pygame.time.delay(5)
-    return (new_img, new_img, new_img, file, ns)
+    return (new_img, new_img, new_img, file)
 
 
 def show_thumbs(screen, SPACER, x, i, j, place, marker, font, font_size):
@@ -265,4 +258,3 @@ def hover_fx(screen, x, cursor, marker):
             gl.OLD_CAP = "%d Thumbnails - imgv" % marker
         if gl.OLD_CAP != get_caption()[0]:
             set_caption(gl.OLD_CAP)
-

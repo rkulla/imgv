@@ -36,21 +36,15 @@ def init_screen():
     pygame.display.set_icon(load(gl.DATA_DIR + "imgv-icon.png"))
 
 
-def my_update_screen(new_img, rect, file, *ns):
+def my_update_screen(new_img, rect, file):
     screen = get_surface()
     screen.fill(gl.IMGV_COLOR)
     screen.blit(new_img, rect)
     update()
-    if not ns:
-        "ns wasn't passed, store last ns value in ns"
-        ns = gl.NS_GLOBAL
-    else:
-        "ns was passed update gl.NS_GLOBAL"
-        gl.NS_GLOBAL = ns
     try:
         if gl.IMG_BORDER:
             img_border(new_img.get_width(), new_img.get_height(), rect)
-        img_info(gl.files[file], file, new_img, ns[0])
+        img_info(gl.files[file], file, new_img)
     except:
         pass
 

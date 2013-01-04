@@ -4,7 +4,6 @@ import gl
 import os
 from string import digits
 from sys import platform
-from load_timers import start_timer, check_timer
 from load_img import load_img
 from show_message import show_message, truncate_name
 from buttons import imgv_button, hover_button, close_button
@@ -54,7 +53,6 @@ def command_show_dirs(new_img, img, screen, rect, file):
     wait_cursor()
     num_imgs = len(gl.files)
     if gl.ESCAPED != 1:
-        start = start_timer()
         if num_imgs < 1 or len(gl.files) == 0:
             gl.files = [gl.IMGV_LOGO]
             num_imgs = 0
@@ -64,8 +62,7 @@ def command_show_dirs(new_img, img, screen, rect, file):
     screen = restore_screen(screen, before_winsize, not_accepted, new_img, file, rect)
     rect = get_center(screen, new_img)
     if gl.ESCAPED != 1:
-        ns = check_timer(start)
-        my_update_screen(new_img, rect, file, ns)
+        my_update_screen(new_img, rect, file)
     else:
         my_update_screen(new_img, rect, file)
     normal_cursor()

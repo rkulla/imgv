@@ -296,9 +296,6 @@ class verbose:
         rect = (15, self.prev_pic_row - 2)
         img_border(self.current, rect)
 
-    def loaded_time(self):
-        self.print_info("Loaded in: %s milliseconds %s" % (comma_it(gl.N_MILLISECONDS), ('', '(From Zoom)')[gl.CURRENT_ZOOM_PERCENT != 100]), 10)
-
     def exif_data(self, filen):
         paint_screen(gl.BLACK)
         close_button(self.screen)
@@ -506,7 +503,6 @@ def print_verbose_info(screen, new_img, file):
         verb.histogram()
     except:  # a few rare images cause a ZeroDivisionError from histogram()
         print "Couldn't display histogram"
-    verb.loaded_time()
     try:
         verb.system_info()
     except:

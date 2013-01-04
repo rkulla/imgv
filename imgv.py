@@ -20,7 +20,6 @@ import pygame.time
 from pygame.display import set_caption, update
 from pygame.locals import MOUSEMOTION, MOUSEBUTTONDOWN, Rect, KEYDOWN, KEYUP, RESIZABLE, VIDEORESIZE, MOUSEBUTTONUP, K_UP, K_DOWN, K_RIGHT, K_LEFT
 import gl
-from load_timers import start_timer, check_timer
 from img_screen import init_screen, get_center, my_update_screen, img_border, paint_screen
 from show_message import show_message
 from cursor import wait_cursor, normal_cursor, drag_hand_cursor, grab_hand_cursor
@@ -34,8 +33,6 @@ from res import command_fullscreen
 
 class Imgv(object):
     def __init__(self):
-        pygame.time.delay(5)  # to make start_timer() work initially
-        start = start_timer()
         init_screen()
         wait_cursor()
         self.gfx = {}
@@ -51,19 +48,18 @@ class Imgv(object):
         self.gfx['refresh_img'] = self.gfx['img']
         self.gfx['new_img'] = self.gfx['img']
         self.gfx['rect'] = get_center(self.gfx['screen'], self.gfx['new_img'])
-        self.ns = check_timer(start)
-        my_update_screen(self.gfx['new_img'], self.gfx['rect'], self.gfx['file'], self.ns)
+        my_update_screen(self.gfx['new_img'], self.gfx['rect'], self.gfx['file'])
         normal_cursor()
         if gl.START_FULLSCREEN:
             command_fullscreen()
-            my_update_screen(self.gfx['new_img'], self.gfx['rect'], self.gfx['file'], self.ns)
+            my_update_screen(self.gfx['new_img'], self.gfx['rect'], self.gfx['file'])
         self.minus1 = 0
         self.minus2 = 0
         self.last_rect = Rect(self.gfx['rect'])
 
     def main(self):
         # start with menu open
-        self.gfx = command_main_menu(self.gfx, self.ns)
+        self.gfx = command_main_menu(self.gfx)
 
         # main loop
         while 1:
@@ -90,18 +86,18 @@ class Imgv(object):
                     update(self.gfx['rect'].union(self.last_rect))
                 if self.event.type == MOUSEBUTTONUP:  # released mouse button, redisplay status bars:
                     drag_hand_cursor()
-                    my_update_screen(self.gfx['new_img'], self.gfx['rect'], self.gfx['file'], self.ns)
+                    my_update_screen(self.gfx['new_img'], self.gfx['rect'], self.gfx['file'])
                     gl.DO_DRAG = 0
 
             if self.event.type == VIDEORESIZE:
                 self.gfx['screen'] = pygame.display.set_mode(self.event.dict['size'], RESIZABLE)
                 self.gfx['rect'] = get_center(self.gfx['screen'], self.gfx['new_img'])
-                my_update_screen(self.gfx['new_img'], self.gfx['rect'], self.gfx['file'], self.ns)
+                my_update_screen(self.gfx['new_img'], self.gfx['rect'], self.gfx['file'])
             if self.event.type == KEYDOWN:
                 gl.HAND_TOOL = 0
                 if self.event.key not in (K_DOWN, K_UP, K_RIGHT, K_LEFT):
                     normal_cursor()  # stop displaying hand tool
-                (gfx, self.last_rect) = handle_keyboard(self.event, self.gfx, self.last_rect, self.ns)
+                (gfx, self.last_rect) = handle_keyboard(self.event, self.gfx, self.last_rect)
             if self.event.type == KEYUP:
                 self.stop_auto_repeat()
             check_quit(self.event)
@@ -113,13 +109,13 @@ class Imgv(object):
             if (gl.KEEP_MENU_OPEN == "1" and gl.COUNT_CLICKS == 1) or gl.JUST_RESIZED:
                 gl.COUNT_CLICKS = 0
                 gl.JUST_RESIZED = 0
-                self.gfx = command_main_menu(self.gfx, self.ns)
+                self.gfx = command_main_menu(self.gfx)
 
             self.start_auto_repeat()
 
     def open_main_menu(self):
         gl.HAND_TOOL = 0
-        self.gfx = command_main_menu(self.gfx, self.ns)
+        self.gfx = command_main_menu(self.gfx)
 
     def start_auto_repeat(self):
         screen = self.gfx['screen']
