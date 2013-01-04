@@ -10,7 +10,16 @@ from pygame.display import update, set_caption, get_caption, get_surface
 from show_message import show_message, truncate_name
 import exif
 if platform == 'win32':
-    import BmpImagePlugin, JpegImagePlugin, PngImagePlugin, SgiImagePlugin, SunImagePlugin, TgaImagePlugin, TiffImagePlugin, PcxImagePlugin, PpmImagePlugin, XpmImagePlugin # for py2exe to work with PIL
+    import BmpImagePlugin
+    import JpegImagePlugin
+    import PngImagePlugin
+    import SgiImagePlugin
+    import SunImagePlugin
+    import TgaImagePlugin
+    import TiffImagePlugin
+    import PcxImagePlugin
+    import PpmImagePlugin
+    import XpmImagePlugin # for py2exe to work with PIL
     import Image # PIL
 
 
@@ -80,7 +89,8 @@ def exif_data(screen, filename):
             shutspd_text = exif_data1_msg.split(divider)[1].split()[-1]
             shutspd_vals = shutspd_text.split('/')
             shutspd_vals = shutspd_vals[0][0] + '/' + shutspd_vals[1][:2].replace('s', '').replace('sec', '')
-            if shutspd_vals == "3/10": shutspd_vals = "1/3" # some kodak's
+            if shutspd_vals == "3/10":
+                shutspd_vals = "1/3" # some kodak's
             exif_data1_msg = exif_data1_msg.replace(shutspd_text, shutspd_vals + " sec")
 
         # round the apeture value:
@@ -170,16 +180,24 @@ def img_info(filename, file, new_img):
             zoom_percent = gl.CURRENT_ZOOM_PERCENT
         gl.CALC_ZOOM = 1
 
-        if zoom_percent == 100:
-            img_status = " %s  [%s/%s]  %sx%s%s  %d%%  -  %s, %s" % (filename, current_img, str(num_imgs), img_width, img_height, bitsperpixelmsg, zoom_percent, str(file_size), file_mtime)
-        else:
-            img_status = " %s  [%s/%s]  %sx%s%s  %d%%  [Zoom: %sx%s]  -  %s, %s" % (filename, current_img, str(num_imgs), gl.REAL_WIDTH, gl.REAL_HEIGHT, bitsperpixelmsg, zoom_percent, img_width, img_height, str(file_size), file_mtime)
+        stats = {'file': filename, 'curr': current_img, 'num_imgs': str(num_imgs), 'w': img_width, 'h': img_height,
+                 'bpp': bitsperpixelmsg, 'zoom': zoom_percent, 'size': str(file_size), 'date': file_mtime}
 
-        filename = check_truncate(screen.get_width(), filename, font.size('  '.join(img_status.split()[1:]))[0])
+        stats_zoom = {'file': filename, 'curr': current_img, 'num_imgs': str(num_imgs), 'w': gl.REAL_WIDTH,
+                      'h': gl.REAL_HEIGHT, 'bpp': bitsperpixelmsg, 'zoom': zoom_percent, 'zoom_w': img_width,
+                      'zoom_h': img_height, 'size': str(file_size), 'date': file_mtime}
+
         if zoom_percent == 100:
-            img_status = " %s  [%s/%s]  %sx%s%s  %d%%  -  %s, %s" % (filename, current_img, str(num_imgs), img_width, img_height, bitsperpixelmsg, zoom_percent, str(file_size), file_mtime)
+            img_stats_msg = build_stats_msg(stats)
         else:
-            img_status = " %s  [%s/%s]  %sx%s%s  %d%%  [Zoom: %sx%s]  -  %s, %s" % (filename, current_img, str(num_imgs), gl.REAL_WIDTH, gl.REAL_HEIGHT, bitsperpixelmsg, zoom_percent, img_width, img_height, str(file_size), file_mtime)
+            img_stats_msg = build_stats_msg_zoom(stats_zoom)
+
+        filename = check_truncate(screen.get_width(), filename, font.size('  '.join(img_stats_msg.split()[1:]))[0])
+
+        if zoom_percent == 100:
+            img_stats_msg = build_stats_msg(stats)
+        else:
+            img_stats_msg = build_stats_msg_zoom(stats_zoom)
 
         if not gl.TOGGLE_TRANSPARENT:
             # draw transparent 'tinted' bar to be the background for the image status message to appear on
@@ -191,7 +209,7 @@ def img_info(filename, file, new_img):
             update(transrect)
 
         # write the image status message:
-        show_message(img_status, "bottom", font_size)
+        show_message(img_stats_msg, "bottom", font_size)
 
     try:
         if gl.ON_FLY_EXIF_STATUS_BAR:
@@ -199,8 +217,13 @@ def img_info(filename, file, new_img):
     except:
         print "Can't display exif"
 
+def build_stats_msg(stats):
+    return " %(file)s  [%(curr)s/%(num_imgs)s]  %(w)sx%(h)s%(bpp)s  %(zoom)d%%  -  %(size)s, %(date)s" % stats
+
+def build_stats_msg_zoom(stats):
+    return " %(file)s  [%(curr)s/%(num_imgs)s] %(w)sx%(h)s%(bpp)s %(zoom)d%%  [Zoom: %(zoom_w)sx%(zoom_h)s] -  %(size)s, %(date)s" % stats
 
 def check_truncate(screen_width, name, rest_size):
-    allow = (screen_width - rest_size) / 6 - 15 # 6 = hardcoded value of how many pixels wide a char is font.size'd
+    allow = (screen_width - rest_size) / 6 - 15  # 6 = hardcoded value of how many pixels wide a char is font.size'd
     name = truncate_name(name, allow)
     return name
