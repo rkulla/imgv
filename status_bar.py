@@ -162,19 +162,6 @@ def img_info(filename, file, new_img, ns):
         else:
             file_size = "0 bytes"
 
-        memsizemsg = "?"
-        try:
-            # display memory size of image
-            curmembytesize = ((img_width * img_height) * bitsperpixel) / 8
-            if curmembytesize <= 1024:
-                memsizemsg = "%d b" % curmembytesize
-            elif curmembytesize >= 1024 and curmembytesize <= (1024 * 1024):
-                memsizemsg = "%.2f KB" % (curmembytesize / 1024.0)
-            elif curmembytesize >= 1024 and curmembytesize <= (1024 * 1024 * 1024):
-                memsizemsg = "%.2f MB" % (curmembytesize / (1024.0 * 1024.0))
-        except:
-            pass
-
         if gl.PLAY_LIST_NAME != " ":
             set_caption("%s [%s] - imgv" % (get_caption()[0].replace(' - imgv', ''), gl.PLAY_LIST_NAME))
         if gl.SLIDE_SHOW_RUNNING == 1:
@@ -194,15 +181,15 @@ def img_info(filename, file, new_img, ns):
         gl.N_MILLISECONDS = msmsg
 
         if zoom_percent == 100:
-            img_status = " %s  [%s/%s]  %sx%s%s  %d%%  %.1fs  -  %s / %s, %s" % (filename, current_img, str(num_imgs), img_width, img_height, bitsperpixelmsg, zoom_percent, ns, str(file_size), memsizemsg, file_mtime)
+            img_status = " %s  [%s/%s]  %sx%s%s  %d%%  %.1fs  -  %s, %s" % (filename, current_img, str(num_imgs), img_width, img_height, bitsperpixelmsg, zoom_percent, ns, str(file_size), file_mtime)
         else:
-            img_status = " %s  [%s/%s]  %sx%s%s  %d%%  [Zoom: %sx%s]  %.1fs  -  %s / %s, %s" % (filename, current_img, str(num_imgs), gl.REAL_WIDTH, gl.REAL_HEIGHT, bitsperpixelmsg, zoom_percent, img_width, img_height, ns, str(file_size), memsizemsg, file_mtime)
+            img_status = " %s  [%s/%s]  %sx%s%s  %d%%  [Zoom: %sx%s]  %.1fs  -  %s, %s" % (filename, current_img, str(num_imgs), gl.REAL_WIDTH, gl.REAL_HEIGHT, bitsperpixelmsg, zoom_percent, img_width, img_height, ns, str(file_size), file_mtime)
 
         filename = check_truncate(screen.get_width(), filename, font.size('  '.join(img_status.split()[1:]))[0])
         if zoom_percent == 100:
-            img_status = " %s  [%s/%s]  %sx%s%s  %d%%  %.1fs  -  %s / %s, %s" % (filename, current_img, str(num_imgs), img_width, img_height, bitsperpixelmsg, zoom_percent, ns, str(file_size), memsizemsg, file_mtime)
+            img_status = " %s  [%s/%s]  %sx%s%s  %d%%  %.1fs  -  %s, %s" % (filename, current_img, str(num_imgs), img_width, img_height, bitsperpixelmsg, zoom_percent, ns, str(file_size), file_mtime)
         else:
-            img_status = " %s  [%s/%s]  %sx%s%s  %d%%  [Zoom: %sx%s]  %.1fs  -  %s / %s, %s" % (filename, current_img, str(num_imgs), gl.REAL_WIDTH, gl.REAL_HEIGHT, bitsperpixelmsg, zoom_percent, img_width, img_height, ns, str(file_size), memsizemsg, file_mtime)
+            img_status = " %s  [%s/%s]  %sx%s%s  %d%%  [Zoom: %sx%s]  %.1fs  -  %s, %s" % (filename, current_img, str(num_imgs), gl.REAL_WIDTH, gl.REAL_HEIGHT, bitsperpixelmsg, zoom_percent, img_width, img_height, ns, str(file_size), file_mtime)
 
         if not gl.TOGGLE_TRANSPARENT:
             # draw transparent 'tinted' bar to be the background for the image status message to appear on

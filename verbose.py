@@ -41,13 +41,11 @@ class verbose:
         else:
             self.font_size = 12
         self.font = pygame.font.Font(gl.FONT_NAME, self.font_size)
-        gl.ROW_SEP = self.font.get_linesize(
-        )  # recommended line separation size
+        gl.ROW_SEP = self.font.get_linesize()  # recommended line separation size
         self.start_width = 230
         self.show_exif = 1
         self.row = 11
-        show_message("Image Properties", self.row, self.font_size,
-                     ("bold", "underline", "transparent"))
+        show_message("Image Properties", self.row, self.font_size, ("bold", "underline", "transparent"))
         self.row += gl.ROW_SEP
         self.prev_pic_row = self.row + gl.ROW_SEP + 5
         self.screen = screen
@@ -62,8 +60,7 @@ class verbose:
     def file_and_dir_name(self, file):
         sw = self.screen.get_width()
         file_msg = "File name: "
-        file_msg = check_truncate(
-            sw, file_msg + os.path.basename(gl.files[file]))
+        file_msg = check_truncate(sw, file_msg + os.path.basename(gl.files[file]))
         self.print_info(file_msg, 10)
 
         dir_msg = "Directory: "
@@ -74,8 +71,7 @@ class verbose:
         fpmsg = check_truncate(sw, fpmsg + gl.files[file])
         self.print_info(fpmsg, 10)
 
-        self.print_info("Current index: %s / %s" % (
-            comma_it(str(file + 1)), comma_it(str(len(gl.files)))), 14)
+        self.print_info("Current index: %s / %s" % (comma_it(str(file + 1)), comma_it(str(len(gl.files)))), 14)
 
     def bits_per_pixel(self):
         if self.bitsperpixel:
@@ -86,8 +82,7 @@ class verbose:
         if fsize <= 1024:
             filesize_details = "Size on disk: %s Bytes" % comma_it(fsize)
         elif fsize >= 1024 and fsize <= (1024 * 1024):
-            filesize_details = "Size on disk: %s Kilobytes (%s Bytes)" % (
-                comma_it((fsize / 1024.0)), comma_it(fsize))
+            filesize_details = "Size on disk: %s Kilobytes (%s Bytes)" % (comma_it((fsize / 1024.0)), comma_it(fsize))
         elif fsize >= 1024 and fsize <= (1024 * 1024 * 1024):
             filesize_details = "Size on disk: %.2f Megabytes (%s Kilobytes) (%s Bytes)" % ((fsize / (1024.0 * 1024.0), comma_it((fsize / 1024.0)), comma_it(fsize)))
         else:
@@ -103,8 +98,7 @@ class verbose:
             origmembytesize = (
                 (gl.REAL_WIDTH * gl.REAL_HEIGHT) * self.bitsperpixel) / 8
             if origmembytesize <= 1024:
-                memsizemsg = "%s %s Bytes" % (
-                    origmsg_start, comma_it(origmembytesize))
+                memsizemsg = "%s %s Bytes" % (origmsg_start, comma_it(origmembytesize))
             elif origmembytesize >= 1024 and origmembytesize <= (1024 * 1024):
                 memsizemsg = "%s %s Kilobytes (%s Bytes)" % (origmsg_start, comma_it(origmembytesize / 1024.0), comma_it(origmembytesize))
             elif origmembytesize >= 1024 and origmembytesize <= (1024 * 1024 * 1024):
@@ -116,8 +110,7 @@ class verbose:
         if gl.CURRENT_ZOOM_PERCENT != 100:
             try:
                 # display current memory size of image
-                curmembytesize = ((new_img.get_width(
-                ) * new_img.get_height()) * self.bitsperpixel) / 8
+                curmembytesize = ((new_img.get_width() * new_img.get_height()) * self.bitsperpixel) / 8
                 if curmembytesize <= 1024:
                     memsizemsg = "Current memory size: %s Bytes" % comma_it(
                         curmembytesize)
@@ -171,8 +164,7 @@ class verbose:
             if self.im.info['jfif_unit'] == 0:
                 self.print_info("Aspect Ratio: %s" % aspect_ratio, 13)
             if self.im.info['jfif_unit'] == 2:
-                self.print_info("Aspect Ratio: %s (Dots Per Centimeter)" %
-                                aspect_ratio, 13)
+                self.print_info("Aspect Ratio: %s (Dots Per Centimeter)" % aspect_ratio, 13)
 
     def bit_depth(self):
         if self.pil_info:
@@ -301,7 +293,8 @@ class verbose:
         current_rect[1] = self.prev_pic_row
         self.screen.blit(self.current, current_rect)
         update(current_rect)
-        img_border(self.current, 15, self.prev_pic_row - 2)
+        rect = (15, self.prev_pic_row - 2)
+        img_border(self.current, rect)
 
     def loaded_time(self):
         self.print_info("Loaded in: %s milliseconds %s" % (comma_it(gl.N_MILLISECONDS), ('', '(From Zoom)')[gl.CURRENT_ZOOM_PERCENT != 100]), 10)
@@ -372,46 +365,35 @@ class verbose:
             for i, v in enumerate(hist):
                 if v > vlen:
                     v -= vlen  # don't go outside of border on long histograms
-                pygame.draw.line(self.screen, gl.SILVER, ((i / wdiv) + wpos,
-                                 h), ((i / wdiv) + wpos, (h - (v / vdiv))), 1)
+                pygame.draw.line(self.screen, gl.SILVER, ((i / wdiv) + wpos, h), ((i / wdiv) + wpos, (h - (v / vdiv))), 1)
         else:
             for i, v in enumerate(redlist):
                 if v > vlen:
                     v -= vlen
-                pygame.draw.line(self.screen, gl.RED, ((i / wdiv) + wpos,
-                                 h), ((i / wdiv) + wpos, (h - (v / vdiv))), 1)
+                pygame.draw.line(self.screen, gl.RED, ((i / wdiv) + wpos, h), ((i / wdiv) + wpos, (h - (v / vdiv))), 1)
             for i, v in enumerate(greenlist):
                 if v > vlen:
                     v -= vlen
-                pygame.draw.line(self.screen, gl.GREEN, ((i / wdiv) + wpos,
-                                 h), ((i / wdiv) + wpos, (h - (v / vdiv))), 1)
+                pygame.draw.line(self.screen, gl.GREEN, ((i / wdiv) + wpos, h), ((i / wdiv) + wpos, (h - (v / vdiv))), 1)
             for i, v in enumerate(bluelist):
                 if v > vlen:
                     v -= vlen
-                pygame.draw.line(self.screen, gl.BLUE, ((i / wdiv) + wpos,
-                                 h), ((i / wdiv) + wpos, (h - (v / vdiv))), 1)
+                pygame.draw.line(self.screen, gl.BLUE, ((i / wdiv) + wpos, h), ((i / wdiv) + wpos, (h - (v / vdiv))), 1)
         show_message("Histogram", (wpos + 1, h - 174), 11, ("transparent"))
-        pygame.draw.line(self.screen, gl.MSG_COLOR, (
-            wpos - 2, h + 2), (wpos - 2, h - vlen))  # left side of border
-        pygame.draw.line(self.screen, gl.MSG_COLOR, ((i / wdiv) + wpos,
-                         h - vlen), ((i / wdiv) + wpos, h + 2))  # right side
-        pygame.draw.line(self.screen, gl.MSG_COLOR, (
-            wpos - 2, h - vlen), ((i / wdiv) + wpos, h - vlen))  # top
-        pygame.draw.line(self.screen, gl.MSG_COLOR, (
-            wpos - 2, h + 2), ((i / wdiv) + wpos, h + 2))  # bottom
+        pygame.draw.line(self.screen, gl.MSG_COLOR, (wpos - 2, h + 2), (wpos - 2, h - vlen))  # left side of border
+        pygame.draw.line(self.screen, gl.MSG_COLOR, ((i / wdiv) + wpos, h - vlen), ((i / wdiv) + wpos, h + 2))  # right side
+        pygame.draw.line(self.screen, gl.MSG_COLOR, (wpos - 2, h - vlen), ((i / wdiv) + wpos, h - vlen))  # top
+        pygame.draw.line(self.screen, gl.MSG_COLOR, (wpos - 2, h + 2), ((i / wdiv) + wpos, h + 2))  # bottom
 
     def system_info(self):
         info = pygame.display.Info()
         self.row += gl.ROW_SEP * 2
-        show_message("Display Properties", self.row,
-                     self.font_size, ("bold", "underline", "transparent"))
+        show_message("Display Properties", self.row, self.font_size, ("bold", "underline", "transparent"))
         self.row += gl.ROW_SEP
         self.print_info(
             'Using video driver: %s' % pygame.display.get_driver(), 20)
-        self.print_info(
-            'Video mode is accelerated: %s' % ('No', 'Yes')[info.hw], 27)
-        self.print_info(
-            'Display depth (Bits Per Pixel): %d' % info.bitsize, 31)
+        self.print_info('Video mode is accelerated: %s' % ('No', 'Yes')[info.hw], 27)
+        self.print_info('Display depth (Bits Per Pixel): %d' % info.bitsize, 31)
         self.print_info('Screen size of imgv: %s' % gl.ORIG_WINSIZE, 21)
 
     def print_info(self, msg, emphasize_length):
@@ -423,8 +405,7 @@ class verbose:
             gl.MSG_COLOR = (142, 142, 142)
         else:
             gl.MSG_COLOR = gl.SILVER
-        show_message(msg, (self.start_width, self.row),
-                     self.font_size, (""), (emphasize_length, before_color))
+        show_message(msg, (self.start_width, self.row), self.font_size, (""), (emphasize_length, before_color))
         gl.MSG_COLOR = before_color
 
 
@@ -436,8 +417,7 @@ def command_verbose_info(screen, new_img, rect, file):
         remote_img_details(screen, new_img, rect, file)
     else:
         verbose_info(screen, new_img, file)
-    screen = restore_screen(
-        screen, before_winsize, not_accepted, new_img, file, rect)
+    screen = restore_screen(screen, before_winsize, not_accepted, new_img, file, rect)
     rect = get_center(screen, new_img)
     my_update_screen(new_img, rect, file)
 
@@ -447,19 +427,13 @@ def verbose_info(screen, new_img, file):
     wait_cursor()
     paint_screen(gl.BLACK)
     try:
-        (uniquecolors_rect, total_colors, row, font, im,
-         verb) = print_verbose_info(screen, new_img, file)
+        (uniquecolors_rect, total_colors, row, font, im, verb) = print_verbose_info(screen, new_img, file)
     except:
         print 'print verbose'
-        #(uniquecolors_rect, total_colors, row, font, im, verb) = junk_rect()#
-       # uniquecolors_rect = junk_rect()#
-       # total_colors = ""#
         verb = verbose(screen, file)
         (uniquecolors_rect, total_colors, row, font, im) = verb.colors()
-        #return
     if gl.SHOW_EXIFBUTTON:
-        exif_rect = imgv_button(
-            screen, " Exif Data ", 5, gl.ROW_SEP + 435, None)
+        exif_rect = imgv_button(screen, " Exif Data ", 5, gl.ROW_SEP + 435, None)
     (esc_rect, close_font) = close_button(screen)
     normal_cursor()
     while 1:
@@ -469,11 +443,9 @@ def verbose_info(screen, new_img, file):
         cursor = pygame.mouse.get_pos()
         hover_cursor(cursor, (esc_rect, exif_rect, uniquecolors_rect))
         if gl.SHOW_EXIFBUTTON:
-            hover_button(exif_rect, cursor, screen,
-                         " Exif Data ", 5, gl.ROW_SEP + 435, None)
+            hover_button(exif_rect, cursor, screen, " Exif Data ", 5, gl.ROW_SEP + 435, None)
         if gl.UNIQUE_COLORS is None and gl.SHOW_EXIFBUTTON and total_colors != "":
-            hover_button(uniquecolors_rect, cursor, screen, " Unique colors ",
-                         (font.size(total_colors)[0] + 230), row, None)
+            hover_button(uniquecolors_rect, cursor, screen, " Unique colors ", (font.size(total_colors)[0] + 230), row, None)
 
         show_message(convert_times(ctime(), 0), "bottom", 15, ("transparent"))
 
@@ -481,8 +453,7 @@ def verbose_info(screen, new_img, file):
             if uniquecolors_rect != junk_rect():
                 if uniquecolors_rect.collidepoint(cursor):
                     wait_cursor()
-                    gl.UNIQUE_COLORS = comma_it(len(dict.fromkeys(
-                        im.getdata())))  # determine unique colors
+                    gl.UNIQUE_COLORS = comma_it(len(dict.fromkeys(im.getdata())))  # determine unique colors
                     before_color = gl.MSG_COLOR
                     if gl.MSG_COLOR == gl.SILVER:
                         gl.MSG_COLOR = (142, 142, 142)

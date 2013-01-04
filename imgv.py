@@ -36,7 +36,6 @@ class Imgv(object):
     def __init__(self):
         pygame.time.delay(5)  # to make start_timer() work initially
         start = start_timer()
-        pygame.init()  # needed for Mac OSX?
         init_screen()
         wait_cursor()
         self.gfx = {}

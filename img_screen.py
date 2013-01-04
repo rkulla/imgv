@@ -30,7 +30,7 @@ def clean_screen():
 
 def init_screen():
     import pygame
-    pygame.init()  # seems needed for Mac OSX
+    pygame.init()
     pygame.display.init()
     pygame.font.init()
     pygame.display.set_icon(load(gl.DATA_DIR + "imgv-icon.png"))
@@ -64,7 +64,7 @@ def get_center(screen, new_img):
     return rect
 
 
-def img_border(new_img, wpos, downpos):
+def img_border(new_img, rect):
     "draw a border around the image"
     screen = get_surface()
     img_width = new_img.get_width()
