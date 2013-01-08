@@ -40,7 +40,7 @@ Imgv also takes optional arguments:
     $ imgv <directory|image|remote image>
 
 If you're in Windows and have the executable binary version "imgv.exe" Click on imgv
-from the start menu if it was installed there or in a DOS window type:
+from the start menu if it was installed there or in a cmd prompt type:
 
     C:\"Program Files"\imgv> imgv.exe
 
