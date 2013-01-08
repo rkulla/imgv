@@ -4,7 +4,7 @@
 """
     imgv.py
     Description: Image viewing application
-    Version: 3.1.7
+    Version: 3.1.8
     Author: Ryan Kulla
     Email: rkulla@gmail.com
 """
@@ -57,7 +57,7 @@ class Imgv(object):
         self.minus2 = 0
         self.last_rect = Rect(self.gfx['rect'])
 
-    def main(self):
+    def start(self):
         # start with menu open
         self.gfx = command_main_menu(self.gfx)
 
@@ -172,6 +172,9 @@ class Imgv(object):
         gl.MY_KEYDOWN = gl.MY_KEYUP = gl.MY_KEYRIGHT = gl.MY_KEYLEFT = 0
 
 
-if __name__ == '__main__':
+def main():
     imgv = Imgv()
-    imgv.main()
+    imgv.start()
+
+if __name__ == '__main__':
+    main()

@@ -17,7 +17,7 @@ except KeyError:
     DATA_DIR = os.path.join(BASE_DIR, 'data' + os.sep)
 
 
-IMGV_VERSION = "3.1.6"
+IMGV_VERSION = "3.1.8"
 TOGGLE_TRANSPARENT = 0
 TOGGLE_STATUS_BAR = 1
 FOUR_STATUS_BARS = 1
