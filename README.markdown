@@ -1,6 +1,6 @@
 Imgv - cross-platform image viewer.
 
-Latest Version: 3.1.7
+Latest Version: 3.1.8
 
 About
 =====
@@ -23,39 +23,45 @@ Requirements
 The operating system doesn't matter as long as you have the above requirements.
 Thus it should work on Linux, Mac OS X, Windows, etc.
 
-Environment
------------
-The very first thing you should do is create a new environment variable called
-*IMGV_HOME* with the value of the directory you installed imgv in. For example,
-if you unpacked the imgv source into /usr/home/foo/imgv then put the following line in
-your bash_profile (or the equivalent depending on your shell):
+IMGV_HOME
+---------
+If you're using Windows, or if you want to move the data/ directory somewhere else, 
+then create a new environment variable called IMGV_HOME with the value of the directory
+you installed imgv in. In linux this means opening your bash_profile (or the equivalent
+depending on your shell) and adding:
     
-    export IMGV_HOME="/usr/home/foo/imgv"
+    export IMGV_HOME="/path/to/imgv"
 
 If you're using MS-Windows and you unpacked imgv in C:\Program Files\imgv then 
-put the following line in your autoexec.bat file:
+search the internet for how to change environment variables in your particular
+version of windows, or do it the old fashoined way and edit autoexe.bat:
 
     set IMGV_HOME=C:\Program Files\imgv
 
-On Windows you may need to reboot for changes to take affect
+On Windows you may need to reboot for changes to take affect.
 
 
 Starting the image viewer
 -------------------------
-If you have the source file "imgv.py" type:
+Add /path/to/imgv to your $PYTHONPATH from the root of the package run:
 
-    python imgv.py
+    $ bin/imgv
 
-or:
+or better yet, the script 'imgv' from the bin/ directory into a directory in your $PATH,
+such as ~/bin, or add /path/to/imgv/bin/ to your path, so you can then invoke it as simply:
 
-    python imgv.py <directory|image|remote image>
+    $ imgv
+
+Imgv also takes optional arguments:
+
+    $ imgv <directory|image|remote image>
 
 If you're in Windows and have the executable binary version "imgv.exe" Click on imgv
 from the start menu if it was installed there or in a DOS window type:
 
     C:\"Program Files"\imgv> imgv.exe
 
-or (assuming imgv is installed in C:\Program Files\imgv\):
+or (assuming imgv is installed in C:\Program Files\imgv):
 
     C:\"Program Files"\imgv> imgv.exe <directory|image|remote image|movie>
 
@@ -100,12 +106,12 @@ one in your home directory.
 Playlists
 ---------
 In order for the play list feature to work you always must have a file named 
-'playlists' in the data/ directory (the default).  If you want to create new playlists 
-and/or edit them manually using your text editor you need to put the name of the play
-list on its own line in the 'playlists' file and also create a file with the
-name of the playlist. Make sure there are NO blank lines in either file. I 
-recommend only using imgv to handle all the playlist stuff but this way can
-be faster.
+'playlists' in the data/ directory (the default).  If you want to create new 
+playlists and/or edit them manually using your text editor you need to put the
+name of the play list on its own line in the 'playlists' file and also create a
+file with the name of the playlist. Make sure there are NO blank lines in either
+file. I recommend only using imgv to handle all the playlist stuff but this way 
+can be faster.
 
 To create a new playlist manually:
 
