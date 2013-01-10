@@ -49,17 +49,17 @@ or (assuming imgv is installed in C:\Program Files\imgv):
     C:\"Program Files"\imgv> imgv.exe <directory|image|remote image|movie>
 
 If you're using Windows, or if you want to move the data/ directory somewhere else, 
-then create a new environment variable called IMGV_HOME with the value of the directory
+then create a new environment variable called IMGV_DATA with the value of the directory
 you installed imgv in. In linux this means opening your bash_profile (or the equivalent
 depending on your shell) and adding:
     
-    export IMGV_HOME="/path/to/imgv"
+    export IMGV_DATA="/path/to/imgv"
 
 If you're using MS-Windows and you unpacked imgv in C:\Program Files\imgv then 
 search the internet for how to change environment variables in your particular
 version of windows, or do it the old fashoined way and edit autoexe.bat:
 
-    set IMGV_HOME=C:\Program Files\imgv
+    set IMGV_DATA=C:\Program Files\imgv
 
 On Windows you may need to reboot for changes to take affect.
 
