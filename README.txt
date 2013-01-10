@@ -33,6 +33,12 @@ The easiest way to install imgv from source is to just run:
 
     $ python setup.py install
 
+To see where everything installed you can run it as:
+
+    $ python setup.py install --record files.txt
+
+and then examine files.txt.
+
 
 If you don't have distutils, or if you don't want to install it that way, you
 can do it manually:
