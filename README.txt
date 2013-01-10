@@ -71,12 +71,12 @@ USAGE
 =====
 - Imgv also takes optional command-line arguments:
 
-    $ imgv <directory|image|remote image>
+    $ imgv [directory|image|remote image]
 
   If you're in Windows and have the executable binary version "imgv.exe" Click on
   imgv from the start menu if it was installed there.  Or in a cmd prompt type:
 
-    C:\"Program Files"\imgv> imgv.exe <directory|image|remote image|movie>
+    C:\"Program Files"\imgv> imgv.exe [directory|image|remote image|movie]
 
 - When you right click in imgv a menu pops up. Simply click on what you
   want to do. (Clicking your middle mouse button will close the menu)
