@@ -126,9 +126,9 @@ To add new images to a play list manually:
 
 Configuration
 =============
-You can edit the 'imgv.conf' configuration file customize imgv.
+You can edit the imgv.conf configuration file to customize imgv.
 
-If you ran setup.py then it will be in your IMGV_HOME, e.g., $HOME/.imgv/
+If you ran setup.py then imgv.conf will be in your IMGV_HOME, e.g., $HOME/.imgv/
 
 If you have used the Windows Installer from version 1.3.6 or below, then
 it will be in the data/ folder where imgv was installed.
