@@ -1,20 +1,41 @@
-# imgv data objects code by Ryan Kulla, rkulla@gmail.com
-# Note: The order in which objects are declared in this file are very important and
-# rearranging the order could cause certain code to break.
+# Imgv data objects code by Ryan Kulla, rkulla@gmail.com
+# Note: The order in which objects are declared in this file are very important
+# and rearranging the order could cause certain code to break.
 import os
-from sys import argv
+import sys
+import errno
 from cfg import get_conf_name, set_configuration
 from dir_nav import strip_dirs, get_imgs
 from error_box import errorbox
 from res import my_toggle_fullscreen
+from shutil import copytree
 from pygame import version
 
-
-BASE_DIR = os.getcwd()
-try:
-    DATA_DIR = os.environ['IMGV_HOME'] + os.sep + 'data' + os.sep
+HOME_DIR = os.environ['HOME']
+INSTALL_DIR = os.path.abspath(os.path.dirname(__file__))
+INSTALL_DATA_DIR = os.path.join(INSTALL_DIR, 'data' + os.sep)
+BASE_DIR = HOME_DIR + os.sep + '.imgv' + os.sep
+try:  # If the user made a custom location for the imgv data/ dir
+    DATA_DIR = os.environ['IMGV_DATA'] + os.sep + 'data' + os.sep
 except KeyError:
     DATA_DIR = os.path.join(BASE_DIR, 'data' + os.sep)
+
+# Setup data/ dir
+try:  # create and copy
+    os.makedirs(BASE_DIR)
+    print "Created %s" % BASE_DIR
+    try:
+        copytree(INSTALL_DATA_DIR, DATA_DIR)
+        print "Copied %s to %s" % (INSTALL_DATA_DIR, DATA_DIR)
+    except OSError, err:
+        sys.stderr.write('ERROR: %s\n' % str(err))
+        sys.exit(1)
+except OSError, err:
+    if err.errno == errno.EEXIST and os.path.isdir(DATA_DIR):
+        print "Using %s" % DATA_DIR
+        pass  # everything already existed fine
+    else:
+        raise
 
 
 IMGV_VERSION = "3.1.8"
@@ -192,13 +213,13 @@ if not version.ver >= "1.1":
     errorbox("Version Error", "You need pygame 1.1 or greater to run imgv")
 
 
-if len(argv) < 2:
+if len(sys.argv) < 2:
     if START_DIRECTORY_VAL == "CURRENT":
         dir_or_file = '.'
     else:
         dir_or_file = START_DIRECTORY_VAL
 else:
-    dir_or_file = argv[1]
+    dir_or_file = sys.argv[1]
     if not os.path.exists(dir_or_file):
         # make a full path if user didn't (i.e., they typed "../foo/bar/bla.jpg")
         dir_or_file = BASE_DIR + os.sep + dir_or_file
