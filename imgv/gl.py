@@ -16,7 +16,7 @@ INSTALL_DIR = os.path.abspath(os.path.dirname(__file__))
 INSTALL_DATA_DIR = os.path.join(INSTALL_DIR, 'data' + os.sep)
 BASE_DIR = HOME_DIR + os.sep + '.imgv' + os.sep
 try:  # If the user made a custom location for the imgv data/ dir
-    DATA_DIR = os.environ['IMGV_DATA'] + os.sep + 'data' + os.sep
+    DATA_DIR = os.environ['IMGV_HOME'] + os.sep + 'data' + os.sep
 except KeyError:
     DATA_DIR = os.path.join(BASE_DIR, 'data' + os.sep)
 

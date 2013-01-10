@@ -24,48 +24,60 @@ The operating system doesn't matter as long as you have the above requirements.
 Thus it should work on Linux, Mac OS X, Windows, etc.
 
 
-SETUP / INSTALL
-===============
+INSTALLING
+==========
+
+INSTALLING FOM SOURCE CODE
+---------------------------
+The easiest way to install imgv from source is to just run:
+
+    $ python setup.py install
+
+If you don't have distutils or if you don't want to install it that way. You
+can do it manually:
+
 Add /path/to/imgv to your $PYTHONPATH from the root of the package run:
 
     $ bin/imgv
 
-or better yet, the script 'imgv' from the bin/ directory into a directory in your $PATH,
-such as ~/bin, or add /path/to/imgv/bin/ to your path, so you can then invoke it as simply:
+or better yet, the script 'imgv' from the bin/ directory into a directory in 
+your $PATH, such as ~/bin, or add /path/to/imgv/bin/ to your path, so you can
+then invoke it as simply:
 
     $ imgv
 
-Imgv also takes optional arguments:
-
-    $ imgv <directory|image|remote image>
-
-If you're in Windows and have the executable binary version "imgv.exe" Click on imgv
-from the start menu if it was installed there or in a cmd prompt type:
-
-    C:\"Program Files"\imgv> imgv.exe
-
-or (assuming imgv is installed in C:\Program Files\imgv):
-
-    C:\"Program Files"\imgv> imgv.exe <directory|image|remote image|movie>
-
-If you're using Windows, or if you want to move the data/ directory somewhere else, 
-then create a new environment variable called IMGV_DATA with the value of the directory
-you installed imgv in. In linux this means opening your bash_profile (or the equivalent
-depending on your shell) and adding:
+The first time you run imgv, it will create the directory "$HOME/.imgv" and put
+a sub-directory called "data" in it. If you want to use a different location for
+the imgv home folder, then move $HOME/.imgv somewhere else and create an 
+environment variable called IMGV_HOME. In linux this means opening your 
+bash_profile (or the equivalent depending on your shell)
     
-    export IMGV_DATA="/path/to/imgv"
+    $ mv ~/.imgv /whatever
+    $ export IMGV_HOME="/whatever/.imgv"
 
+
+INSTALLING ON WINDOWS
+---------------------
 If you're using MS-Windows and you unpacked imgv in C:\Program Files\imgv then 
 search the internet for how to change environment variables in your particular
-version of windows, or do it the old fashoined way and edit autoexe.bat:
+version of windows, or do it the old fashioned way and edit autoexe.bat:
 
-    set IMGV_DATA=C:\Program Files\imgv
+    set IMGV_HOME=C:\Program Files\imgv
 
-On Windows you may need to reboot for changes to take affect.
+Reboot for changes to take affect.
 
 
 USAGE
 =====
+- Imgv also takes optional command-line arguments:
+
+    $ imgv <directory|image|remote image>
+
+  If you're in Windows and have the executable binary version "imgv.exe" Click on
+  imgv from the start menu if it was installed there.  Or in a cmd prompt type:
+
+    C:\"Program Files"\imgv> imgv.exe <directory|image|remote image|movie>
+
 - When you right click in imgv a menu pops up. Simply click on what you
   want to do. (Clicking your middle mouse button will close the menu)
 
@@ -79,10 +91,10 @@ Imgv allows the loading of remote images by forming a name like:
 
     imgv http://www.site.com/bla.jpg
 
-When imgv is running you can click the 'Open URL' menu option and enter a valid URL for
-imgv to extract images from such as:
+When imgv is running you can click the 'Open URL' menu option and enter a valid
+URL for imgv to extract images from such as:
 
-    http://www.site.com/  (note: you usually need that appended / for this to work)
+    http://www.site.com/  (you usually need that appended / for this to work)
     http://www.site.com/foo.html
     http://www.site.com/bla.jpg
 
