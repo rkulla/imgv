@@ -1,6 +1,6 @@
 # imgv.conf configuration code by Ryan Kulla, rkulla@gmail.com
 import gl
-from os import chdir, listdir, environ, sep
+from os import chdir
 from error_box import errorbox
 
 
@@ -97,7 +97,7 @@ def set_configuration():
                 x = 'x'
             elif gl.IMGV_RESOLUTION.find('X') != -1:
                 x = 'X'
-            if x != None:
+            if x is not None:
                 gl.IMGV_RESOLUTION = int(gl.IMGV_RESOLUTION.split(x)[0]), int(gl.IMGV_RESOLUTION.split(x)[1])
         if cfg_match(line, "FULLSCREEN"):
             gl.START_FULLSCREEN = int(chopnl(line))
@@ -114,16 +114,6 @@ def set_configuration():
     f.close()
 
 
-def get_conf_name():
-    try:
-        for file in listdir(environ['HOME']):
-            if file == ".imgv.conf":
-                return (environ['HOME'] + sep + ".imgv.conf")
-    except KeyError:
-        return (gl.DATA_DIR + "imgv.conf")
-    return (gl.DATA_DIR + "imgv.conf")
-
-
 def cfg_match(line, val):
     if line.find(val + "=") != -1 and line.find("#") == -1:
         return 1
@@ -136,7 +126,7 @@ def chopnl(line):
 
 
 def get_color(line):
-    color = chopnl(line).upper() # strip newline and make case insensitive
+    color = chopnl(line).upper()  # strip newline and make case insensitive
     if color.find(',') != -1:
         color = color.split(',')
         if len(color) >= 3:

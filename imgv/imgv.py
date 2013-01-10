@@ -19,7 +19,7 @@ import pygame.event
 import pygame.time
 from pygame.display import set_caption, update
 from pygame.locals import MOUSEMOTION, MOUSEBUTTONDOWN, Rect, KEYDOWN, KEYUP, RESIZABLE, VIDEORESIZE, MOUSEBUTTONUP, K_UP, K_DOWN, K_RIGHT, K_LEFT
-import gl
+import gl  # import gl before any other imgv modules
 from img_screen import init_screen, get_center, my_update_screen, img_border, paint_screen
 from show_message import show_message
 from cursor import wait_cursor, normal_cursor, drag_hand_cursor, grab_hand_cursor

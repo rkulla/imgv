@@ -33,10 +33,11 @@ The easiest way to install imgv from source is to just run:
 
     $ python setup.py install
 
-If you don't have distutils or if you don't want to install it that way. You
+
+If you don't have distutils, or if you don't want to install it that way, you
 can do it manually:
 
-Add /path/to/imgv to your $PYTHONPATH from the root of the package run:
+add /path/to/imgv to your $PYTHONPATH from the root of the package run:
 
     $ bin/imgv
 
@@ -46,6 +47,7 @@ then invoke it as simply:
 
     $ imgv
 
+
 The first time you run imgv, it will create the directory "$HOME/.imgv" and put
 a sub-directory called "data" in it. If you want to use a different location for
 the imgv home folder, then move $HOME/.imgv somewhere else and create an 
@@ -54,6 +56,9 @@ bash_profile (or the equivalent depending on your shell)
     
     $ mv ~/.imgv /whatever
     $ export IMGV_HOME="/whatever/.imgv"
+
+You can also copy imgv.conf to the root of the IMGV_HOME directory to have imgv
+read it from there from now on.
 
 
 INSTALLING ON WINDOWS
@@ -121,15 +126,12 @@ To add new images to a play list manually:
 
 Configuration
 =============
-In the data/ directory there is a file called 'imgv.conf'.  This is a 
-configuration file for imgv that allows you to customize imgv to your needs.
+You can edit the 'imgv.conf' configuration file customize imgv.
 
-IMGV will first look in your home directory for a file named .imgv.conf (which
-you should create by copying the one from the data/ directory to your home
-directory). If IMGV could not find .imgv.conf in your home directory it will 
-then look for imgv.conf in your data/ directory.  If you have both .imgv.conf
-in your home directory and imgv.conf in the data directory IMGV will use the
-one in your home directory.
+If you ran setup.py then it will be in your IMGV_HOME, e.g., $HOME/.imgv/
+
+If you have used the Windows Installer from version 1.3.6 or below, then
+it will be in the data/ folder where imgv was installed.
 
 Contact
 =======

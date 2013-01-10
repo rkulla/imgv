@@ -4,39 +4,58 @@
 import os
 import sys
 import errno
-from cfg import get_conf_name, set_configuration
+from cfg import set_configuration
 from dir_nav import strip_dirs, get_imgs
 from error_box import errorbox
 from res import my_toggle_fullscreen
-from shutil import copytree
+import shutil
 from pygame import version
+
+pjoin = os.path.join
 
 HOME_DIR = os.environ['HOME']
 INSTALL_DIR = os.path.abspath(os.path.dirname(__file__))
-INSTALL_DATA_DIR = os.path.join(INSTALL_DIR, 'data' + os.sep)
-BASE_DIR = HOME_DIR + os.sep + '.imgv' + os.sep
-try:  # If the user made a custom location for the imgv data/ dir
-    DATA_DIR = os.environ['IMGV_HOME'] + os.sep + 'data' + os.sep
-except KeyError:
-    DATA_DIR = os.path.join(BASE_DIR, 'data' + os.sep)
+INSTALL_DATA_DIR = pjoin(INSTALL_DIR, 'data' + os.sep)
+IMGV_HOME = HOME_DIR + os.sep + '.imgv' + os.sep
+CONF_FILENAME = 'imgv.conf'
+INSTALL_CONF_PATH = pjoin(INSTALL_DIR, CONF_FILENAME)
 
-# Setup data/ dir
+try:  # If the user made a custom location for the imgv data/ dir
+    IMGV_HOME = os.environ['IMGV_HOME']
+    DATA_DIR = IMGV_HOME + os.sep + 'data' + os.sep
+except KeyError:
+    DATA_DIR = pjoin(IMGV_HOME, 'data' + os.sep)
+
+# Setup imgv home/data dir and config file
 try:  # create and copy
-    os.makedirs(BASE_DIR)
-    print "Created %s" % BASE_DIR
+    os.makedirs(IMGV_HOME)
+    print "Created %s" % IMGV_HOME
+
     try:
-        copytree(INSTALL_DATA_DIR, DATA_DIR)
+        shutil.copytree(INSTALL_DATA_DIR, DATA_DIR)
         print "Copied %s to %s" % (INSTALL_DATA_DIR, DATA_DIR)
+    except OSError, err:
+        sys.stderr.write('ERROR: %s\n' % str(err))
+        sys.exit(1)
+
+    try:
+        shutil.copy(INSTALL_CONF_PATH, IMGV_HOME)
+        print "Copied %s to %s" % (INSTALL_CONF_PATH, IMGV_HOME)
     except OSError, err:
         sys.stderr.write('ERROR: %s\n' % str(err))
         sys.exit(1)
 except OSError, err:
     if err.errno == errno.EEXIST and os.path.isdir(DATA_DIR):
-        print "Using %s" % DATA_DIR
+        print "Using %s" % IMGV_HOME
         pass  # everything already existed fine
     else:
         raise
 
+CONF_HOME_PATH = pjoin(IMGV_HOME, CONF_FILENAME)
+if os.path.isfile(CONF_HOME_PATH):
+    CONF_FILE = CONF_HOME_PATH
+else:
+    CONF_FILE = pjoin(INSTALL_DIR, CONF_FILENAME)
 
 IMGV_VERSION = "3.1.8"
 TOGGLE_TRANSPARENT = 0
@@ -108,7 +127,6 @@ IMG_BORDER = 0
 MAX_SCREEN_FILES = 0  # number of image names file_master can show on a given screen res
 MAX_SF = {"640x480": 165, "800x600": 301, "1024x768": 513, "1280x1024": 858}
 ACCEPTED_WINSIZES = ["640x480", "800x600", "1024x768", "1280x1024"]
-CONF_FILE = get_conf_name()
 WRAP = "1"
 WRAP_SLIDESHOW = "1"
 THUMB_VAL = "100x100"
@@ -222,7 +240,7 @@ else:
     dir_or_file = sys.argv[1]
     if not os.path.exists(dir_or_file):
         # make a full path if user didn't (i.e., they typed "../foo/bar/bla.jpg")
-        dir_or_file = BASE_DIR + os.sep + dir_or_file
+        dir_or_file = os.getcwd() + os.sep + dir_or_file
 
 
 # set initial directory values
