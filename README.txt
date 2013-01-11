@@ -49,7 +49,7 @@ and then examine files.txt.
 
 You could alternatively use virtualenv and just run:
    
-   $ python setup.py install
+    $ python setup.py install
 
 but I don't recommend that unless you're fine with having to also install the
 dependencies into the virtualenv first, and creating a from ~/bin/imgv to
