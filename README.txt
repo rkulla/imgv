@@ -31,7 +31,15 @@ INSTALLING FOM SOURCE CODE
 ---------------------------
 The easiest way to install imgv from source is to just run:
 
-    $ python setup.py install
+    $ sudo python setup.py install
+
+If you don't have permissions to install to your global site-packages, or if you
+simply don't want to, then you can install it locally by doing:
+
+    $ python setup.py install --user
+
+which will install it somewhere such as ~/.local. And you'll probably need to
+manually add ~/.local/bin/imgv to your system $PATH.
 
 To see where everything installed you can run it as:
 
@@ -39,9 +47,17 @@ To see where everything installed you can run it as:
 
 and then examine files.txt.
 
+You could alternatively use virtualenv and just run:
+   
+   $ python setup.py install
 
-If you don't have distutils, or if you don't want to install it that way, you
-can do it manually:
+but I don't recommend that unless you're fine with having to also install the
+dependencies into the virtualenv first, and creating a from ~/bin/imgv to
+~/.virtualenvs/imgv/bin/imgv or similar.
+
+
+If you don't have distutils, or if you don't want to install it via setup.py, 
+you can always do it manually:
 
 add /path/to/imgv to your $PYTHONPATH from the root of the package run:
 
