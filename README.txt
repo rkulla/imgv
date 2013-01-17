@@ -59,7 +59,7 @@ dependencies into the virtualenv first, and creating a from ~/bin/imgv to
 If you don't have distutils, or if you don't want to install it via setup.py, 
 you can always do it manually:
 
-add /path/to/imgv to your $PYTHONPATH from the root of the package run:
+add /path/to/imgv/imgv to your $PYTHONPATH from the root of the package run:
 
     $ bin/imgv
 
