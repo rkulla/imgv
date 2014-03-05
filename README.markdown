@@ -4,6 +4,8 @@ Latest Version: 3.1.8
 
 ABOUT
 =====
+(Note: this project has been abandoned. It had a good run from 2001-2006)
+
 Imgv is a image viewer with an opinionated interface - meaning that certain
 features were added or are missing intentionally. Its main opinion is that screen
 real-estate is most important and so the interface tries to stay out of your way. 
