@@ -1,12 +1,8 @@
-Imgv - cross-platform image viewer.
+# IMGV
 
-Latest Version: 3.1.8
+(*UPDATE: this project has been abandoned. It had a good run from 2001-2006*)
 
-ABOUT
-=====
-(Note: this project has been abandoned. It had a good run from 2001-2006)
-
-Imgv is a image viewer with an opinionated interface - meaning that certain
+Imgv is a cross-platform image viewer with an opinionated interface - meaning that certain
 features were added or are missing intentionally. Its main opinion is that screen
 real-estate is most important and so the interface tries to stay out of your way. 
 
@@ -16,21 +12,19 @@ even has the ability to temporarily 'hide' what you're viewing.
 It also has very flexible viewing options, such as the ability to view 4
 images at a time, and view/download from URLs.
 
-SYSTEM REQUIREMENTS
-===================
+![imgv-sshot1](https://cloud.githubusercontent.com/assets/244283/17833421/aeb93d1c-66d1-11e6-95d6-31284be48270.jpg)
+
+## Requirements
+
 - python 2.2 or higher
 - pygame
 - python-imaging (PIL)
 
 The operating system doesn't matter as long as you have the above requirements.
-Thus it should work on Linux, Mac OS X, Windows, etc.
+It should work on Linux, Mac OS X, Windows, etc.
 
+## Installing from Source
 
-INSTALLING
-==========
-
-INSTALLING FOM SOURCE CODE
----------------------------
 The easiest way to install imgv from source is to just run:
 
     $ sudo python setup.py install
@@ -57,7 +51,6 @@ but I don't recommend that unless you're fine with having to also install the
 dependencies into the virtualenv first, and creating a from ~/bin/imgv to
 ~/.virtualenvs/imgv/bin/imgv or similar.
 
-
 If you don't have distutils, or if you don't want to install it via setup.py, 
 you can always do it manually:
 
@@ -71,7 +64,6 @@ then invoke it as simply:
 
     $ imgv
 
-
 The first time you run imgv, it will create the directory "$HOME/.imgv" and put
 a sub-directory called "data" in it. If you want to use a different location for
 the imgv home folder, then move $HOME/.imgv somewhere else and create an 
@@ -84,9 +76,8 @@ bash_profile (or the equivalent depending on your shell)
 You can also copy imgv.conf to the root of the IMGV_HOME directory to have imgv
 read it from there from now on.
 
+## Installing on Windows
 
-INSTALLING ON WINDOWS
----------------------
 If you're using MS-Windows and you unpacked imgv in C:\Program Files\imgv then 
 search the internet for how to change environment variables in your particular
 version of windows, or do it the old fashioned way and edit autoexe.bat:
@@ -96,8 +87,8 @@ version of windows, or do it the old fashioned way and edit autoexe.bat:
 Reboot for changes to take affect.
 
 
-USAGE
-=====
+## Usage
+
 - Imgv also takes optional command-line arguments:
 
     $ imgv [directory|image|remote image]
@@ -114,8 +105,8 @@ USAGE
   to get a list of keys supported and their functions. 
 
 
-Loading images from web sites
------------------------------
+## Loading images from web sites
+
 Imgv allows the loading of remote images by forming a name like:
 
     imgv http://www.site.com/bla.jpg
@@ -127,8 +118,8 @@ URL for imgv to extract images from such as:
     http://www.site.com/foo.html
     http://www.site.com/bla.jpg
 
-Playlists
----------
+## Playlists
+
 In order for the play list feature to work you always must have a file named 
 'playlists' in the data/ directory (the default).  If you want to create new 
 playlists and/or edit them manually using your text editor you need to put the
@@ -148,8 +139,8 @@ To add new images to a play list manually:
     cd data/    
     echo "/home/user/pics/bla.jpg" >> "play list name"
 
-Configuration
-=============
+## Configuration
+
 You can edit the imgv.conf configuration file to customize imgv.
 
 If you ran setup.py then imgv.conf will be in your IMGV_HOME, e.g., $HOME/.imgv/
@@ -157,8 +148,8 @@ If you ran setup.py then imgv.conf will be in your IMGV_HOME, e.g., $HOME/.imgv/
 If you have used the Windows Installer from version 1.3.6 or below, then
 it will be in the data/ folder where imgv was installed.
 
-Contact
-=======
+## Contact
+
 If you have questions email me at: rkulla@gmail.com
 
 IMGV's homepage is: http://imgv.sf.net/
