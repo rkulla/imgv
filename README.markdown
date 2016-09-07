@@ -23,6 +23,59 @@ images at a time, and view/download from URLs.
 The operating system doesn't matter as long as you have the above requirements.
 It should work on Linux, Mac OS X, Windows, etc.
 
+## Features
+**Supported Files:** JPEG, GIF, PNG, TIFF, BMP, PCX, TGA, PPM, PNM, PBM, PGM, XPM, XCF, LBM, IFF, MPEG
+
+**Movies Support:** View MPEG movies
+
+**Costumization:** Edit "imgv.conf" to configure IMGV's interface and abilities to your desires.
+
+**Command Line:** Ability to load image files from the command line.
+
+**Histogram Support:** View an image histogram in color.
+
+**Fullscreen Support:** View images in fullscreen mode.
+
+**Play Lists:** Have collections of images. Files can be in any directory or drive on your system or even on the Web.
+
+**Slideshows:** Create different types of slideshows.
+
+**Hand Tool:** Drag images to move them around the screen
+
+**Persistent Zoom:** Lock the zoom amount so that all images are auto-zoomed to that amount<
+
+**Shuffle:** Dynamically randomizes the images, even across multiple directories.
+
+**Search Filters:** Search for or filter out certain images.
+
+**Typical Features:** Zoom-in/out. Rotate. Flip vertically/horizontally, etc.
+
+**Multi-view:** You can view four images at a time (and even slideshow in this mode) 
+
+**Exif Support:** On-the-fly viewing of Exif information (meta-data from images that came from digital cameras, scanners, etc) and detailed Exif viewing are available.
+
+**Transitional Effects:** Effects currently include "fade in" and "melt". Ability to set multiple effects to run at the same time.
+
+**External Editor Support:** Launch images into an external editor such as Adobe Photoshop for editing.
+
+**Wallpaper Setting:** - Easily set your desktop wallpaper.
+
+**Thumbnail Support:** View screenfulls of thumbnails and adjust their sizes.
+
+**Extract Images from web pages:** View individual images from Web URL's or extract all images from a Web page. You can then manipulate the images and even download them.
+
+**Multi-Directory Loading:** You can tag multiple directories to load all of their images at the same time.
+
+**Subdirectory Loading:** Optionally load sub-directories too.
+
+**Image Closing:** Remove an image from your current session without deleting it.
+
+**Image Hiding:** Hides displayed images by blanking the window until a keypress or mouse-click. You can also password protect this feature.
+
+**Image Details:** Shows an entire screen full of information about the image.
+
+**ScreenSaver Disabling:** IMGV temporarily disables your screensaver when watching movies or viewing slideshows.
+
 ## Installing from Source
 
 The easiest way to install imgv from source is to just run:
